@@ -9,6 +9,7 @@
 		]
 	},
 	"devDependencies": {
+		"oao": "^1.4.0",
 		"typescript": "^2.7.2",
 		"typescript-workspace-plugin": "^1.0.5"
 	}
