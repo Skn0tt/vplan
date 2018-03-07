@@ -9,5 +9,24 @@
   "private": true,
   "scripts": {
     "build": "tsc"
+  },
+  "dependencies": {
+    "@types/redux-actions": "^2.2.4",
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.5",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.3.0",
+    "redux-devtools": "^3.4.1",
+    "redux-immutable": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.9.1",
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/redux-immutable": "^3.0.38",
+    "@types/redux-logger": "^3.0.5",
+    "@types/redux-persist": "^4.3.1",
+    "vplan-types": "^0.0.1"
   }
 }
