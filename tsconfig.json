@@ -2,10 +2,9 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "commonjs",
-    "baseUrl": "packages",
-    "plugins": [{ "name": "typescript-workspace-plugin" }],
+    "baseUrl": "./packages",
     "paths": {
-      "@vplan/*": ["./*/src"]
+      "vplan-*": ["./*/src"]
     }
   }
 }

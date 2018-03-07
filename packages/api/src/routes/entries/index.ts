@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createClient } from 'redis';
-import { Entries } from 'vplan-types/src';
+import { Entries } from 'vplan-types';
 
 const entriesRouter: Router = Router();
 

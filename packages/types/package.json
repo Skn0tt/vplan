@@ -1,5 +1,5 @@
 {
-  "name": "@vplan/types",
+  "name": "vplan-types",
   "version": "0.0.1",
   "description": "typings for vplan.",
   "main": "src/index.ts",

@@ -1,5 +1,5 @@
 {
-  "name": "@vplan/redux",
+  "name": "vplan-redux",
   "version": "0.0.1",
   "description": "redux state management for vplan",
   "main": "src/index.ts",

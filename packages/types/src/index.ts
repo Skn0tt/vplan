@@ -1,3 +1,4 @@
+
 export type Entry = {
   from: number;
   to: number;
