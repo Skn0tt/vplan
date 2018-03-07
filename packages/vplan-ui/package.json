@@ -1,5 +1,5 @@
 {
-  "name": "@vplan/ui",
+  "name": "vplan-ui",
   "version": "0.0.1",
   "description": "the ui for vplan",
   "main": "dist/index.html",

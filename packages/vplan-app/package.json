@@ -1,10 +1,13 @@
 {
-  "name": "@vplan/api",
+  "name": "vplan-app",
   "version": "0.0.1",
-  "description": "the api of vplan.",
+  "description": "the app for vplan",
   "main": "dist/index.js",
   "repository": "https://gitlab.com/skn0tt/vplan",
   "author": "Simon Knott",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "tsc"
+  }
 }

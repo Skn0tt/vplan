@@ -1,10 +1,13 @@
 {
-  "name": "@vplan/redux",
+  "name": "vplan-redux",
   "version": "0.0.1",
   "description": "redux state management for vplan",
-  "main": "dist/index.js",
+  "main": "src/index.ts",
   "repository": "https://gitlab.com/skn0tt/vplan",
   "author": "Simon Knott",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "tsc"
+  }
 }

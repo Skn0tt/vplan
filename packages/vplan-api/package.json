@@ -1,0 +1,33 @@
+{
+  "name": "vplan-api",
+  "version": "0.0.1",
+  "description": "the api of vplan.",
+  "main": "dist/index.js",
+  "repository": "https://gitlab.com/skn0tt/vplan",
+  "author": "Simon Knott",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "helmet": "^3.12.0",
+    "morgan": "^1.9.0",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.3",
+    "@types/dotenv": "^4.0.2",
+    "@types/express": "^4.11.1",
+    "@types/helmet": "^0.0.37",
+    "@types/morgan": "^1.7.35",
+    "@types/redis": "^2.8.6",
+    "typescript": "^2.7.2",
+    "vplan-types": "./packages/vplan-types"
+  }
+}
