@@ -193,7 +193,7 @@ class Home extends React.Component {
         )}
         {this.state.showKuerzelModal && (
           <KuerzelModal
-            kuerzel={this.state.kuerzel}
+            short={this.state.kuerzel}
             onClose={() => this.setState({ showKuerzelModal: false })}
           />
         )}

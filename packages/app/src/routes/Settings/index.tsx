@@ -1,11 +1,12 @@
 import React from "react";
 import { View, Picker, Text } from "react-native";
 import { connect } from "react-redux";
+import { Class } from "vplan-types";
 
-import { actions } from "../../redux/store";
-import selectors from "../../redux/selectors";
+import { setClass, getClass, AppState } from "vplan-redux";
 
 import styles from "./styles";
+import { Dispatch, Action } from "redux";
 
 const klassen = [
   "5A",
@@ -37,26 +38,33 @@ const items = klassen.map(item => (
   <Picker.Item key={item} label={item} value={item} />
 ));
 
-const Settings = props => (
+interface StateProps {
+  class: Class;
+}
+const mapStateToProps = (state: AppState) => ({
+  class: getClass(state)
+});
+interface DispatchProps {
+  setClass(c: Class): Action;
+}
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  setClass: (c: Class) => dispatch(setClass(c))
+});
+
+type Props = StateProps & DispatchProps;
+
+const Settings: React.SFC<Props> = props => (
   <View style={styles.container}>
     <View style={styles.item}>
       <Text style={styles.header}>Klasse</Text>
       <Picker
-        selectedValue={props.klasse}
-        onValueChange={klasse => props.setKlasse(klasse)}
+        selectedValue={props.class}
+        onValueChange={c => props.setClass(c)}
       >
         {items}
       </Picker>
     </View>
   </View>
 );
-
-const mapStateToProps = state => ({
-  klasse: selectors.getKlasse(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  setKlasse: klasse => dispatch({ type: actions.SET_KLASSE, payload: klasse })
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

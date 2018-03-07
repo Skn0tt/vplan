@@ -5,13 +5,13 @@ import Swipeable from "react-native-swipeable";
 import styles from "./styles";
 import StundenIcon from "../StundenIcon";
 
-class Item extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      swipeableRef: null
-    };
-  }
+type Props = {};
+interface State {
+  swipeableRef?: React.Ref<string>;
+}
+
+class Item extends React.Component<Props, State> {
+  state: State = {};
 
   kuerzelBttn = lookup => (
     <TouchableHighlight
