@@ -1,8 +1,8 @@
 {
-  "name": "vplan-app",
+  "name": "@vplan/types",
   "version": "0.0.1",
-  "description": "the app for vplan",
-  "main": "dist/index.js",
+  "description": "typings for vplan.",
+  "main": "src/index.ts",
   "repository": "https://gitlab.com/skn0tt/vplan",
   "author": "Simon Knott",
   "license": "MIT",
