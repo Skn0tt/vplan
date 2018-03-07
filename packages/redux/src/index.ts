@@ -2,6 +2,6 @@ export let config = {
   baseUrl: ""
 };
 
-const setup = conf => (config = conf);
+const createStore = (conf: typeof config) => (config = conf);
 
 export default setup;

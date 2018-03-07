@@ -1,13 +1,51 @@
 {
   "name": "vplan-app",
-  "version": "0.0.1",
-  "description": "the app for vplan",
-  "main": "dist/index.js",
-  "repository": "https://gitlab.com/skn0tt/vplan",
-  "author": "Simon Knott",
-  "license": "MIT",
+  "version": "0.1.0",
   "private": true,
+  "devDependencies": {
+    "@types/react-native": "^0.52.16",
+    "babel-eslint": "^8.0.2",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-react-native": "^3.2.0",
+    "jest": "^21.2.1",
+    "react-test-renderer": "16.0.0-beta.5",
+    "typescript": "^2.7.2"
+  },
   "scripts": {
-    "build": "tsc"
+    "start": "react-native start",
+    "tsc": "tsc",
+    "watch": "tsc --watch",
+    "postinstall":
+      "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json",
+    "build": "yarn tsc && cd android && ./gradlew assembleRelease",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "node node_modules/jest/bin/jest.js --watch",
+    "emu:android": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_26_x86",
+    "lint": "eslint app"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "dependencies": {
+    "appcenter": "^1.0.1",
+    "appcenter-analytics": "^1.0.1",
+    "appcenter-crashes": "^1.0.1",
+    "immutable": "^3.8.2",
+    "moment": "^2.19.3",
+    "react": "16.0.0-beta.5",
+    "react-native": "^0.53.0",
+    "react-native-blur": "^3.2.2",
+    "react-native-modal": "^5.0.0",
+    "react-native-swipeable": "^0.6.0",
+    "react-native-vector-icons": "^4.4.2",
+    "react-navigation": "^1.0.0-beta.21",
+    "react-redux": "^5.0.6",
+    "vplan-redux": "^0.0.1"
   }
 }
