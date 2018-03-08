@@ -7,7 +7,11 @@ import Home from "./routes/Home";
 import Settings from "./routes/Settings";
 
 // Store
-import store from "vplan-redux";
+import createStore from "vplan-redux";
+
+const store = createStore({
+  baseUrl: ""
+});
 
 const Navigator = StackNavigator(
   {
@@ -16,9 +20,6 @@ const Navigator = StackNavigator(
     },
     Settings: {
       screen: Settings
-    },
-    Newsletter: {
-      screen: Newsletter
     }
   },
   {

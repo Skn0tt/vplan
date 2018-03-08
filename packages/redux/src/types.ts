@@ -1,22 +1,24 @@
 import { Record, Map } from "immutable";
-import { Entries, Class, Teacher } from "vplan-types";
+import { Group, Teacher, Class, TeacherInfo, Entry } from "vplan-types";
 
 /**
  * AppState
  */
 export interface IAppState {
-  entries: Entries;
+  entries: ReadonlyArray<Entry>;
   loading: number;
-  class: Class;
-  teachers: Map<string, Teacher>;
+  group: Group;
+  teachers: Map<string, TeacherInfo>;
+  marked: ReadonlySet<Class>;
 }
 
 export class AppState extends Record(
   {
     entries: [],
     loading: 0,
-    class: "5A",
-    teachers: Map<string, Teacher>()
+    group: "5A",
+    teachers: Map<string, TeacherInfo>(),
+    marked: new Set<Class>()
   } as IAppState,
   "AppState"
 ) {

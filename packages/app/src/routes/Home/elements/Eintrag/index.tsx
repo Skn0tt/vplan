@@ -4,38 +4,53 @@ import Swipeable from "react-native-swipeable";
 
 import styles from "./styles";
 import StundenIcon from "../StundenIcon";
+import { Short, Entry } from "vplan-types";
 
-type Props = {};
-interface State {
-  swipeableRef?: React.Ref<string>;
-}
+type Props = {
+  onLongPress(): void;
+  marked: boolean;
+  lookupKuerzel(s: Short): void;
+  teacher: string;
+  title: string;
+  room?: string;
+  subtitle: string;
+  item: Entry;
+};
 
-class Item extends React.Component<Props, State> {
-  state: State = {};
+type SwipeableRef = { recenter(): void };
 
-  kuerzelBttn = lookup => (
+class Item extends React.Component<Props> {
+  private swipeableRef?: SwipeableRef;
+
+  kuerzelBttn = (lookup: () => void) => (
     <TouchableHighlight
       onPress={() => {
-        this.state.swipeableRef.recenter();
+        this.swipeableRef!.recenter();
         lookup();
       }}
     >
-      <View style={styles.swipebuttoncontainer} adjustsFontSizeToFit>
-        <Text style={[styles.swipebuttontext, styles.green]}>Kuerzel</Text>
+      <View style={styles.swipebuttoncontainer}>
+        <Text
+          style={[styles.swipebuttontext, styles.green]}
+          adjustsFontSizeToFit
+        >
+          Kuerzel
+        </Text>
       </View>
     </TouchableHighlight>
   );
 
-  markBttn = (onPress, marked) => (
+  markBttn = (onPress: () => void, marked: boolean) => (
     <TouchableHighlight
       onPress={() => {
-        this.state.swipeableRef.recenter();
+        this.swipeableRef!.recenter();
         onPress();
       }}
     >
-      <View style={styles.swipebuttoncontainer} adjustsFontSizeToFit>
+      <View style={styles.swipebuttoncontainer}>
         <Text
           style={[styles.swipebuttontext, marked ? styles.red : styles.orange]}
+          adjustsFontSizeToFit
         >
           {marked ? "Entfernen" : "Markieren"}
         </Text>
@@ -43,162 +58,190 @@ class Item extends React.Component<Props, State> {
     </TouchableHighlight>
   );
 
-  rightButtons = (mark, marked, lookup) => [
+  rightButtons = (mark: () => void, marked: boolean, lookup: () => void) => [
     this.markBttn(mark, marked),
     this.kuerzelBttn(lookup)
   ];
 
-  render = () => (
-    <Swipeable
-      rightButtons={this.rightButtons(
-        this.props.onLongPress,
-        this.props.marked,
-        () => this.props.lookupKuerzel(this.props.lehrer)
-      )}
-      onRef={ref => this.setState({ swipeableRef: ref })}
-    >
-      <View style={[styles.container, this.props.marked && styles.marked]}>
-        <View style={styles.circle}>
-          <StundenIcon {...this.props.circle} marked={this.props.marked} />
-        </View>
-        <View style={styles.main}>
-          <Text style={[styles.title, this.props.marked && styles.whitetext]}>
-            {this.props.title}
+  render() {
+    return (
+      <Swipeable
+        rightButtons={this.rightButtons(
+          this.props.onLongPress,
+          this.props.marked,
+          () => this.props.lookupKuerzel(this.props.teacher)
+        )}
+        onRef={(ref: SwipeableRef) => (this.swipeableRef = ref)}
+      >
+        <View style={[styles.container, this.props.marked && styles.marked]}>
+          <View style={styles.circle}>
+            <StundenIcon
+              from={this.props.item.from}
+              to={this.props.item.to}
+              marked={this.props.marked}
+            />
+          </View>
+          <View style={styles.main}>
+            <Text style={[styles.title, this.props.marked && styles.whitetext]}>
+              {this.props.title}
+            </Text>
+            <Text
+              style={[styles.subtitle, this.props.marked && styles.whitetext]}
+            >
+              {this.props.subtitle}
+            </Text>
+          </View>
+          <Text style={[styles.room, this.props.marked && styles.whitetext]}>
+            {this.props.room}
           </Text>
-          <Text
-            style={[styles.subtitle, this.props.marked && styles.whitetext]}
-          >
-            {this.props.subtitle}
-          </Text>
         </View>
-        <Text style={[styles.room, this.props.marked && styles.whitetext]}>
-          {this.props.room}
-        </Text>
-      </View>
-    </Swipeable>
-  );
+      </Swipeable>
+    );
+  }
 }
 
-const time = item => {
-  const stunde = item.stunden[0];
-
-  switch (stunde.type) {
-    case "range":
-      return {
-        from: stunde.hour_from,
-        to: stunde.hour_to
-      };
-    case "single":
-      return {
-        from: stunde.hour
-      };
-    default:
-      return {
-        from: 0,
-        to: 0
-      };
-  }
-};
-
 const ItemConstructor = (
-  circle,
-  marked,
-  markable,
-  onLongPress,
-  lookupKuerzel,
-  lehrer,
-  title,
-  subtitle,
-  room
+  item: Entry,
+  marked: boolean,
+  markable: boolean,
+  onLongPress: () => void,
+  lookupKuerzel: (s: string) => void,
+  lehrer: string,
+  title: string,
+  subtitle: string,
+  room?: string
 ) => (
   <Item
-    circle={circle}
+    item={item}
     marked={marked}
-    markable={markable}
     onLongPress={onLongPress}
     lookupKuerzel={lookupKuerzel}
-    lehrer={lehrer}
+    teacher={lehrer}
     title={title}
     subtitle={subtitle}
     room={room}
   />
 );
 
-const Klausur = ({ item, marked, markable, onLongPress, lookupKuerzel }) =>
+interface ItemProps {
+  item: Entry;
+  marked: boolean;
+  markable: boolean;
+  onLongPress(): void;
+  lookupKuerzel(s: Short): void;
+}
+
+const Klausur: React.SFC<ItemProps> = ({
+  item,
+  marked,
+  markable,
+  onLongPress,
+  lookupKuerzel
+}) =>
   ItemConstructor(
-    time(item),
+    item,
     marked,
     markable,
     onLongPress,
     lookupKuerzel,
-    item.vertreter || item.statt_lehrer,
-    item.fach || " ",
-    `Klausur ${item.vertreter}`,
-    item.raum || " "
+    item.teacher || item.substituteTeacher,
+    item.class || " ",
+    `Klausur ${item.substituteTeacher}`,
+    item.room || " "
   );
 
-const EVA = ({ item, marked, markable, onLongPress, lookupKuerzel }) =>
+const EVA: React.SFC<ItemProps> = ({
+  item,
+  marked,
+  markable,
+  onLongPress,
+  lookupKuerzel
+}) =>
   ItemConstructor(
-    time(item),
+    item,
     marked,
     markable,
     onLongPress,
     lookupKuerzel,
-    item.vertreter || item.statt_lehrer,
-    item.fach || item.statt_lehrer || " ",
-    `EVA ${item.fach ? item.statt_lehrer : " "}`
+    item.substituteTeacher || item.teacher,
+    item.class || item.teacher || " ",
+    `EVA ${item.substituteTeacher ? item.teacher : " "}`
   );
 
-const Vertretung = ({ item, marked, markable, onLongPress, lookupKuerzel }) =>
+const Vertretung: React.SFC<ItemProps> = ({
+  item,
+  marked,
+  markable,
+  onLongPress,
+  lookupKuerzel
+}) =>
   ItemConstructor(
-    time(item),
+    item,
     marked,
     markable,
     onLongPress,
     lookupKuerzel,
-    item.vertreter || item.statt_lehrer,
-    item.fach || " ",
-    `Vertretung bei ${item.vertreter}`,
-    item.raum || " "
+    item.substituteTeacher || item.teacher,
+    item.class || " ",
+    `Vertretung bei ${item.substituteTeacher}`,
+    item.room || " "
   );
 
-const Entfall = ({ item, marked, markable, onLongPress, lookupKuerzel }) =>
+const Entfall: React.SFC<ItemProps> = ({
+  item,
+  marked,
+  markable,
+  onLongPress,
+  lookupKuerzel
+}) =>
   ItemConstructor(
-    time(item),
+    item,
     marked,
     markable,
     onLongPress,
     lookupKuerzel,
-    item.vertreter || item.statt_lehrer,
-    item.fach || item.statt_lehrer || " ",
-    `Entfall ${item.statt_lehrer}`,
-    item.raum || " "
+    item.substituteTeacher || item.teacher,
+    item.class || item.teacher || " ",
+    `Entfall ${item.teacher}`,
+    item.room || " "
   );
 
-const RaumVtr = ({ item, marked, markable, onLongPress, lookupKuerzel }) =>
+const RaumVtr: React.SFC<ItemProps> = ({
+  item,
+  marked,
+  markable,
+  onLongPress,
+  lookupKuerzel
+}) =>
   ItemConstructor(
-    time(item),
+    item,
     marked,
     markable,
     onLongPress,
     lookupKuerzel,
-    item.vertreter || item.statt_lehrer,
-    item.fach || " ",
-    `Raumvertretung ${item.statt_lehrer}`,
-    item.raum || " "
+    item.substituteTeacher || item.teacher,
+    item.class || " ",
+    `Raumvertretung ${item.teacher}`,
+    item.room || " "
   );
 
-const Betreuung = ({ item, marked, markable, onLongPress, lookupKuerzel }) =>
+const Betreuung: React.SFC<ItemProps> = ({
+  item,
+  marked,
+  markable,
+  onLongPress,
+  lookupKuerzel
+}) =>
   ItemConstructor(
-    time(item),
+    item,
     marked,
     markable,
     onLongPress,
     lookupKuerzel,
-    item.vertreter || item.statt_lehrer,
-    item.fach || " ",
-    `Betreuung ${item.vertreter}`,
-    item.raum || " "
+    item.substituteTeacher || item.teacher,
+    item.class || " ",
+    `Betreuung ${item.substituteTeacher}`,
+    item.room || " "
   );
 
 export default {

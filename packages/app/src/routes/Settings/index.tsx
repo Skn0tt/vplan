@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Picker, Text } from "react-native";
 import { connect } from "react-redux";
-import { Class } from "vplan-types";
+import { Group } from "vplan-types";
 
-import { setClass, getClass, AppState } from "vplan-redux";
+import { setGroup, getGroup, AppState } from "vplan-redux";
 
 import styles from "./styles";
 import { Dispatch, Action } from "redux";
@@ -39,16 +39,16 @@ const items = klassen.map(item => (
 ));
 
 interface StateProps {
-  class: Class;
+  class: Group;
 }
 const mapStateToProps = (state: AppState) => ({
-  class: getClass(state)
+  class: getGroup(state)
 });
 interface DispatchProps {
-  setClass(c: Class): Action;
+  setClass(c: Group): Action;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  setClass: (c: Class) => dispatch(setClass(c))
+  setClass: (c: Group) => dispatch(setGroup(c))
 });
 
 type Props = StateProps & DispatchProps;

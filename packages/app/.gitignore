@@ -236,3 +236,7 @@ gradle-app.setting
 
 # keystore
 *.keystore
+
+# Haul
+#
+haul-debug.log

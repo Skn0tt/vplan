@@ -5,7 +5,11 @@ import { BlurView } from "react-native-blur";
 import styles from "./styles";
 import dateLocaliser from "./dateLocaliser";
 
-const SectionHeader = ({ date }) => (
+interface Props {
+  date: Date;
+}
+
+const SectionHeader: React.SFC<Props> = ({ date }) => (
   <BlurView blurType="light" blurAmount={2}>
     <Text style={styles.text}>{dateLocaliser(date)}</Text>
   </BlurView>

@@ -4,6 +4,8 @@
   "private": true,
   "devDependencies": {
     "@types/react-native": "^0.52.16",
+    "@types/react-native-vector-icons": "^4.4.3",
+    "@types/react-navigation": "^1.2.1",
     "@types/react-redux": "^5.0.15",
     "babel-eslint": "^8.0.2",
     "babel-preset-react-native-stage-0": "^1.0.1",
@@ -13,23 +15,21 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-react-native": "^3.2.0",
+    "haul": "^1.0.0-beta.13",
     "jest": "^21.2.1",
     "react-test-renderer": "16.0.0-beta.5",
     "redux": "^3.7.2",
+    "ts-loader": "^4.0.1",
     "typescript": "^2.7.2"
   },
   "scripts": {
     "start": "react-native start",
     "tsc": "tsc",
     "watch": "tsc --watch",
-    "postinstall":
-      "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json",
     "build": "yarn tsc && cd android && ./gradlew assembleRelease",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "test": "node node_modules/jest/bin/jest.js --watch",
+    "test": "jest --watch",
     "emu:android": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_26_x86",
-    "lint": "eslint app"
+    "haul": "haul"
   },
   "jest": {
     "preset": "react-native"

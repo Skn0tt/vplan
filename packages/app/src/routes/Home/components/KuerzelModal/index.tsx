@@ -2,11 +2,16 @@ import * as React from "react";
 import { Text, ActivityIndicator, View } from "react-native";
 import { connect, Dispatch } from "react-redux";
 import Modal from "react-native-modal";
-import { getTeacher, fetchTeachers, AppState, isLoading } from "vplan-redux";
+import {
+  fetchTeachers,
+  AppState,
+  isLoading,
+  getTeacherInfo
+} from "vplan-redux";
 
 import styles from "./styles";
 import { Action } from "redux";
-import { Teacher } from "vplan-types";
+import { Teacher, TeacherInfo } from "vplan-types";
 
 interface OwnProps {
   short: string;
@@ -21,11 +26,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
 });
 
 interface StateProps {
-  getTeacher(short: string): Teacher;
+  getTeacher(short: string): TeacherInfo;
   loading: boolean;
 }
 const mapStateToProps = (state: AppState) => ({
-  getTeacher: (short: string) => getTeacher(short)(state),
+  getTeacher: (short: string) => getTeacherInfo(short)(state),
   loading: isLoading(state)
 });
 
@@ -50,10 +55,8 @@ const InfoModal = connect<StateProps, DispatchProps, OwnProps, AppState>(
           <View style={styles.container}>
             {lehrer && (
               <View>
-                <Text style={styles.title}>
-                  {lehrer.firstName} {lehrer.lastName}
-                </Text>
-                <Text style={styles.shortcut}>{lehrer.shortcut}</Text>
+                <Text style={styles.title}>{lehrer.name}</Text>
+                <Text style={styles.shortcut}>{lehrer.short}</Text>
                 <Text style={styles.subjects}>
                   {lehrer.subjects.join(", ")}
                 </Text>

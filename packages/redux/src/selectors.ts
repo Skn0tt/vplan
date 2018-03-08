@@ -1,13 +1,23 @@
 import { AppState } from "./types";
-import { Class, Teacher } from "vplan-types";
+import { Group, Teacher, Class, TeacherInfo, Entry } from "vplan-types";
 
 type Selector<T> = (state: AppState) => T;
 
 //TODO: implement
 export const getInfo: Selector<string> = state => "";
 
-export const getClass: Selector<Class> = state => state.get("class");
+export const filterEntries = (
+  short: Group | Teacher
+): Selector<ReadonlyArray<Entry>> => state =>
+  state
+    .get("entries")
+    .filter(entry => entry.class === short || entry.teacher === short);
+
+export const isMarked = (c: Class): Selector<boolean> => state =>
+  state.get("marked").has(c);
+
+export const getGroup: Selector<Group> = state => state.get("group");
 export const isLoading: Selector<boolean> = state => state.get("loading") > 0;
 
-export const getTeacher = (short: string): Selector<Teacher> => state =>
+export const getTeacherInfo = (short: string): Selector<TeacherInfo> => state =>
   state.getIn(["teachers", short]);

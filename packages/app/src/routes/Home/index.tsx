@@ -5,42 +5,69 @@ import {
   Platform,
   View,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  ListRenderItem,
+  ListRenderItemInfo
 } from "react-native";
-import { connect } from "react-redux";
+import { connect, Dispatch } from "react-redux";
 
 import Icon from "react-native-vector-icons/Feather";
 
-import selectors from "../../redux/selectors";
-import { actions } from "../../redux/store";
+import {
+  getInfo,
+  fetchEntries,
+  isMarked,
+  isLoading,
+  getGroup,
+  AppState,
+  filterEntries,
+  addMarked,
+  removeMarked
+} from "vplan-redux";
 
 import InfoModal from "./components/InfoModal";
 import KuerzelModal from "./components/KuerzelModal";
 
 import Eintrag from "./elements/Eintrag";
-import SectionHeader from "./elements/SectionHeader";
+import SectionHeaderIOS from "./elements/SectionHeader/index.ios";
+import SectionHeaderDROID from "./elements/SectionHeader/index.android";
+import { Class, Entry, Group, Short, Teacher } from "vplan-types";
+import { Action } from "redux";
+import {
+  NavigationScreenOptionsGetter,
+  NavigationProp,
+  NavigationScreenProps
+} from "react-navigation";
+
+const SectionHeader =
+  Platform.OS === "android" ? SectionHeaderDROID : SectionHeaderIOS;
+
+type Section<T> = {
+  title: Date;
+  data: T[];
+};
 
 const renderItem = (
-  { item },
-  marked,
-  addMarked,
-  removeMarked,
-  lookupKuerzel
+  item: Entry,
+  marked: (c: Class) => boolean,
+  addMarked: (c: Class) => void,
+  removeMarked: (c: Class) => void,
+  lookupKuerzel: (t: Teacher) => void
 ) => {
-  const isMarked = marked.includes(item.fach) && item.fach;
+  const isMarked = !!item.class && marked(item.class);
 
   const onLongPress = () =>
-    isMarked ? removeMarked(item.fach) : addMarked(item.fach);
+    isMarked ? removeMarked(item.class) : addMarked(item.class);
 
   const props = {
     onLongPress,
     marked: isMarked,
-    markable: !!item.fach,
+    markable: !!item.class,
     item,
     lookupKuerzel
   };
 
-  switch (item.art) {
+  switch (item.type) {
     case "Klausur":
       return <Eintrag.Klausur {...props} />;
     case "EVA":
@@ -58,24 +85,16 @@ const renderItem = (
   }
 };
 
-const date = item =>
-  new Date(item.datum.jahr, item.datum.monat - 1, item.datum.tag);
+const sortStunden = (a: Entry, b: Entry) => a.from - b.from;
 
-const sortStunden = (a, b) => {
-  const stundeA = a.stunden[0].hour_from || a.stunden[0].hour;
-  const stundeB = b.stunden[0].hour_from || b.stunden[0].hour;
-
-  return stundeA - stundeB;
-};
-
-const sortSections = (a, b) => {
-  const dateA = date(a.data[0]);
-  const dateB = date(b.data[0]);
+const sortSections = (a: Section<Entry>, b: Section<Entry>) => {
+  const dateA = a.data[0].day;
+  const dateB = b.data[0].day;
 
   return dateA.getTime() - dateB.getTime();
 };
 
-const daysBetween = (first, second) => {
+const daysBetween = (first: Date, second: Date) => {
   const one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
   const two = new Date(
     second.getFullYear(),
@@ -94,15 +113,14 @@ const daysBetween = (first, second) => {
  *
  * @param {array} data
  */
-const sectionize = data => {
-  const sections = [];
+const sectionize = (data: ReadonlyArray<Entry>) => {
+  const sections: Section<Entry>[] = [];
 
   data.forEach(item => {
-    const title = date(item);
     const i = sections.findIndex(
-      entry => daysBetween(entry.title, title) === 0
+      entry => daysBetween(entry.title, item.day) === 0
     );
-    if (i === -1) sections.push({ title, data: [item] });
+    if (i === -1) sections.push({ title: item.day, data: [item] });
     else sections[i].data.push(item);
   });
 
@@ -111,8 +129,44 @@ const sectionize = data => {
   return sections;
 };
 
-class Home extends React.Component {
-  static navigationOptions = ({ navigation }) => {
+interface StateProps {
+  entries(short: Short): ReadonlyArray<Entry>;
+  isMarked(c: Class): boolean;
+  isLoading: boolean;
+  group: Group;
+}
+const mapStateToProps = (state: AppState) =>
+  ({
+    entries: (short: Short) => filterEntries(short)(state),
+    isMarked: (c: Class) => isMarked(c)(state),
+    isLoading: isLoading(state),
+    group: getGroup(state)
+  } as StateProps);
+
+interface DispatchProps {
+  refresh(): Action;
+  addMarked(item: Class): Action;
+  removeMarked(item: Class): Action;
+}
+const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
+  ({
+    refresh: () => dispatch(fetchEntries()),
+    addMarked: (item: Class) => dispatch(addMarked(item)),
+    removeMarked: (item: Class) => dispatch(removeMarked(item))
+  } as DispatchProps);
+
+type Props = StateProps & DispatchProps & NavigationScreenProps;
+
+interface State {
+  showInfoModal: boolean;
+  showKuerzelModal: boolean;
+  kuerzel: Short;
+}
+
+class Home extends React.Component<Props, State> {
+  static navigationOptions: NavigationScreenOptionsGetter<
+    void
+  > = navigation => {
     const { state } = navigation;
     return {
       title: "vPlan",
@@ -120,7 +174,7 @@ class Home extends React.Component {
       headerTitleStyle: { color: "white", alignSelf: "center" },
       headerTintColor: "white",
       headerLeft: (
-        <TouchableOpacity onPress={() => state.params.openInfo()}>
+        <TouchableOpacity onPress={() => state.params!.openInfo()}>
           <Icon
             style={{ paddingLeft: 21 }}
             name="inbox"
@@ -130,7 +184,7 @@ class Home extends React.Component {
         </TouchableOpacity>
       ),
       headerRight: Platform.OS === "android" && (
-        <TouchableOpacity onPress={() => state.params.openSettings()}>
+        <TouchableOpacity onPress={() => state.params!.openSettings()}>
           <Icon
             style={{ paddingRight: 21 }}
             name="settings"
@@ -142,7 +196,7 @@ class Home extends React.Component {
     };
   };
 
-  state = {
+  state: State = {
     showInfoModal: false,
     showKuerzelModal: false,
     kuerzel: ""
@@ -157,7 +211,8 @@ class Home extends React.Component {
 
   openInfo = () => this.setState({ showInfoModal: true });
 
-  openKuerzel = kuerzel => this.setState({ showKuerzelModal: true, kuerzel });
+  openKuerzel = (kuerzel: Teacher) =>
+    this.setState({ showKuerzelModal: true, kuerzel });
 
   render() {
     const { props } = this;
@@ -166,22 +221,22 @@ class Home extends React.Component {
         <StatusBar barStyle="light-content" backgroundColor="#09ABF6" />
         <SectionList
           sections={sectionize(
-            props.data(
-              Platform.OS === "ios" ? Settings.get("klasse") : props.klasse
+            props.entries(
+              Platform.OS === "ios" ? Settings.get("klasse") : props.group
             )
           ).sort(sortSections)}
           showsVerticalScrollIndicator={false}
-          extraData={props.marked && props.loading}
-          keyExtractor={(item, index) => index}
-          refreshing={props.loading}
+          extraData={props.isMarked && props.isLoading}
+          keyExtractor={(item, index) => "" + index}
+          refreshing={props.isLoading}
           onRefresh={() => props.refresh()}
           renderSectionHeader={({ section }) => (
             <SectionHeader date={section.title} />
           )}
-          renderItem={item =>
+          renderItem={(info: ListRenderItemInfo<Entry>) =>
             renderItem(
-              item,
-              props.marked,
+              info.item,
+              props.isMarked,
               props.addMarked,
               props.removeMarked,
               this.openKuerzel
@@ -201,18 +256,4 @@ class Home extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  data: klasse => selectors.getData(klasse)(state),
-  marked: selectors.getMarked(state),
-  loading: selectors.getLoading(state),
-  klasse: selectors.getKlasse(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  refresh: () => dispatch({ type: actions.REFRESH }),
-  addMarked: item => dispatch({ type: actions.ADD_MARKED, payload: item }),
-  removeMarked: item => dispatch({ type: actions.REMOVE_MARKED, payload: item })
-});
-
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

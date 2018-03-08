@@ -1,14 +1,17 @@
-import { handleActions, ReducerMap } from "redux-actions";
+import { handleActions, ReducerMap, Action } from "redux-actions";
 import { AppState } from "./types";
 import {
   FETCH_ENTRIES,
   FETCH_ENTRIES_ERROR,
   FETCH_ENTRIES_SUCCESS,
-  SET_CLASS
+  ADD_MARKED,
+  REMOVE_MARKED,
+  SET_GROUP
 } from "./actions";
+import { Class, Group, Entry } from "vplan-types";
 
-const increment = i => i + 1;
-const decrement = i => i - 1;
+const increment = (i: number) => i + 1;
+const decrement = (i: number) => i - 1;
 
 const reducer = handleActions(
   {
@@ -18,14 +21,23 @@ const reducer = handleActions(
     [FETCH_ENTRIES]: (state, action) => state.update("loading", increment),
     [FETCH_ENTRIES_ERROR]: (state, action) =>
       state.update("loading", decrement),
-    [FETCH_ENTRIES_SUCCESS]: (state, action) =>
+    [FETCH_ENTRIES_SUCCESS]: (state, action: Action<Entry>) =>
       state.update("loading", decrement).set("entries", action.payload),
 
     /**
-     * SET_CLASS
+     * SET_GROUP
      */
-    [SET_CLASS]: (state, action) => state.set("class", action.payload)
-  } as ReducerMap<AppState, any>,
+    [SET_GROUP]: (state, action: Action<Group>) =>
+      state.set("group", action.payload),
+
+    /**
+     * MARKED
+     */
+    [ADD_MARKED]: (state, action: Action<Class>) =>
+      state.update("marked", marked => marked.add(action.payload)),
+    [REMOVE_MARKED]: (state, action: Action<Class>) =>
+      state.update("marked", marked => marked.delete(action.payload))
+  } as ReducerMap<AppState, Object>,
   new AppState({}) // initial State
 );
 

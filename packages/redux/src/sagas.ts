@@ -7,8 +7,9 @@ import {
   FETCH_ENTRIES,
   FETCH_TEACHERS
 } from "./actions";
+import { Action } from "redux-actions";
 
-function* fetchEntriesSaga(action) {
+function* fetchEntriesSaga(action: Action<void>) {
   try {
     const result = yield call(api.fetchEntries);
 
@@ -18,7 +19,7 @@ function* fetchEntriesSaga(action) {
   }
 }
 
-function* fetchTeachersSaga(action) {
+function* fetchTeachersSaga(action: Action<void>) {
   try {
     const result = yield call(api.fetchTeachers);
 

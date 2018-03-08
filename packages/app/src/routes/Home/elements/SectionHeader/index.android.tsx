@@ -4,7 +4,11 @@ import { Text } from "react-native";
 import styles from "./styles";
 import dateLocaliser from "./dateLocaliser";
 
-const SectionHeader = ({ date }) => (
+interface Props {
+  date: Date;
+}
+
+const SectionHeader: React.SFC<Props> = ({ date }) => (
   <Text style={styles.text}>{dateLocaliser(date)}</Text>
 );
 
