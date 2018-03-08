@@ -1,13 +1,13 @@
 rootProject.name = 'vplanApp'
 include ':react-native-blur'
-project(':react-native-blur').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-blur/android')
+project(':react-native-blur').projectDir = new File(rootProject.projectDir, '../../../node_modules/react-native-blur/android')
 include ':react-native-vector-icons'
-project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../../../node_modules/react-native-vector-icons/android')
 include ':appcenter-crashes'
-project(':appcenter-crashes').projectDir = new File(rootProject.projectDir, '../node_modules/appcenter-crashes/android')
+project(':appcenter-crashes').projectDir = new File(rootProject.projectDir, '../../../node_modules/appcenter-crashes/android')
 include ':appcenter-analytics'
-project(':appcenter-analytics').projectDir = new File(rootProject.projectDir, '../node_modules/appcenter-analytics/android')
+project(':appcenter-analytics').projectDir = new File(rootProject.projectDir, '../../../node_modules/appcenter-analytics/android')
 include ':appcenter'
-project(':appcenter').projectDir = new File(rootProject.projectDir, '../node_modules/appcenter/android')
+project(':appcenter').projectDir = new File(rootProject.projectDir, '../../../node_modules/appcenter/android')
 
 include ':app'

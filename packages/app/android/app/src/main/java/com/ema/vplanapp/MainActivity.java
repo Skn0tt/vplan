@@ -1,4 +1,4 @@
-package com.vplanapp;
+package com.ema.vplanapp;
 
 import com.facebook.react.ReactActivity;
 
