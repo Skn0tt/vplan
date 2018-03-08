@@ -26,12 +26,12 @@ const sagaMiddleware = createSagaMiddleware();
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-sagaMiddleware.run(sagas);
-
 const store = createStore(
   persistedReducer,
   new AppState({}),
   applyMiddleware(sagaMiddleware, logger)
 );
+
+sagaMiddleware.run(sagas);
 
 export default store;

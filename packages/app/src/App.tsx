@@ -28,7 +28,7 @@ const Navigator = StackNavigator(
   }
 );
 
-const App = () => (
+const App: React.SFC<{}> = () => (
   <Provider store={store}>
     <Navigator />
   </Provider>

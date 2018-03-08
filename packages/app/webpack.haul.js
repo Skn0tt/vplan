@@ -5,7 +5,8 @@ module.exports = ({ platform }, { module, resolve }) => ({
     rules: [
       {
         test: /\.tsx?$/,
-        loader: "ts-loader"
+        loader: "ts-loader",
+        exclude: /node_modules/
       },
       ...module.rules
     ]
@@ -16,9 +17,7 @@ module.exports = ({ platform }, { module, resolve }) => ({
       ".ts",
       ".tsx",
       `.${platform}.ts`,
-      ".native.ts",
       `.${platform}.tsx`,
-      ".native.tsx",
       ...resolve.extensions
     ]
   }
