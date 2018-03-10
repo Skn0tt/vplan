@@ -1,21 +1,17 @@
-import sampleinput from "./sampleinput";
-import sampleinputteacher from "./sampleinputteacher";
-import sampleinput2 from "./sampleinput2";
-import sampleinputteacher2 from "./sampleinputteacher2";
+import sample2 from "./sampleinputteacher2";
 import parse from "./parse";
-import { Entry } from "vplan-types";
+import { Entry, Grouped } from "vplan-types";
 import group from "./group";
 import { convertStudent, convertTeacher } from "./convert";
+import merge from "./merge";
 
 export type Row = string[];
-export type Grouped<T> = { [type: string]: T[] };
 
 type Converter = (input: Grouped<Row>) => Grouped<Entry>;
 
-export const today = (): Date => new Date();
-
+const todayDate = (): Date => new Date();
 const day = 24 * 60 * 60 * 1000;
-export const tomorrow = (): Date => new Date(+today() + day);
+const tomorrowDate = (): Date => new Date(+todayDate() + day);
 
 const parseHTML = (
   input: string,
@@ -29,10 +25,15 @@ const parseHTML = (
   return groupedEntries;
 };
 
-export const parseTeacher = (input: string, day: Date) =>
+const parseTeacherDay = (input: string, day: Date) =>
   parseHTML(input, parse(true), convertTeacher(day));
+export const parseTeacherView = (today: string, tomorrow: string) =>
+  merge(
+    parseTeacherDay(today, todayDate()),
+    parseTeacherDay(tomorrow, tomorrowDate())
+  );
 
-export const parseStudent = (input: string) =>
+const parseStudentDay = (input: string) =>
   parseHTML(input, parse(false), convertStudent);
-
-console.log(parseTeacher(sampleinputteacher, tomorrow()));
+export const parseStudentView = (today: string, tomorrow: string) =>
+  merge(parseStudentDay(today), parseStudentDay(tomorrow));

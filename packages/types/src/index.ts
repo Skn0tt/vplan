@@ -34,7 +34,6 @@ export enum Types {
 
 export type Class = string;
 
-//TODO: specify
 export type Teacher = string;
 
 export type TeacherInfo = {
@@ -50,7 +49,6 @@ export type TeacherEntry = StudentEntry & {
   substituteClass: Class;
 };
 
-// TODO: Specify
 export type StudentEntry = {
   type: Types;
   from: number;
@@ -63,3 +61,11 @@ export type StudentEntry = {
 };
 
 export type Entry = StudentEntry | TeacherEntry;
+export type Entries = Grouped<Entry>;
+export type StudentEntries = Entries;
+export type TeacherEntries = Entries;
+export type AllEntries = {
+  student: StudentEntries;
+  teacher: TeacherEntries;
+};
+export type Grouped<T> = { [type: string]: T[] };

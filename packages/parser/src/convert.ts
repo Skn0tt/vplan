@@ -1,11 +1,12 @@
-import { Grouped, Row } from "vplan-parser";
+import { Row } from "vplan-parser";
 import {
   Entry,
   StudentEntry,
   TeacherEntry,
   Types,
   Group,
-  Short
+  Short,
+  Grouped
 } from "vplan-types";
 import _ = require("lodash");
 
@@ -76,8 +77,14 @@ const nonTeacher: string[] = [];
 const isTeacher = (val: string): boolean =>
   !_.includes(nonTeacher, val) && validShort(val);
 
-const findShort = (entries: Entry[]): Short =>
-  entries.find(entry => isTeacher(entry.substituteTeacher)).substituteTeacher;
+const findShort = (entries: Entry[]): Short => {
+  const entryWithShort = entries.find(entry =>
+    isTeacher(entry.substituteTeacher)
+  );
+  return !!entryWithShort
+    ? entryWithShort.substituteTeacher
+    : entries[0].substituteTeacher;
+};
 
 const transformTeacherKeys = (
   input: Readonly<Grouped<Entry>>

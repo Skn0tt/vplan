@@ -9,15 +9,3 @@ Umgesetzt mit
 * React Native
 * Redux
 * Microsoft App Center
-
-# Algorithmus Items
-
-URL: [http://vplanapp.ema-bonn.de/api?advanced_substitutes=true&type=json](http://vplanapp.ema-bonn.de/api?advanced_substitutes=true&type=json)
-
-```js
-const items = Immutable.fromJS(data)
-  .delete("refresh_dateline")
-  .toList();
-
-console.log(items.toJS());
-```

@@ -1,5 +1,5 @@
-import { Row, Grouped } from "vplan-parser";
-import { StudentEntry, TeacherEntry } from "vplan-types";
+import { Row } from "vplan-parser";
+import { StudentEntry, TeacherEntry, Grouped } from "vplan-types";
 
 const group = (input: ReadonlyArray<Row>): Readonly<Grouped<Row>> => {
   const result: Grouped<Row> = {};
