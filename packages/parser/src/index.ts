@@ -25,6 +25,9 @@ const parseHTML = (
   return groupedEntries;
 };
 
+/**
+ * Parse Teacher
+ */
 const parseTeacherDay = (input: string, day: Date) =>
   parseHTML(input, parse(true), convertTeacher(day));
 export const parseTeacherView = (today: string, tomorrow: string) =>
@@ -33,6 +36,9 @@ export const parseTeacherView = (today: string, tomorrow: string) =>
     parseTeacherDay(tomorrow, tomorrowDate())
   );
 
+/**
+ * Parse Students
+ */
 const parseStudentDay = (input: string) =>
   parseHTML(input, parse(false), convertStudent);
 export const parseStudentView = (today: string, tomorrow: string) =>

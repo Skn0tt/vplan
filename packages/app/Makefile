@@ -1,0 +1,2 @@
+build: src
+	yarn build

@@ -3,6 +3,7 @@
     "target": "es2015",
     "module": "commonjs",
     "baseUrl": "./packages",
+    "skipLibCheck": true, // see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16825,
     "paths": {
       "vplan-*": ["./*/src"]
     }

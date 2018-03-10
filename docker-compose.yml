@@ -5,12 +5,29 @@ services:
   redis:
     image: redis:alpine
   
-  traefik:
-    image: traefik
-    restart: always
+  nginx-proxy:
+    image: joshtrow/nginx-proxy
     ports:
       - 80:80
       - 443:443
+      - 8080:8080
+    restart: always
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/traefik/traefik.toml:/traefik.toml
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+
+  api:
+    image: registry.gitlab.com/skn0tt/vplan/vplan-api
+    depends_on:
+      - redis
+    environment:
+      - HOST
+      - VIRTUAL_HOST=${HOST}
+      - VIRTUAL_PATH=/api/
+
+  ui:
+    image: registry.gitlab.com/skn0tt/vplan/vplan-ui
+    depends_on:
+      - api
+    environment:
+      - VIRTUAL_HOST=${HOST}
+      - VIRTUAL_PATH=/

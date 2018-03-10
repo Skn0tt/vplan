@@ -19,7 +19,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Redis Client
-const client = createClient("redis://localhost");
+const client = createClient("redis://redis");
 const getAsync = promisify(client.get).bind(client);
 const ALL_ENTRIES = "all_entries";
 const STUDENT_ENTRIES = "student_entries";
