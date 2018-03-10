@@ -45,15 +45,21 @@ export type TeacherInfo = {
 
 export type Short = Teacher | Group;
 
+export type TeacherEntry = StudentEntry & {
+  group: Group;
+  substituteClass: Class;
+};
+
 // TODO: Specify
-export type Entry = {
+export type StudentEntry = {
   type: Types;
   from: number;
   to: number;
   day: Date;
-  title: string;
   class: Class;
   teacher: Teacher;
   substituteTeacher: Teacher;
   room: string;
 };
+
+export type Entry = StudentEntry | TeacherEntry;

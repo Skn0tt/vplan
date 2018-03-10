@@ -1,24 +1,20 @@
 import sampleinput from "./sampleinput";
-
-type HeaderRow = [string];
-type DataRow = [
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string
-];
-
-type Row = HeaderRow | DataRow;
+import {
+  Entry,
+  Short,
+  Types,
+  StudentEntry,
+  TeacherEntry,
+  Group
+} from "vplan-types";
+import * as _ from "lodash";
+import { Row } from "vplan-parser";
 
 const find = (text: string, input: string) => input.indexOf(text);
 const findLast = (text: string, input: string) => input.lastIndexOf(text);
+
+const getBetweenFirstAndLast = (delimiter: string, input: string) =>
+  input.substring(find(delimiter, input), findLast(delimiter, input));
 
 const getBetween = (begin: string, end: string, input: string) =>
   input.substring(find(begin, input), find(end, input));
@@ -28,6 +24,8 @@ const getBetweenTags = (tag: string, input: string) =>
 
 const getCenter = (input: string) => getBetweenTags("center", input);
 const getTable = (input: string) => getBetweenTags("table", input);
+const getTableTeacher = (input: string) =>
+  getTable(getBetweenFirstAndLast("<p>", input));
 
 const lines = (input: string) => input.split("\n");
 const getTableRows = (input: string) => lines(input).slice(1);
@@ -45,18 +43,19 @@ const getDataFields = (row: string) =>
 
 const hasOuterTag = (row: string) => row.startsWith("<") && row.endsWith(">");
 
-const invalid = ["&nbsp;", "---", "+"];
+const invalid = ["&nbsp;", "+"];
 
-const sanitizeInvalid = (item: string) =>
-  invalid.indexOf(item) !== -1 ? "" : item;
+const isValid = (item: string) => invalid.indexOf(item) === -1;
 
-const parse = (input: string): ReadonlyArray<ReadonlyArray<string>> => {
+const sanitizeInvalid = (item: string) => (isValid(item) ? item : "");
+
+export default (isTeachersView: boolean) => (input: string): Row[] => {
   const center = getCenter(input);
-  const table = getTable(center);
+  const table = isTeachersView ? getTableTeacher(center) : getTable(center);
   const tableRows = removeLast(1, removeTableHead(getTableRows(table)));
-  return tableRows.map(row =>
+  const arrs = tableRows.map(row =>
     getDataFields(removeOuterTag(row)).map(sanitizeInvalid)
   );
-};
 
-export default parse;
+  return arrs;
+};

@@ -1,3 +1,4 @@
+export default `
 <html>
 <head>
 <title>Untis 2018 Vertretungsplan</title>
@@ -77,7 +78,7 @@ tr.even { background: #fdecd9; }
 </style>
 <meta name="generator" content="Untis 2018">
 <meta name="company" content="Gruber &amp; Petters Software, A-2000 Stockerau, Austria, www.untis.at">
-<!--<meta http-equiv="refresh" content="4; URL=subst_002.htm">-->
+<meta http-equiv="refresh" content="4; URL=subst_002.htm">
 </head>
 
 <body>
@@ -161,4 +162,4 @@ Periode9   8.3.2018 B   2.Halbjahr   DB~1~2017-2018~1
 <p><center><font face="Arial" size="2"><a href="http://www.untis.at" target="_blank" >Untis Stundenplan Software</a></font></center>
 </body>
 </html>
-
+`;

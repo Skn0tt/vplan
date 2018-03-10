@@ -1,3 +1,4 @@
+export default `
 <html>
 <head>
 <title>Untis 2018 Vertretungsplan</title>
@@ -154,3 +155,4 @@ Periode9   9.3.2018 B   2.Halbjahr   DB~1~2017-2018~1
 </body>
 </html>
 
+`;
