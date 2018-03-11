@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 RUN yarn global add lerna parcel-bundler
 
 COPY package.json ./
+COPY tsconfig.json ./ 
 
 RUN yarn install
 
@@ -15,7 +16,9 @@ COPY lerna.json ./
 
 RUN lerna bootstrap
 
-RUN yarn --cwd packages/ui build 
+RUN yarn --cwd packages/types build
+RUN yarn --cwd packages/redux build
+RUN yarn --cwd packages/ui build
 
 # Host Static Files
 FROM nginx:alpine as server

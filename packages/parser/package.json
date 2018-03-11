@@ -8,15 +8,17 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
+    "build": "yarn tsc",
+    "watch": "yarn tsc --watch",
     "start": "node dist/parser/src/index.js"
   },
   "dependencies": {
+    "iconv-lite": "^0.4.19",
     "lodash": "^4.17.5",
     "vplan-types": "^0.0.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.104"
+    "@types/lodash": "^4.14.104",
+    "typescript": "^2.7.2"
   }
 }

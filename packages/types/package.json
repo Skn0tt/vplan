@@ -8,6 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "yarn tsc"
+  },
+  "devDependencies": {
+    "typescript": "^2.7.2"
   }
 }

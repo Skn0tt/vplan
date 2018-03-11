@@ -1,10 +1,14 @@
 import store from "./store";
 
-export let config = {
+export type Config = {
+  baseUrl: string;
+};
+
+export let config: Config = {
   baseUrl: ""
 };
 
-const createStore = (conf: typeof config) => {
+const createStore = (conf: Config) => {
   config = conf;
   return store;
 };

@@ -1,4 +1,4 @@
-import { Record, Map } from "immutable";
+import { Record, Map, List } from "immutable";
 import {
   Group,
   Teacher,
@@ -11,22 +11,25 @@ import {
   Short
 } from "vplan-types";
 
-interface IAllEntriesMap {
-  teacher: Map<Short, TeacherEntry>;
-  student: Map<Group, StudentEntry>;
+export type StudentEntriesMap = Map<Short, StudentEntry[]>;
+export type TeacherEntriesMap = Map<Short, TeacherEntry[]>;
+
+interface IAllEntriesRecord {
+  teacher: TeacherEntriesMap;
+  student: StudentEntriesMap;
 }
 
-export class AllEntriesMap extends Record(
+export class AllEntriesRecord extends Record(
   {
-    teacher: Map<Short, TeacherEntry>(),
-    student: Map<Group, StudentEntry>()
-  } as IAllEntriesMap,
+    teacher: Map<Short, TeacherEntry[]>(),
+    student: Map<Group, StudentEntry[]>()
+  } as IAllEntriesRecord,
   "AllEntries"
 ) {
-  constructor(props: Partial<AllEntries>) {
+  constructor(props: Partial<IAllEntriesRecord>) {
     super(props);
   }
-  get<T extends keyof IAppState>(value: T): IAppState[T] {
+  get<T extends keyof IAllEntriesRecord>(value: T): IAllEntriesRecord[T] {
     return super.get(value);
   }
 }
@@ -35,7 +38,7 @@ export class AllEntriesMap extends Record(
  * AppState
  */
 interface IAppState {
-  entries: AllEntriesMap;
+  entries: AllEntriesRecord;
   loading: number;
   group: Group;
   teachers: Map<string, TeacherInfo>;
@@ -45,12 +48,12 @@ interface IAppState {
 
 export class AppState extends Record(
   {
-    entries: new AllEntriesMap({}),
+    entries: new AllEntriesRecord({}),
     loading: 0,
     group: "5A",
     teachers: Map<string, TeacherInfo>(),
     marked: new Set<Class>(),
-    info: []
+    info: ["Hallo hallo du da", "Wie gehts heute?"]
   } as IAppState,
   "AppState"
 ) {

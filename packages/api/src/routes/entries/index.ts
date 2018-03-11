@@ -1,9 +1,7 @@
 import { Router, NextFunction } from "express";
 import { createClient } from "redis";
 import {
-  Entry,
   Grouped,
-  Entries,
   StudentEntries,
   TeacherEntries,
   AllEntries,
@@ -30,7 +28,7 @@ const redisErrHandler = (next: NextFunction) => (err, reply) =>
 
 const returnRedis = (key: string) => async (_, res, next) => {
   try {
-    const entries: Entries = JSON.parse(await getAsync(key));
+    const entries = JSON.parse(await getAsync(key));
     return res
       .status(200)
       .json(entries)
@@ -68,18 +66,10 @@ entriesRouter.post(
 
     // Parse
     try {
-      const studentToday: string = req.files[
-        "studentToday"
-      ][0].buffer.toString();
-      const studentTomorrow: string = req.files[
-        "studentTomorrow"
-      ][0].buffer.toString();
-      const teacherToday: string = req.files[
-        "teacherToday"
-      ][0].buffer.toString();
-      const teacherTomorrow: string = req.files[
-        "teacherTomorrow"
-      ][0].buffer.toString();
+      const studentToday: Buffer = req.files["studentToday"][0].buffer;
+      const studentTomorrow: Buffer = req.files["studentTomorrow"][0].buffer;
+      const teacherToday: Buffer = req.files["teacherToday"][0].buffer;
+      const teacherTomorrow: Buffer = req.files["teacherTomorrow"][0].buffer;
 
       student = parseStudentView(studentToday, studentTomorrow);
       teacher = parseTeacherView(teacherToday, teacherTomorrow);

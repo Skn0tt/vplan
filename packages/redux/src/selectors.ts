@@ -1,4 +1,9 @@
-import { AllEntriesMap } from "./types";
+import {
+  AppState,
+  AllEntriesRecord,
+  StudentEntriesMap,
+  TeacherEntriesMap
+} from "./types";
 import {
   Group,
   Teacher,
@@ -10,43 +15,45 @@ import {
   TeacherEntries,
   Informations
 } from "vplan-types";
-import { createSelector } from "reselect";
+import { createSelector, Selector } from "reselect";
 
-type Selector<T> = (state: AllEntriesMap) => T;
+export const getInfo: Selector<AppState, Informations> = state =>
+  state.get("info");
 
-export const getInfo: Selector<Informations> = state => state.get("info");
-
-export const getEntries: Selector<AllEntries> = state => state.get("entries");
+export const getEntries: Selector<AppState, AllEntriesRecord> = state =>
+  state.get("entries");
 
 export const getStudentEntries = createSelector<
-  AllEntriesMap,
-  AllEntries,
-  StudentEntries
->(getEntries, (entries: AllEntries) => entries.student);
+  AppState,
+  AllEntriesRecord,
+  StudentEntriesMap
+>([getEntries], (entries: AllEntriesRecord) => entries.get("student"));
 
 export const getTeacherEntries = createSelector<
-  AllEntriesMap,
-  AllEntries,
-  TeacherEntries
->(getEntries, (entries: AllEntries) => entries.teacher);
+  AppState,
+  AllEntriesRecord,
+  TeacherEntriesMap
+>([getEntries], (entries: AllEntriesRecord) => entries.get("teacher"));
 
 export const filterStudentEntries = (short: Group) =>
-  createSelector<AllEntriesMap, StudentEntries, StudentEntry[]>(
+  createSelector<AppState, StudentEntriesMap, StudentEntry[]>(
     getStudentEntries,
-    (entries: StudentEntries) => entries[short]
+    entries => entries.get(short)
   );
 
 export const filterTeacherEntries = (short: Teacher) =>
-  createSelector<AllEntriesMap, TeacherEntries, StudentEntry[]>(
+  createSelector<AppState, TeacherEntriesMap, StudentEntry[]>(
     getTeacherEntries,
-    (entries: TeacherEntries) => entries[short]
+    entries => entries.get(short)
   );
 
-export const isMarked = (c: Class): Selector<boolean> => state =>
+export const isMarked = (c: Class): Selector<AppState, boolean> => state =>
   state.get("marked").has(c);
 
-export const getGroup: Selector<Group> = state => state.get("group");
-export const isLoading: Selector<boolean> = state => state.get("loading") > 0;
+export const getGroup: Selector<AppState, Group> = state => state.get("group");
+export const isLoading: Selector<AppState, boolean> = state =>
+  state.get("loading") > 0;
 
-export const getTeacherInfo = (short: string): Selector<TeacherInfo> => state =>
-  state.getIn(["teachers", short]);
+export const getTeacherInfo = (
+  short: string
+): Selector<AppState, TeacherInfo> => state => state.getIn(["teachers", short]);

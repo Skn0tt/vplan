@@ -56,15 +56,18 @@ export type StudentEntry = {
   type: Types;
   from: number;
   to: number;
-  day: Date;
+  day: number;
   class: Class;
   teacher: Teacher;
   substituteTeacher: Teacher;
   room: string;
 };
 
+export type Entry = StudentEntry | TeacherEntry;
+
 export type StudentEntries = Grouped<StudentEntry>;
 export type TeacherEntries = Grouped<TeacherEntry>;
+export type Entries = StudentEntries | TeacherEntries;
 export type AllEntries = {
   student: StudentEntries;
   teacher: TeacherEntries;

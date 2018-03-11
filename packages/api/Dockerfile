@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 RUN yarn global add lerna
 
 COPY package.json ./
+COPY tsconfig.json ./
 
 RUN yarn install
 
@@ -14,6 +15,10 @@ COPY packages/parser ./packages/parser
 COPY lerna.json ./
 
 RUN lerna bootstrap
+
+RUN yarn --cwd packages/api build
+RUN yarn --cwd packages/types build
+RUN yarn --cwd packages/parser build
 
 HEALTHCHECK CMD curl --fail http://localhost:3000/status || exit 1
 

@@ -1,23 +1,23 @@
 import { Row } from "vplan-parser";
 import {
-  Entry,
   StudentEntry,
   TeacherEntry,
   Types,
   Group,
   Short,
-  Grouped
+  Grouped,
+  Entry
 } from "vplan-types";
 import _ = require("lodash");
 
-const getDate = (input: string): Date => {
+const getDate = (input: string): number => {
   const [day, month] = input.split(".");
 
   const result = new Date();
   result.setHours(0, 0, 0, 0);
   result.setDate(Number(day));
   result.setMonth(Number(month));
-  return result;
+  return +result;
 };
 
 const getHours = (input: string) => {
@@ -39,10 +39,10 @@ const mapTeacher = (day: Date) => (row: string[]): TeacherEntry => {
   return {
     from,
     to,
-    day,
+    day: +day,
     type: row[0] as Types,
-    class: row[4],
-    substituteClass: row[5],
+    class: row[5],
+    substituteClass: row[4],
     group: row[2] as Group,
     teacher: row[7],
     room: row[6],

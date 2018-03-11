@@ -4,6 +4,8 @@ services:
   
   redis:
     image: redis:alpine
+    volumes:
+      - data:/data
   
   nginx-proxy:
     image: joshtrow/nginx-proxy
@@ -31,3 +33,6 @@ services:
     environment:
       - VIRTUAL_HOST=${HOST}
       - VIRTUAL_PATH=/
+
+volumes:
+  data:

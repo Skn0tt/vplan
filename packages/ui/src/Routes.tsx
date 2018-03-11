@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Route } from "react-router";
+import { Route, Switch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import * as Loadable from "react-loadable";
 
 import Loading from "./elements/Loading";
+import AppBar from "./components/AppBar";
 
 // Routes
 const LoadableLehrerzimmer = Loadable({
@@ -18,10 +19,13 @@ const LoadablePausenhalle = Loadable({
 
 const Routes: React.SFC<{}> = () => (
   <BrowserRouter>
-    <>
-      <Route exact path="/lehrerzimmer" component={LoadableLehrerzimmer} />
+    <Switch>
+      <AppBar>
+        <Route exact path="/lehrerzimmer" component={LoadableLehrerzimmer} />
+        <Route path="/lehrerzimmer/:short" component={LoadableLehrerzimmer} />
+      </AppBar>
       <Route exact path="/pausenhalle" component={LoadablePausenhalle} />
-    </>
+    </Switch>
   </BrowserRouter>
 );
 
