@@ -19,10 +19,18 @@ import {
   PUT_ENTRIES_SUCCESS,
   PUT_INFO,
   FETCH_INFO,
-  FETCH_INFO_ERROR
+  FETCH_INFO_ERROR,
+  FETCH_INFO_TEACHER,
+  FETCH_INFO_TEACHER_ERROR,
+  FETCH_INFO_SUCCESS,
+  FETCH_INFO_STUDENT,
+  FETCH_INFO_STUDENT_ERROR,
+  FETCH_INFO_STUDENT_SUCCESS,
+  FETCH_INFO_TEACHER_SUCCESS
 } from "./actions";
 import { Class, Group, Entry } from "vplan-types";
 import { AppState, AllEntriesRecord } from "./types";
+import { Map } from "immutable";
 
 /**
  * # Helper
@@ -91,13 +99,26 @@ const reducer = handleActions(
      * ## FETCH_INFO
      */
     ...asyncReducer(FETCH_INFO, FETCH_INFO_ERROR),
-    [FETCH_ENTRIES_TEACHER_SUCCESS]: (
-      state,
-      action: Action<AllEntriesRecord>
-    ) =>
+    [FETCH_INFO_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
+      state.update("loading", decrement).set("info", Map(action.payload)),
+
+    /**
+     * ## FETCH_INFO_TEACHER
+     */
+    ...asyncReducer(FETCH_INFO_TEACHER, FETCH_INFO_TEACHER_ERROR),
+    [FETCH_INFO_TEACHER_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .setIn(["info", "teacher"], action.payload),
+
+    /**
+     * ## FETCH_INFO_STUDENT
+     */
+    ...asyncReducer(FETCH_INFO_STUDENT, FETCH_INFO_STUDENT_ERROR),
+    [FETCH_INFO_STUDENT_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
+      state
+        .update("loading", decrement)
+        .setIn(["info", "student"], action.payload),
 
     /**
      * ## PUT_INFO

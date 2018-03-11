@@ -18,7 +18,12 @@ import {
   putInfoSuccess,
   putInfoError,
   putEntriesSuccess,
-  putEntriesError
+  putEntriesError,
+  PUT_INFO,
+  PUT_ENTRIES,
+  FETCH_INFO,
+  FETCH_INFO_TEACHER,
+  FETCH_INFO_STUDENT
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
@@ -75,6 +80,26 @@ function* fetchInfoSaga(action: Action<void>) {
   }
 }
 
+function* fetchInfoTeacherSaga(action: Action<void>) {
+  try {
+    const result = yield call(api.fetchInfoTeacher);
+
+    yield put(fetchInfoSuccess(result));
+  } catch (error) {
+    yield put(fetchInfoError(error));
+  }
+}
+
+function* fetchInfoStudentSaga(action: Action<void>) {
+  try {
+    const result = yield call(api.fetchInfoStudent);
+
+    yield put(fetchInfoSuccess(result));
+  } catch (error) {
+    yield put(fetchInfoError(error));
+  }
+}
+
 function* putInfoSaga(action: Action<PutInfoPayload>) {
   try {
     yield call(api.putInfo, action.payload);
@@ -100,6 +125,11 @@ function* rootSaga() {
   yield takeEvery(FETCH_TEACHERS, fetchTeachersSaga);
   yield takeEvery(FETCH_ENTRIES_STUDENT, fetchEntriesStudentSaga);
   yield takeEvery(FETCH_ENTRIES_TEACHER, fetchEntriesTeacherSaga);
+  yield takeEvery(FETCH_INFO, fetchInfoSaga);
+  yield takeEvery(FETCH_INFO_TEACHER, fetchInfoTeacherSaga);
+  yield takeEvery(FETCH_INFO_STUDENT, fetchInfoStudentSaga);
+  yield takeEvery(PUT_INFO, putInfoSaga);
+  yield takeEvery(PUT_ENTRIES, putEntriesSaga);
 }
 
 export default rootSaga;

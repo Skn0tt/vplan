@@ -1,5 +1,5 @@
 import { createAction } from "redux-actions";
-import { Group, Class, Entry, Teacher, Informations } from "vplan-types";
+import { Group, Class, Entry, Teacher, Info } from "vplan-types";
 import { AllEntriesRecord, PutEntriesPayload, PutInfoPayload } from "./types";
 
 /**
@@ -76,7 +76,35 @@ export const FETCH_INFO_ERROR = "FETCH_INFO_ERROR";
 export const FETCH_INFO_SUCCESS = "FETCH_INFO_SUCCESS";
 export const fetchInfo = createAction(FETCH_INFO);
 export const fetchInfoError = createAction<Error>(FETCH_INFO_ERROR);
-export const fetchInfoSuccess = createAction<Informations>(FETCH_INFO_SUCCESS);
+export const fetchInfoSuccess = createAction<Info>(FETCH_INFO_SUCCESS);
+
+/**
+ * ## FETCH_INFO_TEACHER
+ */
+export const FETCH_INFO_TEACHER = "FETCH_INFO_TEACHER";
+export const FETCH_INFO_TEACHER_ERROR = "FETCH_INFO_TEACHER_ERROR";
+export const FETCH_INFO_TEACHER_SUCCESS = "FETCH_INFO_TEACHER_SUCCESS";
+export const fetchInfoTeacher = createAction(FETCH_INFO_TEACHER);
+export const fetchInfoTeacherError = createAction<Error>(
+  FETCH_INFO_TEACHER_ERROR
+);
+export const fetchInfoTeacherSuccess = createAction<string[]>(
+  FETCH_INFO_TEACHER_SUCCESS
+);
+
+/**
+ * ## FETCH_INFO_STUDENT
+ */
+export const FETCH_INFO_STUDENT = "FETCH_INFO_STUDENT";
+export const FETCH_INFO_STUDENT_ERROR = "FETCH_INFO_STUDENT_ERROR";
+export const FETCH_INFO_STUDENT_SUCCESS = "FETCH_INFO_STUDENT_SUCCESS";
+export const fetchInfoStudent = createAction(FETCH_INFO_STUDENT);
+export const fetchInfoStudentError = createAction<Error>(
+  FETCH_INFO_STUDENT_ERROR
+);
+export const fetchInfoStudentSuccess = createAction<string[]>(
+  FETCH_INFO_STUDENT_SUCCESS
+);
 
 /**
  * ## PUT_INFO

@@ -12,13 +12,21 @@ import {
   StudentEntries,
   StudentEntry,
   AllEntries,
-  TeacherEntries,
-  Informations
+  TeacherEntries
 } from "vplan-types";
 import { createSelector, Selector } from "reselect";
 
-export const getInfo: Selector<AppState, Informations> = state =>
-  state.get("info");
+export const getInfo: Selector<AppState, string[]> = state =>
+  state
+    .get("info")
+    .flatten()
+    .toArray();
+
+export const getInfoTeacher: Selector<AppState, string[]> = state =>
+  state.getIn(["info", "teacher"]);
+
+export const getInfoStudent: Selector<AppState, string[]> = state =>
+  state.getIn(["info", "student"]);
 
 export const getEntries: Selector<AppState, AllEntriesRecord> = state =>
   state.get("entries");

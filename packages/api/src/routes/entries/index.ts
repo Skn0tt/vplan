@@ -73,7 +73,10 @@ entriesRouter.put(
       redisErrHandler(next)
     );
 
-    return res.status(200).end();
+    return res
+      .status(200)
+      .json({ student, teacher })
+      .end();
   }
 );
 

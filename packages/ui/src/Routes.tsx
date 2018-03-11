@@ -17,10 +17,16 @@ const LoadablePausenhalle = Loadable({
   loading: Loading
 });
 
+const LoadableAdmin = Loadable({
+  loader: () => import("./routes/Admin"),
+  loading: Loading
+});
+
 const Routes: React.SFC<{}> = () => (
   <BrowserRouter>
     <Switch>
       <AppBar>
+        <Route exact path="/admin" component={LoadableAdmin} />
         <Route exact path="/lehrerzimmer" component={LoadableLehrerzimmer} />
         <Route path="/lehrerzimmer/:short" component={LoadableLehrerzimmer} />
       </AppBar>

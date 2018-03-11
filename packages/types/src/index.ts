@@ -77,5 +77,7 @@ export type Grouped<T> = { [type: string]: T[] };
 /**
  * Informationen
  */
-export type Info = string;
-export type Informations = Info[];
+export type Info = {
+  student: string[];
+  teacher: string[];
+};

@@ -12,7 +12,6 @@ import { StudentEntries, AllEntries, TeacherEntries, Entry } from "vplan-types";
 /**
  * # Helpers
  */
-const { baseUrl } = config;
 
 const toImmutable = (json: Partial<AllEntries>) =>
   new AllEntriesRecord({
@@ -22,11 +21,11 @@ const toImmutable = (json: Partial<AllEntries>) =>
 
 const transform = (json: any) => toImmutable(json);
 
-const postConfig = (body: any, secret: string, contenttype: string) => ({
+const putConfig = (body: any, secret: string, contenttype: string) => ({
   body,
-  method: "POST",
+  method: "PUT",
   headers: {
-    Authorization: new Buffer(`Basic Admin:${secret}`).toString("base64"),
+    Authorization: "Basic " + btoa("admin:" + secret),
     "content-type": contenttype
   }
 });
@@ -36,7 +35,7 @@ const postConfig = (body: any, secret: string, contenttype: string) => ({
  */
 export const fetchEntries = async () => {
   try {
-    const data = await fetch(`${baseUrl}/entries`);
+    const data = await fetch(`${config.baseUrl}/entries`);
     const json = await data.json();
 
     return transform(json);
@@ -47,7 +46,7 @@ export const fetchEntries = async () => {
 
 export const fetchEntriesTeacher = async () => {
   try {
-    const data = await fetch(`${baseUrl}/entries/teacher`);
+    const data = await fetch(`${config.baseUrl}/entries/teacher`);
     const json = await data.json();
 
     return transform({ teacher: json });
@@ -58,7 +57,7 @@ export const fetchEntriesTeacher = async () => {
 
 export const fetchEntriesStudent = async () => {
   try {
-    const data = await fetch(`${baseUrl}/entries/student`);
+    const data = await fetch(`${config.baseUrl}/entries/student`);
     const json = await data.json();
 
     return transform({ student: json });
@@ -69,7 +68,7 @@ export const fetchEntriesStudent = async () => {
 
 export const fetchTeachers = async () => {
   try {
-    const data = await fetch(`${baseUrl}/teachers`);
+    const data = await fetch(`${config.baseUrl}/teachers`);
     const json = await data.json();
 
     return json;
@@ -82,14 +81,14 @@ export const putEntries = async (payload: PutEntriesPayload) => {
   try {
     const data = new FormData();
 
-    data.append("files[]", payload.studentToday, "studentToday");
-    data.append("files[]", payload.studentTomorrow, "studentTomorrow");
-    data.append("files[]", payload.teacherToday, "teacherToday");
-    data.append("files[]", payload.teacherTomorrow, "teacherTomorrow");
+    data.set("studentToday", payload.studentToday, "studentToday");
+    data.set("studentTomorrow", payload.studentTomorrow, "studentTomorrow");
+    data.set("teacherToday", payload.teacherToday, "teacherToday");
+    data.set("teacherTomorrow", payload.teacherTomorrow, "teacherTomorrow");
 
     const response = await fetch(
-      `${baseUrl}/info`,
-      postConfig(data, payload.secret, "multipart/form-data")
+      `${config.baseUrl}/entries`,
+      putConfig(data, payload.secret, "multipart/form-data")
     );
 
     if (response.status !== 200) {
@@ -104,8 +103,8 @@ export const putInfo = async (payload: PutInfoPayload) => {
   try {
     const body = JSON.stringify(payload.info);
     const response = await fetch(
-      `${baseUrl}/info`,
-      postConfig(body, payload.secret, "application/json")
+      `${config.baseUrl}/info`,
+      putConfig(body, payload.secret, "application/json")
     );
 
     if (response.status !== 200) {
@@ -118,7 +117,29 @@ export const putInfo = async (payload: PutInfoPayload) => {
 
 export const fetchInfo = async () => {
   try {
-    const data = await fetch(`${baseUrl}/info`);
+    const data = await fetch(`${config.baseUrl}/info`);
+    const json = await data.json();
+
+    return json;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchInfoTeacher = async () => {
+  try {
+    const data = await fetch(`${config.baseUrl}/info/teacher`);
+    const json = await data.json();
+
+    return json;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchInfoStudent = async () => {
+  try {
+    const data = await fetch(`${config.baseUrl}/info/student`);
     const json = await data.json();
 
     return json;

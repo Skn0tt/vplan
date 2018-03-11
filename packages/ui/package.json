@@ -17,6 +17,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.9",
     "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.104",
+    "@types/react-dropzone": "^4.2.0",
     "@types/react-loadable": "^5.3.3",
     "@types/react-router": "^4.0.22",
     "@types/react-router-dom": "^4.2.4",

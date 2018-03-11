@@ -5,10 +5,10 @@ import {
   Class,
   TeacherInfo,
   AllEntries,
-  Informations,
   TeacherEntry,
   StudentEntry,
-  Short
+  Short,
+  Info
 } from "vplan-types";
 
 /**
@@ -23,7 +23,7 @@ export type PutEntriesPayload = {
 };
 
 export type PutInfoPayload = {
-  info: Informations;
+  info: Info;
   secret: string;
 };
 
@@ -53,6 +53,21 @@ export class AllEntriesRecord extends Record(
   }
 }
 
+export class InfoRecord extends Record(
+  {
+    teacher: [],
+    student: []
+  } as Info,
+  "InfoRecord"
+) {
+  constructor(props: Partial<Info>) {
+    super(props);
+  }
+  get<T extends keyof Info>(value: T): Info[T] {
+    return super.get(value);
+  }
+}
+
 /**
  * AppState
  */
@@ -62,7 +77,7 @@ interface IAppState {
   group: Group;
   teachers: Map<string, TeacherInfo>;
   marked: ReadonlySet<Class>;
-  info: Informations;
+  info: InfoRecord;
 }
 
 export class AppState extends Record(
@@ -72,7 +87,7 @@ export class AppState extends Record(
     group: "5A",
     teachers: Map<string, TeacherInfo>(),
     marked: new Set<Class>(),
-    info: ["Hallo hallo du da", "Wie gehts heute?"]
+    info: new InfoRecord({})
   } as IAppState,
   "AppState"
 ) {
