@@ -5,13 +5,13 @@ import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
 import reducer from "./reducer";
 import sagas from "./sagas";
-import { AppState } from "./types";
+import { AllEntriesMap } from "./types";
 
 const immutableTransform = createTransform(
   // transform state on its way to being serialized and persisted.
-  (inboundState: AppState, key) => inboundState.toJS(),
+  (inboundState: AllEntriesMap, key) => inboundState.toJS(),
   // transform state being rehydrated
-  (outboundState, key) => new AppState(outboundState)
+  (outboundState, key) => new AllEntriesMap(outboundState)
 );
 
 const persistConfig: PersistConfig = {
@@ -28,7 +28,7 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = createStore(
   persistedReducer,
-  new AppState({}),
+  new AllEntriesMap({}),
   applyMiddleware(sagaMiddleware, logger)
 );
 

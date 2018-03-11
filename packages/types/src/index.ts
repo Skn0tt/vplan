@@ -1,3 +1,6 @@
+/**
+ * Vertretungsstunden
+ */
 export type Group =
   | "5A"
   | "5B"
@@ -60,12 +63,16 @@ export type StudentEntry = {
   room: string;
 };
 
-export type Entry = StudentEntry | TeacherEntry;
-export type Entries = Grouped<Entry>;
-export type StudentEntries = Entries;
-export type TeacherEntries = Entries;
+export type StudentEntries = Grouped<StudentEntry>;
+export type TeacherEntries = Grouped<TeacherEntry>;
 export type AllEntries = {
   student: StudentEntries;
   teacher: TeacherEntries;
 };
 export type Grouped<T> = { [type: string]: T[] };
+
+/**
+ * Informationen
+ */
+export type Info = string;
+export type Informations = Info[];

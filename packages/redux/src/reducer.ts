@@ -1,5 +1,5 @@
 import { handleActions, ReducerMap, Action } from "redux-actions";
-import { AppState } from "./types";
+import { AllEntriesMap } from "./types";
 import {
   FETCH_ENTRIES,
   FETCH_ENTRIES_ERROR,
@@ -37,8 +37,8 @@ const reducer = handleActions(
       state.update("marked", marked => marked.add(action.payload)),
     [REMOVE_MARKED]: (state, action: Action<Class>) =>
       state.update("marked", marked => marked.delete(action.payload))
-  } as ReducerMap<AppState, Object>,
-  new AppState({}) // initial State
+  } as ReducerMap<AllEntriesMap, Object>,
+  new AllEntriesMap({}) // initial State
 );
 
 export default reducer;
