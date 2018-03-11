@@ -10,33 +10,17 @@ import {
 import { parseStudentView, parseTeacherView } from "vplan-parser";
 import * as multer from "multer";
 import { promisify } from "util";
+import { returnRedis, redisErrHandler, client } from "../../helpers/redis";
+import auth from "../../helpers/auth";
 
 const entriesRouter: Router = Router();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Redis Client
-const client = createClient("redis://redis");
-const getAsync = promisify(client.get).bind(client);
 const ALL_ENTRIES = "all_entries";
 const STUDENT_ENTRIES = "student_entries";
 const TEACHER_ENTRIES = "teacher_entries";
-
-const redisErrHandler = (next: NextFunction) => (err, reply) =>
-  err && next(err);
-
-const returnRedis = (key: string) => async (_, res, next) => {
-  try {
-    const entries = JSON.parse(await getAsync(key));
-    return res
-      .status(200)
-      .json(entries)
-      .end();
-  } catch (error) {
-    return next(error);
-  }
-};
 
 entriesRouter.get("/", returnRedis(ALL_ENTRIES));
 
@@ -46,6 +30,7 @@ entriesRouter.get("/teacher", returnRedis(TEACHER_ENTRIES));
 
 entriesRouter.post(
   "/",
+  auth,
   upload.fields([
     {
       name: "studentToday"

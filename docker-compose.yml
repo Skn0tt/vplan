@@ -23,6 +23,7 @@ services:
       - redis
     environment:
       - HOST
+      - PASSWORD
       - VIRTUAL_HOST=${HOST}
       - VIRTUAL_PATH=/api/
 
