@@ -11,14 +11,38 @@ import {
   FETCH_ENTRIES_STUDENT_SUCCESS,
   FETCH_ENTRIES_TEACHER,
   FETCH_ENTRIES_TEACHER_ERROR,
-  FETCH_ENTRIES_TEACHER_SUCCESS
+  FETCH_ENTRIES_TEACHER_SUCCESS,
+  PUT_ENTRIES,
+  PUT_INFO_ERROR,
+  PUT_INFO_SUCCESS,
+  PUT_ENTRIES_ERROR,
+  PUT_ENTRIES_SUCCESS,
+  PUT_INFO,
+  FETCH_INFO,
+  FETCH_INFO_ERROR
 } from "./actions";
 import { Class, Group, Entry } from "vplan-types";
 import { AppState, AllEntriesRecord } from "./types";
 
+/**
+ * # Helper
+ */
 const increment = (i: number) => i + 1;
 const decrement = (i: number) => i - 1;
 
+const asyncReducer = (start: string, error: string) => ({
+  [start]: (state: AppState) => state.update("loading", increment),
+  [error]: (state: AppState) => state.update("loading", decrement)
+});
+
+const asyncReducerFull = (start: string, error: string, success: string) => ({
+  ...asyncReducer(start, error),
+  [success]: (state: AppState) => state.update("loading", decrement)
+});
+
+/**
+ * # Reducer
+ */
 const reducer = handleActions(
   {
     /**
@@ -28,9 +52,7 @@ const reducer = handleActions(
     /**
      * ## FETCH_ENTRIES
      */
-    [FETCH_ENTRIES]: (state, action) => state.update("loading", increment),
-    [FETCH_ENTRIES_ERROR]: (state, action) =>
-      state.update("loading", decrement),
+    ...asyncReducer(FETCH_ENTRIES, FETCH_ENTRIES_ERROR),
     [FETCH_ENTRIES_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
       state
         .update("loading", decrement)
@@ -39,10 +61,7 @@ const reducer = handleActions(
     /**
      * ## FETCH_ENTRIES_STUDENT
      */
-    [FETCH_ENTRIES_STUDENT]: (state, action) =>
-      state.update("loading", increment),
-    [FETCH_ENTRIES_STUDENT_ERROR]: (state, action) =>
-      state.update("loading", decrement),
+    ...asyncReducer(FETCH_ENTRIES_STUDENT, FETCH_ENTRIES_STUDENT_ERROR),
     [FETCH_ENTRIES_STUDENT_SUCCESS]: (
       state,
       action: Action<AllEntriesRecord>
@@ -54,10 +73,7 @@ const reducer = handleActions(
     /**
      * ## FETCH_ENTRIES_TEACHER
      */
-    [FETCH_ENTRIES_TEACHER]: (state, action) =>
-      state.update("loading", increment),
-    [FETCH_ENTRIES_TEACHER_ERROR]: (state, action) =>
-      state.update("loading", decrement),
+    ...asyncReducer(FETCH_ENTRIES_TEACHER, FETCH_ENTRIES_TEACHER_ERROR),
     [FETCH_ENTRIES_TEACHER_SUCCESS]: (
       state,
       action: Action<AllEntriesRecord>
@@ -65,6 +81,28 @@ const reducer = handleActions(
       state
         .update("loading", decrement)
         .update("entries", entries => entries.merge(action.payload)),
+
+    /**
+     * ## PUT_ENTRIES
+     */
+    ...asyncReducerFull(PUT_ENTRIES, PUT_ENTRIES_ERROR, PUT_ENTRIES_SUCCESS),
+
+    /**
+     * ## FETCH_INFO
+     */
+    ...asyncReducer(FETCH_INFO, FETCH_INFO_ERROR),
+    [FETCH_ENTRIES_TEACHER_SUCCESS]: (
+      state,
+      action: Action<AllEntriesRecord>
+    ) =>
+      state
+        .update("loading", decrement)
+        .update("entries", entries => entries.merge(action.payload)),
+
+    /**
+     * ## PUT_INFO
+     */
+    ...asyncReducerFull(PUT_INFO, PUT_INFO_ERROR, PUT_INFO_SUCCESS),
 
     /**
      * # Sync

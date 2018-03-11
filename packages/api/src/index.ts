@@ -7,6 +7,7 @@ import * as dotenv from "dotenv";
 // Routes
 import entries from "./routes/entries";
 import status from "./routes/status";
+import info from "./routes/info";
 
 // Env
 dotenv.config();
@@ -31,6 +32,7 @@ app.options("*", cors({ origin: true }));
 // Routes
 app.use("/entries", entries);
 app.use("/status", status);
+app.use("/info", info);
 
 app.listen(app.get("port"), () => {
   console.log(

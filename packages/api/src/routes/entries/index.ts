@@ -28,7 +28,7 @@ entriesRouter.get("/student", returnRedis(STUDENT_ENTRIES));
 
 entriesRouter.get("/teacher", returnRedis(TEACHER_ENTRIES));
 
-entriesRouter.post(
+entriesRouter.put(
   "/",
   auth,
   upload.fields([

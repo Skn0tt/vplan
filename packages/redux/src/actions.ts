@@ -1,6 +1,6 @@
 import { createAction } from "redux-actions";
-import { Group, Class, Entry, Teacher } from "vplan-types";
-import { AllEntriesRecord } from "./types";
+import { Group, Class, Entry, Teacher, Informations } from "vplan-types";
+import { AllEntriesRecord, PutEntriesPayload, PutInfoPayload } from "./types";
 
 /**
  * # Async
@@ -57,6 +57,36 @@ export const fetchTeachersError = createAction<Error>(FETCH_TEACHERS_ERROR);
 export const fetchTeachersSuccess = createAction<ReadonlyArray<Teacher>>(
   FETCH_TEACHERS_SUCCESS
 );
+
+/**
+ * ## PUT_ENTRIES
+ */
+export const PUT_ENTRIES = "PUT_ENTRIES";
+export const PUT_ENTRIES_ERROR = "PUT_ENTRIES_ERROR";
+export const PUT_ENTRIES_SUCCESS = "PUT_ENTRIES_SUCCESS";
+export const putEntries = createAction<PutEntriesPayload>(PUT_ENTRIES);
+export const putEntriesError = createAction<Error>(PUT_ENTRIES_ERROR);
+export const putEntriesSuccess = createAction(PUT_ENTRIES_SUCCESS);
+
+/**
+ * ## FETCH_INFO
+ */
+export const FETCH_INFO = "FETCH_INFO";
+export const FETCH_INFO_ERROR = "FETCH_INFO_ERROR";
+export const FETCH_INFO_SUCCESS = "FETCH_INFO_SUCCESS";
+export const fetchInfo = createAction(FETCH_INFO);
+export const fetchInfoError = createAction<Error>(FETCH_INFO_ERROR);
+export const fetchInfoSuccess = createAction<Informations>(FETCH_INFO_SUCCESS);
+
+/**
+ * ## PUT_INFO
+ */
+export const PUT_INFO = "PUT_INFO";
+export const PUT_INFO_ERROR = "PUT_INFO_ERROR";
+export const PUT_INFO_SUCCESS = "PUT_INFO_SUCCESS";
+export const putInfo = createAction<PutInfoPayload>(PUT_INFO);
+export const putInfoError = createAction<Error>(PUT_INFO_ERROR);
+export const putInfoSuccess = createAction(PUT_INFO_SUCCESS);
 
 /**
  * # Sync

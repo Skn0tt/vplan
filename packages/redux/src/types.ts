@@ -11,6 +11,25 @@ import {
   Short
 } from "vplan-types";
 
+/**
+ * # Actions
+ */
+export type PutEntriesPayload = {
+  studentToday: File;
+  studentTomorrow: File;
+  teacherToday: File;
+  teacherTomorrow: File;
+  secret: string;
+};
+
+export type PutInfoPayload = {
+  info: Informations;
+  secret: string;
+};
+
+/**
+ * # State
+ */
 export type StudentEntriesMap = Map<Short, StudentEntry[]>;
 export type TeacherEntriesMap = Map<Short, TeacherEntry[]>;
 

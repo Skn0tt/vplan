@@ -12,10 +12,18 @@ import {
   fetchEntriesTeacherError,
   fetchEntriesStudentError,
   FETCH_ENTRIES_STUDENT,
-  FETCH_ENTRIES_TEACHER
+  FETCH_ENTRIES_TEACHER,
+  fetchInfoSuccess,
+  fetchInfoError,
+  putInfoSuccess,
+  putInfoError,
+  putEntriesSuccess,
+  putEntriesError
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
+import { Informations } from "vplan-types";
+import { PutEntriesPayload, PutInfoPayload } from "./types";
 
 function* fetchEntriesSaga(action: Action<void>) {
   try {
@@ -44,6 +52,36 @@ function* fetchEntriesTeacherSaga(action: Action<void>) {
     yield put(fetchEntriesTeacherSuccess(result));
   } catch (error) {
     yield put(fetchEntriesTeacherError(error));
+  }
+}
+
+function* putEntriesSaga(action: Action<PutEntriesPayload>) {
+  try {
+    yield call(api.putEntries, action.payload);
+
+    yield put(putEntriesSuccess());
+  } catch (error) {
+    yield put(putEntriesError(error));
+  }
+}
+
+function* fetchInfoSaga(action: Action<void>) {
+  try {
+    const result = yield call(api.fetchInfo);
+
+    yield put(fetchInfoSuccess(result));
+  } catch (error) {
+    yield put(fetchInfoError(error));
+  }
+}
+
+function* putInfoSaga(action: Action<PutInfoPayload>) {
+  try {
+    yield call(api.putInfo, action.payload);
+
+    yield put(putInfoSuccess());
+  } catch (error) {
+    yield put(putInfoError(error));
   }
 }
 
