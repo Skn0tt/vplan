@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Divider, ListSubheader } from 'material-ui';
+import * as React from "react";
+import { Divider, ListSubheader } from "material-ui";
 
 /**
  * # Component Types
@@ -12,13 +12,9 @@ type Props = OwnProps;
 /**
  * # Component
  */
-const EntryHeader: React.SFC<Props> = (props) => {
+const EntryHeader: React.SFC<Props> = props => {
   const { title } = props;
-  return (
-    <ListSubheader>
-      {title}
-    </ListSubheader>
-  );
-}
+  return <ListSubheader>{title}</ListSubheader>;
+};
 
 export default EntryHeader;

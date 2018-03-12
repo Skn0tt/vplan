@@ -5,7 +5,7 @@ const styles = (theme: Theme): StyleRules => ({
   groupSelect: {
     marginTop: 12,
     marginLeft: 24,
-    marginRight: 24,
+    marginRight: 24
   }
 });
 

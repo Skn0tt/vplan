@@ -1,6 +1,16 @@
 import { StyleRules } from "material-ui/styles/withStyles";
 import { Theme } from "material-ui/styles/createMuiTheme";
-import { blue, deepPurple, red, deepOrange, orange, lightBlue, cyan, common, grey } from 'material-ui/colors';
+import {
+  blue,
+  deepPurple,
+  red,
+  deepOrange,
+  orange,
+  lightBlue,
+  cyan,
+  common,
+  grey
+} from "material-ui/colors";
 
 const styles = (theme: Theme): StyleRules => ({
   red900: { backgroundColor: red[900] },
@@ -12,7 +22,7 @@ const styles = (theme: Theme): StyleRules => ({
   blue500: { backgroundColor: blue[500] },
   deepPurple500: { backgroundColor: deepPurple[500] },
   markedAvatar: { backgroundColor: grey[100], color: common.black },
-  marked: { backgroundColor: blue[500] },
+  marked: { backgroundColor: blue[500] }
 });
 
 export default styles;
