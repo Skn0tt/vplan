@@ -27,7 +27,6 @@ import {
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
-import { Informations } from "vplan-types";
 import { PutEntriesPayload, PutInfoPayload } from "./types";
 
 function* fetchEntriesSaga(action: Action<void>) {

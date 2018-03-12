@@ -30,7 +30,8 @@ import {
 } from "./actions";
 import { Class, Group, Entry } from "vplan-types";
 import { AppState, AllEntriesRecord } from "./types";
-import { Map } from "immutable";
+import { Map, Set } from "immutable";
+import { getGroup } from "./selectors";
 
 /**
  * # Helper
@@ -138,9 +139,17 @@ const reducer = handleActions(
      * ## MARKED
      */
     [ADD_MARKED]: (state, action: Action<Class>) =>
-      state.update("marked", marked => marked.add(action.payload)),
+      state.updateIn(
+        ["marked", getGroup(state)],
+        Set(),
+        (marked: Set<string>) => marked.add(action.payload)
+      ),
     [REMOVE_MARKED]: (state, action: Action<Class>) =>
-      state.update("marked", marked => marked.delete(action.payload))
+      state.updateIn(
+        ["marked", getGroup(state)],
+        Set(),
+        (marked: Set<string>) => marked.delete(action.payload)
+      )
   } as ReducerMap<AppState, Object>,
   new AppState({}) // initial State
 );

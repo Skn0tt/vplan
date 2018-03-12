@@ -5,9 +5,10 @@ import {
   AppState,
   TeacherEntriesMap,
   fetchEntriesTeacher,
-  getInfo
+  getInfo,
+  fetchInfo
 } from "vplan-redux";
-import { TeacherEntry, TeacherEntries, Short, Informations } from "vplan-types";
+import { TeacherEntry, TeacherEntries, Short, Info } from "vplan-types";
 import { connect, Dispatch } from "react-redux";
 import { Action } from "redux";
 import { List } from "immutable";
@@ -19,6 +20,7 @@ import styles from "./styles";
 import _ = require("lodash");
 import { withRouter, RouteComponentProps } from "react-router";
 import Absent from "./components/Absent";
+import EntriesView from '../../components/EntriesView';
 
 /**
  * Helpers
@@ -36,7 +38,7 @@ const getItems = (entries: TeacherEntriesMap): Item[] =>
  */
 interface StateProps {
   entries: TeacherEntriesMap;
-  info: Informations;
+  info: Info;
 }
 const mapStateToProps = (state: AppState) =>
   ({
@@ -45,11 +47,13 @@ const mapStateToProps = (state: AppState) =>
   } as StateProps);
 
 interface DispatchProps {
-  refresh(): void;
+  refreshEntries(): void;
+  refreshInfo(): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
-    refresh: () => dispatch(fetchEntriesTeacher())
+    refreshEntries: () => dispatch(fetchEntriesTeacher()),
+    refreshInfo: () => dispatch(fetchInfo()),
   } as DispatchProps);
 
 type Props = StateProps &
@@ -60,7 +64,7 @@ type Props = StateProps &
 /**
  * Component
  */
-const Lehrerzimmer = connect(mapStateToProps, mapDispatchToProps)(
+const Teacher = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(
     withRouter(
       class extends React.Component<Props> {
@@ -68,14 +72,19 @@ const Lehrerzimmer = connect(mapStateToProps, mapDispatchToProps)(
          * Component Lifecycle
          */
         componentDidMount() {
-          this.props.refresh();
+          this.props.refreshEntries();
+          this.props.refreshInfo();
+          setInterval(() => {
+            this.props.refreshEntries();
+            this.props.refreshInfo();
+          }, 10 * 1000);
         }
 
         /**
          * Handlers
          */
         handleShortChange = (short: Short) =>
-          this.props.history.push(`/lehrerzimmer/${short}`);
+          this.props.history.push(`/teacher/${short}`);
 
         /**
          * Render
@@ -84,7 +93,7 @@ const Lehrerzimmer = connect(mapStateToProps, mapDispatchToProps)(
           const { entries, classes, match, info } = this.props;
           const { short } = match.params;
 
-          const show = entries.get(short === "etc" ? "" : short);
+          const showEntries = entries.get(short === "etc" ? "" : short);
 
           return (
             <Grid container>
@@ -95,32 +104,30 @@ const Lehrerzimmer = connect(mapStateToProps, mapDispatchToProps)(
                 />
               </Grid>
               <Grid item className={classes.right}>
-                <Grid
-                  container
-                  direction="column"
-                  spacing={24}
-                  alignItems="stretch"
-                >
-                  {show && (
-                    <>
-                      <Grid item>
-                        <Typography variant="headline">{short}</Typography>
-                      </Grid>
-                      <Grid item>
-                        <DetailView entries={show} />
-                      </Grid>
-                    </>
-                  )}
-                  <Grid item>
-                    <Grid container direction="row">
-                      <Grid item xs={6}>
-                        <Information info={info} />
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Absent now={[]} next={[]} />
-                      </Grid>
+                {showEntries && (
+                  <>
+                    <Grid item>
+                      <Typography variant="headline">{short}</Typography>
                     </Grid>
-                  </Grid>
+                    <Grid item>
+                      <EntriesView entries={showEntries} />
+                    </Grid>
+                  </>
+                )}
+                <Grid item>
+                  <Information
+                    title="Infos Lehrer"
+                    info={info.teacher}
+                  />
+                </Grid>
+                <Grid item>
+                  <Information
+                    title="Infos Schüler"
+                    info={info.student}
+                  />
+                </Grid>
+                <Grid item>
+                  <Absent now={[]} next={[]} />
                 </Grid>
               </Grid>
             </Grid>
@@ -131,4 +138,4 @@ const Lehrerzimmer = connect(mapStateToProps, mapDispatchToProps)(
   )
 );
 
-export default Lehrerzimmer;
+export default Teacher;

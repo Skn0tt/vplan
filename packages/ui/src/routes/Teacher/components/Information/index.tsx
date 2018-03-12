@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { getInfo, AppState } from "vplan-redux";
-import { Informations } from "vplan-types";
+import { Info } from "vplan-types";
 import {
   List,
   ListItem,
@@ -15,7 +15,8 @@ import {
  * # Component Types
  */
 interface OwnProps {
-  info: Informations;
+  title: string;
+  info: string[];
 }
 
 type Props = OwnProps;
@@ -24,10 +25,10 @@ type Props = OwnProps;
  * # Component
  */
 const Information: React.SFC<Props> = props => {
-  const { info } = props;
+  const { info, title } = props;
   return (
     <Paper>
-      <List subheader={<ListSubheader>Informationen</ListSubheader>}>
+      <List subheader={<ListSubheader>{title}</ListSubheader>}>
         {info.map(item => (
           <ListItem key={item}>
             <ListItemText primary={item} />
