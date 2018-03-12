@@ -1,5 +1,14 @@
+dev: build-docker
+	docker-compose \
+		-f docker-compose.yml \
+		-f docker-compose.dev.yml \
+		up
+
 up: build-docker
-	docker-compose up
+	docker-compose \
+		-f docker-compose.yml \
+		-f docker-compose.dev.yml \
+		up
 
 build: vplan-api vplan-ui vplan-app
 

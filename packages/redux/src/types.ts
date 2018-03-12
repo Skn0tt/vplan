@@ -1,4 +1,4 @@
-import { Record, Map, List } from "immutable";
+import { Record, Map, List, Set } from "immutable";
 import {
   Group,
   Teacher,
@@ -76,7 +76,7 @@ interface IAppState {
   loading: number;
   group: Group;
   teachers: Map<string, TeacherInfo>;
-  marked: ReadonlySet<Class>;
+  marked: Map<Group, Set<Class>>;
   info: InfoRecord;
 }
 
@@ -86,7 +86,7 @@ export class AppState extends Record(
     loading: 0,
     group: "5A",
     teachers: Map<string, TeacherInfo>(),
-    marked: new Set<Class>(),
+    marked: Map<Group, Set<Class>>(),
     info: new InfoRecord({})
   } as IAppState,
   "AppState"

@@ -12,11 +12,15 @@ import {
   StudentEntries,
   StudentEntry,
   AllEntries,
-  TeacherEntries
+  TeacherEntries,
+  Info
 } from "vplan-types";
 import { createSelector, Selector } from "reselect";
 
-export const getInfo: Selector<AppState, string[]> = state =>
+export const getInfo: Selector<AppState, Info> = state =>
+  state.get("info").toJS();
+
+export const getInfos: Selector<AppState, string[]> = state =>
   state
     .get("info")
     .flatten()
@@ -56,7 +60,7 @@ export const filterTeacherEntries = (short: Teacher) =>
   );
 
 export const isMarked = (c: Class): Selector<AppState, boolean> => state =>
-  state.get("marked").has(c);
+  state.hasIn(["marked", getGroup(state), c]);
 
 export const getGroup: Selector<AppState, Group> = state => state.get("group");
 export const isLoading: Selector<AppState, boolean> = state =>

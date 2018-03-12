@@ -1,14 +1,14 @@
 import * as React from "react";
-import { Route, Switch } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { Route } from "react-router";
+import { BrowserRouter, Switch } from "react-router-dom";
 import * as Loadable from "react-loadable";
 
 import Loading from "./elements/Loading";
 import AppBar from "./components/AppBar";
 
 // Routes
-const LoadableLehrerzimmer = Loadable({
-  loader: () => import("./routes/Lehrerzimmer"),
+const LoadableTeacher = Loadable({
+  loader: () => import("./routes/Teacher"),
   loading: Loading
 });
 
@@ -22,13 +22,28 @@ const LoadableAdmin = Loadable({
   loading: Loading
 });
 
+const LoadableHome = Loadable({
+  loader: () => import("./routes/Home"),
+  loading: Loading
+});
+
+const LoadableNotFound = Loadable({
+  loader: () => import("./routes/NotFound"),
+  loading: Loading
+});
+
 const Routes: React.SFC<{}> = () => (
   <BrowserRouter>
     <Switch>
       <AppBar>
-        <Route exact path="/admin" component={LoadableAdmin} />
-        <Route exact path="/lehrerzimmer" component={LoadableLehrerzimmer} />
-        <Route path="/lehrerzimmer/:short" component={LoadableLehrerzimmer} />
+        <Switch>
+          <Route exact path="/" component={LoadableHome} />
+          <Route path="/:group" component={LoadableHome} />
+          <Route exact path="/admin" component={LoadableAdmin} />
+          <Route exact path="/teacher" component={LoadableTeacher} />
+          <Route path="/teacher/:short" component={LoadableTeacher} />
+          <Route component={LoadableNotFound} />
+        </Switch>
       </AppBar>
       <Route exact path="/pausenhalle" component={LoadablePausenhalle} />
     </Switch>

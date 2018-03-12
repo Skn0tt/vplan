@@ -4,6 +4,7 @@ import { Reboot, MuiThemeProvider } from "material-ui";
 import store from "./etc/store";
 import Routes from "./Routes";
 import theme from "./theme";
+import Loading from "./elements/Loading";
 
 const App: React.SFC<{}> = () => (
   <div>

@@ -16,5 +16,6 @@ const createStore = (conf: Config) => {
 export * from "./actions";
 export * from "./selectors";
 export * from "./types";
+export * from "./store";
 
 export default createStore;
