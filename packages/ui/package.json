@@ -12,6 +12,7 @@
     "build": "parcel build src/index.html --public-url ./"
   },
   "dependencies": {
+    "create-react-class": "^15.6.3",
     "lodash": "^4.17.5",
     "material-ui": "^1.0.0-beta.36",
     "material-ui-icons": "^1.0.0-beta.36",
