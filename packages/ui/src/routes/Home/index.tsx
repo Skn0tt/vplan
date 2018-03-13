@@ -80,8 +80,8 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         const showEntries = entries.get(match.params.group || group) || [];
 
         return (
-          <Grid container direction="column">
-            <Grid item className={classes.groupSelect}>
+          <EntriesView
+            title={
               <TextField
                 id="select-currency-native"
                 select
@@ -97,11 +97,10 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
                   </option>
                 ))}
               </TextField>
-            </Grid>
-            <Grid item>
-              <EntriesView entries={showEntries} allowMarking />
-            </Grid>
-          </Grid>
+            }
+            entries={showEntries}
+            allowMarking
+          />
         );
       }
     }

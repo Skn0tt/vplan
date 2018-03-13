@@ -14,13 +14,12 @@ import { Action } from "redux";
 import { List } from "immutable";
 import { Grid, withStyles, WithStyles, Typography, Paper } from "material-ui";
 import ShortList, { Item } from "./components/ShortList";
-import DetailView from "./components/DetailView";
 import Information from "./components/Information";
 import styles from "./styles";
 import _ = require("lodash");
 import { withRouter, RouteComponentProps } from "react-router";
 import Absent from "./components/Absent";
-import EntriesView from '../../components/EntriesView';
+import EntriesView from "../../components/EntriesView";
 
 /**
  * Helpers
@@ -53,7 +52,7 @@ interface DispatchProps {
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
     refreshEntries: () => dispatch(fetchEntriesTeacher()),
-    refreshInfo: () => dispatch(fetchInfo()),
+    refreshInfo: () => dispatch(fetchInfo())
   } as DispatchProps);
 
 type Props = StateProps &
@@ -96,41 +95,32 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
           const showEntries = entries.get(short === "etc" ? "" : short);
 
           return (
-            <Grid container>
-              <Grid item>
+            <div className={classes.container}>
+              <div className={classes.left}>
                 <ShortList
                   onChange={this.handleShortChange}
                   items={getItems(entries)}
                 />
-              </Grid>
-              <Grid item className={classes.right}>
+              </div>
+              <div className={classes.center}>
                 {showEntries && (
-                  <>
-                    <Grid item>
-                      <Typography variant="headline">{short}</Typography>
-                    </Grid>
-                    <Grid item>
-                      <EntriesView entries={showEntries} />
-                    </Grid>
-                  </>
+                  <EntriesView entries={showEntries} title={short} />
                 )}
-                <Grid item>
-                  <Information
-                    title="Infos Lehrer"
-                    info={info.teacher}
-                  />
+              </div>
+              <div className={classes.right}>
+                <Grid container direction="column">
+                  <Grid item>
+                    <Information title="Infos Lehrer" info={info.teacher} />
+                  </Grid>
+                  <Grid item>
+                    <Information title="Infos Schüler" info={info.student} />
+                  </Grid>
+                  <Grid item>
+                    <Absent now={["BES", "GRÜTZ"]} next={[]} />
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Information
-                    title="Infos Schüler"
-                    info={info.student}
-                  />
-                </Grid>
-                <Grid item>
-                  <Absent now={[]} next={[]} />
-                </Grid>
-              </Grid>
-            </Grid>
+              </div>
+            </div>
           );
         }
       }

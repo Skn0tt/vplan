@@ -101,9 +101,9 @@ function* fetchInfoStudentSaga(action: Action<void>) {
 
 function* putInfoSaga(action: Action<PutInfoPayload>) {
   try {
-    yield call(api.putInfo, action.payload);
+    const info = yield call(api.putInfo, action.payload);
 
-    yield put(putInfoSuccess());
+    yield put(putInfoSuccess(info));
   } catch (error) {
     yield put(putInfoError(error));
   }

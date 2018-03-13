@@ -38,10 +38,10 @@ const Routes: React.SFC<{}> = () => (
       <AppBar>
         <Switch>
           <Route exact path="/" component={LoadableHome} />
-          <Route path="/:group" component={LoadableHome} />
           <Route exact path="/admin" component={LoadableAdmin} />
           <Route exact path="/teacher" component={LoadableTeacher} />
           <Route path="/teacher/:short" component={LoadableTeacher} />
+          <Route path="/:group" component={LoadableHome} />
           <Route component={LoadableNotFound} />
         </Switch>
       </AppBar>

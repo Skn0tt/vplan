@@ -5,7 +5,8 @@ import {
   TeacherEntriesMap,
   StudentEntriesMap,
   PutInfoPayload,
-  PutEntriesPayload
+  PutEntriesPayload,
+  InfoRecord
 } from "./";
 import { StudentEntries, AllEntries, TeacherEntries, Entry } from "vplan-types";
 
@@ -21,12 +22,24 @@ const toImmutable = (json: Partial<AllEntries>) =>
 
 const transform = (json: any) => toImmutable(json);
 
-const putConfig = (body: any, secret: string, contenttype: string) => ({
+const putConfig = (body: any, secret: string) => ({
+  body,
+  method: "PUT",
+  headers: {
+    Authorization: "Basic " + btoa("admin:" + secret)
+  }
+});
+
+const putConfigWithContentType = (
+  body: any,
+  secret: string,
+  contenttype: string
+) => ({
   body,
   method: "PUT",
   headers: {
     Authorization: "Basic " + btoa("admin:" + secret),
-    "content-type": contenttype
+    "Content-Type": contenttype
   }
 });
 
@@ -81,14 +94,14 @@ export const putEntries = async (payload: PutEntriesPayload) => {
   try {
     const data = new FormData();
 
-    data.set("studentToday", payload.studentToday, "studentToday");
-    data.set("studentTomorrow", payload.studentTomorrow, "studentTomorrow");
-    data.set("teacherToday", payload.teacherToday, "teacherToday");
-    data.set("teacherTomorrow", payload.teacherTomorrow, "teacherTomorrow");
+    data.append("studentToday", payload.studentToday);
+    data.append("studentTomorrow", payload.studentTomorrow);
+    data.append("teacherToday", payload.teacherToday);
+    data.append("teacherTomorrow", payload.teacherTomorrow);
 
     const response = await fetch(
       `${config.baseUrl}/entries`,
-      putConfig(data, payload.secret, "multipart/form-data")
+      putConfig(data, payload.secret)
     );
 
     if (response.status !== 200) {
@@ -104,12 +117,16 @@ export const putInfo = async (payload: PutInfoPayload) => {
     const body = JSON.stringify(payload.info);
     const response = await fetch(
       `${config.baseUrl}/info`,
-      putConfig(body, payload.secret, "application/json")
+      putConfigWithContentType(body, payload.secret, "application/json")
     );
+
+    const json = await response.json();
 
     if (response.status !== 200) {
       throw new Error("Request failed.");
     }
+
+    return new InfoRecord(json);
   } catch (error) {
     throw error;
   }

@@ -1,5 +1,6 @@
 import * as React from "react";
+import { CircularProgress } from "material-ui";
 
-const Loading = () => <h1>Loading.</h1>;
+const Loading = () => <CircularProgress />;
 
 export default Loading;

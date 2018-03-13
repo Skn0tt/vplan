@@ -13,7 +13,10 @@ const styles = (theme: Theme): StyleRules => ({
   },
   content: {
     width: "100%",
-    marginTop: 64
+    marginTop: 64,
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 54
+    }
   },
   title: {
     color: "white"

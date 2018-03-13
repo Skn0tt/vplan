@@ -1,6 +1,11 @@
 import { createAction } from "redux-actions";
 import { Group, Class, Entry, Teacher, Info } from "vplan-types";
-import { AllEntriesRecord, PutEntriesPayload, PutInfoPayload } from "./types";
+import {
+  AllEntriesRecord,
+  PutEntriesPayload,
+  PutInfoPayload,
+  InfoRecord
+} from "./types";
 
 /**
  * # Async
@@ -114,7 +119,7 @@ export const PUT_INFO_ERROR = "PUT_INFO_ERROR";
 export const PUT_INFO_SUCCESS = "PUT_INFO_SUCCESS";
 export const putInfo = createAction<PutInfoPayload>(PUT_INFO);
 export const putInfoError = createAction<Error>(PUT_INFO_ERROR);
-export const putInfoSuccess = createAction(PUT_INFO_SUCCESS);
+export const putInfoSuccess = createAction<InfoRecord>(PUT_INFO_SUCCESS);
 
 /**
  * # Sync

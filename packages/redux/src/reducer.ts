@@ -29,7 +29,7 @@ import {
   FETCH_INFO_TEACHER_SUCCESS
 } from "./actions";
 import { Class, Group, Entry } from "vplan-types";
-import { AppState, AllEntriesRecord } from "./types";
+import { AppState, AllEntriesRecord, InfoRecord } from "./types";
 import { Map, Set } from "immutable";
 import { getGroup } from "./selectors";
 
@@ -116,7 +116,7 @@ const reducer = handleActions(
      * ## FETCH_INFO_STUDENT
      */
     ...asyncReducer(FETCH_INFO_STUDENT, FETCH_INFO_STUDENT_ERROR),
-    [FETCH_INFO_STUDENT_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
+    [FETCH_INFO_STUDENT_SUCCESS]: (state, action) =>
       state
         .update("loading", decrement)
         .setIn(["info", "student"], action.payload),
@@ -124,7 +124,9 @@ const reducer = handleActions(
     /**
      * ## PUT_INFO
      */
-    ...asyncReducerFull(PUT_INFO, PUT_INFO_ERROR, PUT_INFO_SUCCESS),
+    ...asyncReducer(PUT_INFO, PUT_INFO_ERROR),
+    [PUT_INFO_SUCCESS]: (state, action: Action<InfoRecord>) =>
+      state.update("loading", decrement).set("info", action.payload),
 
     /**
      * # Sync

@@ -1,6 +1,13 @@
 import * as React from "react";
 import { Teacher } from "vplan-types";
-import { Paper, Typography } from "material-ui";
+import {
+  Paper,
+  Typography,
+  List,
+  ListItemText,
+  ListSubheader,
+  ListItem
+} from "material-ui";
 
 /**
  * # Helpers
@@ -24,9 +31,20 @@ const Absent: React.SFC<Props> = props => {
 
   return (
     <Paper>
-      <Typography variant="title">Abwesende Kollegen:</Typography>
-      <Typography variant="body1">Diese Woche: {join(now)}</Typography>
-      <Typography variant="body1">Nächste Woche: {join(next)}</Typography>
+      <List subheader={<ListSubheader>Momentan Abwesend:</ListSubheader>}>
+        {now.map(item => (
+          <ListItem key={item} dense>
+            <ListItemText primary={item} />
+          </ListItem>
+        ))}
+      </List>
+      <List subheader={<ListSubheader>Nächste Woche Abwesend:</ListSubheader>}>
+        {next.map(item => (
+          <ListItem key={item} dense>
+            <ListItemText primary={item} />
+          </ListItem>
+        ))}
+      </List>
     </Paper>
   );
 };
