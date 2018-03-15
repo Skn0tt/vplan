@@ -23,7 +23,11 @@ import {
   PUT_ENTRIES,
   FETCH_INFO,
   FETCH_INFO_TEACHER,
-  FETCH_INFO_STUDENT
+  FETCH_INFO_STUDENT,
+  fetchInfoStudentError,
+  fetchInfoStudentSuccess,
+  fetchInfoTeacherError,
+  fetchInfoTeacherSuccess
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
@@ -83,9 +87,9 @@ function* fetchInfoTeacherSaga(action: Action<void>) {
   try {
     const result = yield call(api.fetchInfoTeacher);
 
-    yield put(fetchInfoSuccess(result));
+    yield put(fetchInfoTeacherSuccess(result));
   } catch (error) {
-    yield put(fetchInfoError(error));
+    yield put(fetchInfoTeacherError(error));
   }
 }
 
@@ -93,9 +97,9 @@ function* fetchInfoStudentSaga(action: Action<void>) {
   try {
     const result = yield call(api.fetchInfoStudent);
 
-    yield put(fetchInfoSuccess(result));
+    yield put(fetchInfoStudentSuccess(result));
   } catch (error) {
-    yield put(fetchInfoError(error));
+    yield put(fetchInfoStudentError(error));
   }
 }
 

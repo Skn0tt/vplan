@@ -12,8 +12,8 @@ const LoadableTeacher = Loadable({
   loading: Loading
 });
 
-const LoadablePausenhalle = Loadable({
-  loader: () => import("./routes/Pausenhalle"),
+const LoadableDisplay = Loadable({
+  loader: () => import("./routes/Display"),
   loading: Loading
 });
 
@@ -35,6 +35,7 @@ const LoadableNotFound = Loadable({
 const Routes: React.SFC<{}> = () => (
   <BrowserRouter>
     <Switch>
+      <Route exact path="/display" component={LoadableDisplay} />
       <AppBar>
         <Switch>
           <Route exact path="/" component={LoadableHome} />
@@ -45,7 +46,6 @@ const Routes: React.SFC<{}> = () => (
           <Route component={LoadableNotFound} />
         </Switch>
       </AppBar>
-      <Route exact path="/pausenhalle" component={LoadablePausenhalle} />
     </Switch>
   </BrowserRouter>
 );

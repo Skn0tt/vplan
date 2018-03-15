@@ -14,7 +14,7 @@ import { Action } from "redux";
 import { List } from "immutable";
 import { Grid, withStyles, WithStyles, Typography, Paper } from "material-ui";
 import ShortList, { Item } from "./components/ShortList";
-import Information from "./components/Information";
+import Information from "../../components/Information";
 import styles from "./styles";
 import _ = require("lodash");
 import { withRouter, RouteComponentProps } from "react-router";

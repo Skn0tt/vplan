@@ -92,10 +92,8 @@ const EntriesView: React.SFC<Props> = props => {
                   key={index}
                   entry={entry}
                   isMarked={isMarked(entry.class)}
-                  addMarked={allowMarking && (() => addMarked(entry.class))}
-                  removeMarked={
-                    allowMarking && (() => removeMarked(entry.class))
-                  }
+                  addMarked={() => allowMarking && addMarked(entry.class)}
+                  removeMarked={() => allowMarking && removeMarked(entry.class)}
                 />
               ))}
           </React.Fragment>

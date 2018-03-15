@@ -76,7 +76,10 @@ const EntryItem: React.SFC<Props> = props => {
   const { entry, classes, isMarked, removeMarked, addMarked } = props;
 
   return (
-    <Tappable pressDelay={200} onPress={isMarked ? removeMarked : addMarked}>
+    <Tappable
+      pressDelay={200}
+      onPress={() => (isMarked ? removeMarked() : addMarked())}
+    >
       <ListItem className={isMarked ? classes.marked : null}>
         <ListItemAvatar>
           <Avatar
