@@ -77,7 +77,9 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
       render() {
         const { group, setGroup, entries, classes, match } = this.props;
 
-        const showEntries = entries.get(match.params.group || group) || [];
+        const showGroup = match.params.group || group;
+
+        const showEntries = entries.get(showGroup) || [];
 
         return (
           <EntriesView
@@ -85,7 +87,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
               <TextField
                 id="select-currency-native"
                 select
-                value={group}
+                value={showGroup}
                 label="Klasse"
                 fullWidth
                 onChange={e => this.handleSetGroup(e.target.value as Group)}

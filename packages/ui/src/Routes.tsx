@@ -1,12 +1,18 @@
 import * as React from "react";
 import { Route } from "react-router";
 import { BrowserRouter, Switch } from "react-router-dom";
-import * as Loadable from "react-loadable";
-
-import Loading from "./elements/Loading";
+// import * as Loadable from "react-loadable";
 import AppBar from "./components/AppBar";
 
 // Routes
+import Display from "./routes/Display";
+import Home from "./routes/Home";
+import Admin from "./routes/Admin";
+import Teacher from "./routes/Teacher";
+import NotFound from "./routes/NotFound";
+
+/*
+import Loading from "./elements/Loading";
 const LoadableTeacher = Loadable({
   loader: () => import("./routes/Teacher"),
   loading: Loading
@@ -31,19 +37,20 @@ const LoadableNotFound = Loadable({
   loader: () => import("./routes/NotFound"),
   loading: Loading
 });
+*/
 
 const Routes: React.SFC<{}> = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/display" component={LoadableDisplay} />
+      <Route exact path="/display" component={Display} />
       <AppBar>
         <Switch>
-          <Route exact path="/" component={LoadableHome} />
-          <Route exact path="/admin" component={LoadableAdmin} />
-          <Route exact path="/teacher" component={LoadableTeacher} />
-          <Route path="/teacher/:short" component={LoadableTeacher} />
-          <Route path="/:group" component={LoadableHome} />
-          <Route component={LoadableNotFound} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/teacher" component={Teacher} />
+          <Route path="/teacher/:short" component={Teacher} />
+          <Route path="/:group" component={Home} />
+          <Route component={NotFound} />
         </Switch>
       </AppBar>
     </Switch>

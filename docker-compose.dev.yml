@@ -7,5 +7,6 @@ services:
       - 9229:9229
     environment:
       - PASSWORD=root
+      - NODE_ENV=development
 
   

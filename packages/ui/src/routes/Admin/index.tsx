@@ -25,7 +25,6 @@ import {
   WithStyles,
   withStyles
 } from "material-ui";
-import Dropzone, { DropFilesEventHandler } from "react-dropzone";
 import { Delete as DeleteIcon, Add as AddIcon } from "material-ui-icons";
 import EntriesUpdater from "./components/EntriesUpdater";
 import InfoUpdater from "./components/InfoUpdater";
