@@ -16,8 +16,8 @@ import { StudentEntries, AllEntries, TeacherEntries, Entry } from "vplan-types";
 
 const toImmutable = (json: Partial<AllEntries>) =>
   new AllEntriesRecord({
-    student: Map(json.student),
-    teacher: Map(json.teacher)
+    student: Map(json.student!),
+    teacher: Map(json.teacher!)
   });
 
 const transform = (json: any) => toImmutable(json);

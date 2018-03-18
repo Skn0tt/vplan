@@ -1,3 +1,11 @@
+# TypeScript
+#
+lib/
+
+# Jest
+#
+.jest/
+
 # OSX
 #
 .DS_Store

@@ -65,7 +65,7 @@ const reducer = handleActions(
     [FETCH_ENTRIES_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .update("entries", entries => entries.merge(action.payload!)),
 
     /**
      * ## FETCH_ENTRIES_STUDENT
@@ -77,7 +77,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .update("entries", entries => entries.merge(action.payload!)),
 
     /**
      * ## FETCH_ENTRIES_TEACHER
@@ -89,7 +89,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .update("entries", entries => entries.merge(action.payload!)),
 
     /**
      * ## PUT_ENTRIES
@@ -101,7 +101,7 @@ const reducer = handleActions(
      */
     ...asyncReducer(FETCH_INFO, FETCH_INFO_ERROR),
     [FETCH_INFO_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
-      state.update("loading", decrement).set("info", Map(action.payload)),
+      state.update("loading", decrement).set("info", Map(action.payload!)),
 
     /**
      * ## FETCH_INFO_TEACHER
@@ -144,13 +144,13 @@ const reducer = handleActions(
       state.updateIn(
         ["marked", getGroup(state)],
         Set(),
-        (marked: Set<string>) => marked.add(action.payload)
+        (marked: Set<string>) => marked.add(action.payload!)
       ),
     [REMOVE_MARKED]: (state, action: Action<Class>) =>
       state.updateIn(
         ["marked", getGroup(state)],
         Set(),
-        (marked: Set<string>) => marked.delete(action.payload)
+        (marked: Set<string>) => marked.delete(action.payload!)
       )
   } as ReducerMap<AppState, Object>,
   new AppState({}) // initial State
