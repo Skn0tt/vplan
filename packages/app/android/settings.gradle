@@ -1,0 +1,3 @@
+rootProject.name = 'vplanApp'
+
+include ':app'
