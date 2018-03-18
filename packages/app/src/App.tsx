@@ -1,22 +1,20 @@
 import * as React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { FETCH_ENTRIES_TEACHER } from "vplan-redux";
+import createStore from "vplan-redux";
+import { Provider } from "react-redux";
+import Routes from "./Routes";
+import styles from "./styles";
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
+const store = createStore({
+  baseUrl: "http://whale.fritz.box/api"
 });
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View>
-        <Text>Hello Simon!</Text>
-        <Text>To get started, edit App.js</Text>
-        <Text>{FETCH_ENTRIES_TEACHER}</Text>
-      </View>
-    );
-  }
-}
+const App: React.SFC<{}> = () => (
+  <View style={styles.root}>
+    <Provider store={store}>
+      <Routes />
+    </Provider>
+  </View>
+);
+
+export default App;

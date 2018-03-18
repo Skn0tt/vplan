@@ -6,7 +6,6 @@ target 'vplanApp' do
   # use_frameworks!
 
   # Pods for vplanApp
-  pod 'RNVectorIcons', :path => '../../../node_modules/react-native-vector-icons'
 
   target 'vplanAppTests' do
     inherit! :search_paths
