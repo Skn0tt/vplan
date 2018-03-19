@@ -8,7 +8,6 @@ import {
   SectionList,
   SectionListData
 } from "react-native";
-import { RouteComponentProps } from "react-router";
 import {
   AppState,
   getEntries,
@@ -17,13 +16,31 @@ import {
   fetchEntriesTeacher,
   fetchEntriesStudent,
   isTeacher,
-  isLoading
+  isLoading,
+  addMarked,
+  removeMarked,
+  isMarked,
+  fetchInfoStudent,
+  fetchInfo
 } from "vplan-redux";
 import { Dispatch, connect } from "react-redux";
 import { Action } from "redux";
-import { Entry } from "vplan-types";
+import { Entry, Class } from "vplan-types";
 import _ from "lodash";
 import EntryListItem from "./elements/EntryListItem";
+import {
+  NavigationScreenOptions,
+  NavigationStackScreenOptions,
+  NavigationScreenOptionsGetter,
+  StackNavigatorConfig,
+  NavigationActions,
+  NavigationRoute,
+  NavigationScreenProp,
+  NavigationScreenComponent
+} from "react-navigation";
+import SettingsButton from "./elements/SettingsButton";
+import SectionHeader from "./elements/SectionHeader";
+import InfoModalButton from "./elements/InfoModalButton";
 
 /**
  * # Helpers
@@ -34,8 +51,26 @@ const sectionize = (entries: Entry[]): SectionListData<Entry>[] =>
     key: "" + v[0].day
   }));
 
+const compareEntries = (a: Entry, b: Entry): number => {
+  if (a.day !== b.day) {
+    return +a.day - +b.day;
+  }
+
+  return a.from - b.from;
+};
+
+const sort = (entries: Entry[]) =>
+  entries ? entries.sort(compareEntries) : entries;
+
 const hashEntry = (entry: Entry) =>
   entry.class + entry.day + entry.room + entry.from + entry.substituteTeacher;
+
+const dateString = (inp: string): string =>
+  new Date(Number(inp)).toLocaleDateString("de-DE", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
 
 /**
  * # Component Types
@@ -44,25 +79,37 @@ interface StateProps {
   entries: Entry[];
   isTeacher: boolean;
   isLoading: boolean;
+  isMarked(item: Entry): boolean;
 }
 const mapStateToProps = (state: AppState) =>
   ({
     entries: getOwnEntries(state),
     isTeacher: isTeacher(state),
-    isLoading: isLoading(state)
+    isLoading: isLoading(state),
+    isMarked: i => isMarked(i.class)(state)
   } as StateProps);
 
 interface DispatchProps {
   refreshTeacher(): void;
   refreshStudent(): void;
+  refreshAllInfo(): void;
+  refreshStudentInfo(): void;
+  addMarked(item: Entry): void;
+  removeMarked(item: Entry): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
     refreshTeacher: () => dispatch(fetchEntriesTeacher()),
-    refreshStudent: () => dispatch(fetchEntriesStudent())
+    refreshStudent: () => dispatch(fetchEntriesStudent()),
+    addMarked: i => dispatch(addMarked(i.class)),
+    removeMarked: i => dispatch(removeMarked(i.class)),
+    refreshAllInfo: () => dispatch(fetchInfo()),
+    refreshStudentInfo: () => dispatch(fetchInfoStudent())
   } as DispatchProps);
 
-type Props = StateProps & DispatchProps & RouteComponentProps<{}>;
+type Props = StateProps & DispatchProps;
+
+type Nav = { navigation: NavigationScreenProp<NavigationRoute> };
 
 /**
  * # Component
@@ -70,33 +117,76 @@ type Props = StateProps & DispatchProps & RouteComponentProps<{}>;
 const Home = connect(mapStateToProps, mapDispatchToProps)(
   class extends React.PureComponent<Props> {
     /**
+     * # Intialization
+     */
+    static navigationOptions = ({ navigation }: Nav) => ({
+      title: "vPlan",
+      headerRight: (
+        <SettingsButton
+          onPress={() =>
+            navigation.dispatch(
+              NavigationActions.navigate({
+                routeName: "Settings"
+              })
+            )
+          }
+        />
+      )
+    });
+
+    /**
      * # Lifecycle
      */
     componentDidMount() {
       this.handleRefresh();
     }
 
-    handleRefresh = () =>
-      this.props.isTeacher
-        ? this.props.refreshTeacher()
-        : this.props.refreshStudent();
+    /**
+     * # Handlers
+     */
+    handleRefresh = () => {
+      if (this.props.isTeacher) {
+        this.props.refreshTeacher();
+        this.props.refreshAllInfo();
+      } else {
+        this.props.refreshStudent();
+        this.props.refreshStudentInfo();
+      }
+    };
+    handleShowInfoModal = () => this.setState({ showInfoModal: true });
+    handleCloseInfoModal = () => this.setState({ showInfoModal: false });
 
     /**
      * # Render
      */
     render() {
-      const { entries, isLoading } = this.props;
+      const {
+        entries,
+        isLoading,
+        addMarked,
+        removeMarked,
+        isMarked
+      } = this.props;
 
       return (
-        <View>
-          <SectionList
-            sections={sectionize(entries)}
-            renderItem={({ item }) => <EntryListItem item={item} />}
-            keyExtractor={hashEntry}
-            refreshing={isLoading}
-            onRefresh={this.handleRefresh}
-          />
-        </View>
+        <SectionList
+          sections={sectionize(sort(entries))}
+          renderItem={({ item }) => (
+            <EntryListItem
+              item={item as Entry}
+              onLongPress={() =>
+                isMarked(item as Entry) ? removeMarked(item) : addMarked(item)
+              }
+              marked={isMarked(item as Entry)}
+            />
+          )}
+          renderSectionHeader={({ section }) => (
+            <SectionHeader title={dateString(section.key!)} />
+          )}
+          keyExtractor={hashEntry}
+          refreshing={isLoading}
+          onRefresh={this.handleRefresh}
+        />
       );
     }
   }

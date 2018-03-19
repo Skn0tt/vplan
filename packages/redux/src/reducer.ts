@@ -26,7 +26,9 @@ import {
   FETCH_INFO_STUDENT,
   FETCH_INFO_STUDENT_ERROR,
   FETCH_INFO_STUDENT_SUCCESS,
-  FETCH_INFO_TEACHER_SUCCESS
+  FETCH_INFO_TEACHER_SUCCESS,
+  SET_IS_TEACHER,
+  SET_SHORT
 } from "./actions";
 import { Class, Group, Entry } from "vplan-types";
 import { AppState, AllEntriesRecord, InfoRecord } from "./types";
@@ -131,6 +133,18 @@ const reducer = handleActions(
     /**
      * # Sync
      */
+
+    /**
+     * ## SET_IS_TEACHER
+     */
+    [SET_IS_TEACHER]: (state, action: Action<boolean>) =>
+      state.set("isTeacher", action.payload),
+
+    /**
+     * ## SET_SHORT
+     */
+    [SET_SHORT]: (state, action: Action<string>) =>
+      state.set("short", action.payload),
 
     /**
      * ## SET_GROUP

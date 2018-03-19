@@ -1,25 +1,30 @@
 import * as React from "react";
-import { View } from "react-native";
-import { Route } from "react-router";
-import { NativeRouter, Switch } from "react-router-native";
+import { StackNavigator } from "react-navigation";
 
 import Home from "./routes/Home";
-import AppBar from "./components/AppBar";
 import Settings from "./routes/Settings";
+import Info from "./routes/Info";
 
-const Routes = () => (
-  <NativeRouter>
-    <View>
-      {/* AppBar */}
-      <Route component={AppBar} />
-
-      {/* Routes */}
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/settings" component={Settings} />
-      </Switch>
-    </View>
-  </NativeRouter>
+const MainStack = StackNavigator(
+  {
+    Home: {
+      screen: Home,
+      path: "/"
+    },
+    Settings: {
+      screen: Settings,
+      path: "/settings"
+    }
+  },
+  {
+    initialRouteName: "Home",
+    navigationOptions: {
+      headerTintColor: "white",
+      headerStyle: {
+        backgroundColor: "#2196f3"
+      }
+    }
+  }
 );
 
-export default Routes;
+export default MainStack;
