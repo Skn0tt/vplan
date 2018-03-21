@@ -78,6 +78,8 @@ interface IAppState {
   teachers: Map<string, TeacherInfo>;
   marked: Map<Group, Set<Class>>;
   info: InfoRecord;
+  isTeacher: boolean;
+  short: Short;
 }
 
 export class AppState extends Record(
@@ -87,7 +89,9 @@ export class AppState extends Record(
     group: "5A",
     teachers: Map<string, TeacherInfo>(),
     marked: Map<Group, Set<Class>>(),
-    info: new InfoRecord({})
+    info: new InfoRecord({}),
+    isTeacher: false,
+    short: ""
   } as IAppState,
   "AppState"
 ) {

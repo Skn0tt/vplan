@@ -71,7 +71,6 @@ const EntriesUpdater = withStyles(styles)(
       this.setState({ teacherToday: file });
     handleSetTeacherTomorrow = (file: File) => {
       this.setState({ teacherTomorrow: file });
-      console.log("file", file);
     };
 
     /**

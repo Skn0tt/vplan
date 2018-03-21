@@ -13,9 +13,12 @@ import {
   StudentEntry,
   AllEntries,
   TeacherEntries,
-  Info
+  Info,
+  Entry
 } from "vplan-types";
 import { createSelector, Selector } from "reselect";
+
+const getState: Selector<AppState, AppState> = state => state;
 
 export const getInfo: Selector<AppState, Info> = state =>
   state.get("info").toJS();
@@ -34,6 +37,29 @@ export const getInfoStudent: Selector<AppState, string[]> = state =>
 
 export const getEntries: Selector<AppState, AllEntriesRecord> = state =>
   state.get("entries");
+
+export const isTeacher: Selector<AppState, boolean> = state =>
+  state.get("isTeacher");
+
+export const getIdentifier = createSelector<
+  AppState,
+  AppState,
+  boolean,
+  string
+>(
+  [getState, isTeacher],
+  (state, isTeacher) => (isTeacher ? state.get("short") : state.get("group"))
+);
+
+export const getOwnEntries = createSelector<
+  AppState,
+  boolean,
+  string,
+  AllEntriesRecord,
+  Entry[]
+>([isTeacher, getIdentifier, getEntries], (isTeacher, id, entries) =>
+  entries.getIn([isTeacher ? "teacher" : "student", id])
+);
 
 export const getStudentEntries = createSelector<
   AppState,

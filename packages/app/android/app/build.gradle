@@ -81,6 +81,7 @@ project.ext.react = [
 ]
 
 apply from: "../../../../node_modules/react-native/react.gradle"
+apply from: "../../../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -99,10 +100,10 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.ema.vplanapp"
+        applicationId "com.vplanapp"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -110,11 +111,6 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        renderscriptTargetApi 23
-        renderscriptSupportModeEnabled true
-    }
-    buildTypes {
-        release
     }
     splits {
         abi {
@@ -146,11 +142,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-blur')
     compile project(':react-native-vector-icons')
-    compile project(':appcenter-crashes')
-    compile project(':appcenter-analytics')
-    compile project(':appcenter')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

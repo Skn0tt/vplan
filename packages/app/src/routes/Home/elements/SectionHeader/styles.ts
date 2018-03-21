@@ -1,13 +1,15 @@
 import { StyleSheet } from "react-native";
 
+const radius = 44;
+
 export default StyleSheet.create({
   container: {
-    height: 45
+    paddingLeft: 14,
+    paddingVertical: 14,
+    backgroundColor: "#FFFFFFDC"
   },
   text: {
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 16,
-    padding: 5
+    color: "#616161",
+    fontWeight: "bold"
   }
 });

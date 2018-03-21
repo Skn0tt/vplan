@@ -1,37 +1,29 @@
-import React from "react";
-import { StackNavigator } from "react-navigation";
-import { Provider } from "react-redux";
-
-// Routes
-import Home from "./routes/Home";
-import Settings from "./routes/Settings";
-
-// Store
+import * as React from "react";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  AsyncStorage
+} from "react-native";
 import createStore from "vplan-redux";
+import { Provider } from "react-redux";
+import Routes from "./Routes";
+import styles from "./styles";
 
 const store = createStore({
-  baseUrl: ""
+  baseUrl: "http://localhost/api",
+  storage: AsyncStorage
 });
 
-const Navigator = StackNavigator(
-  {
-    Home: {
-      screen: Home
-    },
-    Settings: {
-      screen: Settings
-    }
-  },
-  {
-    mode: "modal",
-    headerMode: "screen"
-  }
-);
-
 const App: React.SFC<{}> = () => (
-  <Provider store={store}>
-    <Navigator />
-  </Provider>
+  <View style={styles.root}>
+    <StatusBar barStyle="light-content" />
+    <Provider store={store}>
+      <Routes />
+    </Provider>
+  </View>
 );
 
 export default App;

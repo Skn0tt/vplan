@@ -1,15 +1,21 @@
-import store from "./store";
+import store, { persist } from "./store";
+import { AsyncStorage } from "react-native";
 
 export type Config = {
   baseUrl: string;
+  storage?: AsyncStorage;
 };
 
 export let config: Config = {
-  baseUrl: ""
+  baseUrl: "",
+  storage: null
 };
 
 const createStore = (conf: Config) => {
   config = conf;
+
+  persist();
+
   return store;
 };
 

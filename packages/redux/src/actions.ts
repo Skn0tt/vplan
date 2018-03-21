@@ -126,6 +126,18 @@ export const putInfoSuccess = createAction<InfoRecord>(PUT_INFO_SUCCESS);
  */
 
 /**
+ * ## SET_IS_TEACHER
+ */
+export const SET_IS_TEACHER = "SET_IS_TEACHER";
+export const setIsTeacher = createAction<boolean>(SET_IS_TEACHER);
+
+/**
+ * ## SET_SHORT
+ */
+export const SET_SHORT = "SET_SHORT";
+export const setShort = createAction<string>(SET_SHORT);
+
+/**
  * ## ADD_MARKED
  */
 export const ADD_MARKED = "ADD_MARKED";

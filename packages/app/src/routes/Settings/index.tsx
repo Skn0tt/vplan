@@ -1,70 +1,98 @@
-import React from "react";
-import { View, Picker, Text } from "react-native";
+import * as React from "react";
+import { View, Text, Switch, TextInput, Picker } from "react-native";
 import { connect } from "react-redux";
-import { Group } from "vplan-types";
-
-import { setGroup, getGroup, AppState } from "vplan-redux";
-
-import styles from "./styles";
+import {
+  AppState,
+  isTeacher,
+  setIsTeacher,
+  getIdentifier,
+  setShort,
+  setGroup,
+  getGroup
+} from "vplan-redux";
 import { Dispatch, Action } from "redux";
+import { Group, Short, Groups } from "vplan-types";
 
-const klassen = [
-  "5A",
-  "5B",
-  "5C",
-  "5D",
-  "6A",
-  "6B",
-  "6C",
-  "6D",
-  "7A",
-  "7B",
-  "7C",
-  "7D",
-  "8A",
-  "8B",
-  "8C",
-  "8D",
-  "9A",
-  "9B",
-  "9C",
-  "9D",
-  "EF",
-  "Q1",
-  "Q2"
-];
+/**
+ * # Helpers
+ */
 
-const items = klassen.map(item => (
-  <Picker.Item key={item} label={item} value={item} />
-));
-
+/**
+ * # Component Types
+ */
 interface StateProps {
-  class: Group;
+  isTeacher: boolean;
+  short: Short;
+  group: Group;
 }
-const mapStateToProps = (state: AppState) => ({
-  class: getGroup(state)
-});
+const mapStateToProps = (state: AppState) =>
+  ({
+    isTeacher: isTeacher(state),
+    short: getIdentifier(state),
+    group: getGroup(state)
+  } as StateProps);
+
 interface DispatchProps {
-  setClass(c: Group): Action;
+  setIsTeacher(is: boolean): void;
+  setShort(id: Short): void;
+  setGroup(g: Group): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  setClass: (c: Group) => dispatch(setGroup(c))
-});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
+  ({
+    setIsTeacher: (is: boolean) => dispatch(setIsTeacher(is)),
+    setShort: (id: Short) => dispatch(setShort(id)),
+    setGroup: (g: Group) => dispatch(setGroup(g))
+  } as DispatchProps);
 
 type Props = StateProps & DispatchProps;
 
-const Settings: React.SFC<Props> = props => (
-  <View style={styles.container}>
-    <View style={styles.item}>
-      <Text style={styles.header}>Klasse</Text>
-      <Picker
-        selectedValue={props.class}
-        onValueChange={c => props.setClass(c)}
-      >
-        {items}
-      </Picker>
-    </View>
-  </View>
+/**
+ * # Component
+ */
+const Settings = connect(mapStateToProps, mapDispatchToProps)(
+  class extends React.Component<Props> {
+    /**
+     * ## Initialization
+     */
+
+    /**
+     * ## Action Handlers
+     */
+    handleChangeIsTeacher = this.props.setIsTeacher;
+    handleChangeIdentifier = this.props.setShort;
+    handleGroupChange = this.props.setGroup;
+
+    /**
+     * ## Render
+     */
+    render() {
+      const { isTeacher, short, group } = this.props;
+
+      return (
+        <View>
+          <Text>{isTeacher ? "Lehrer" : "Schüler"}</Text>
+          <Switch
+            value={isTeacher}
+            onValueChange={this.handleChangeIsTeacher}
+            // Colour!
+          />
+          {isTeacher ? (
+            <TextInput
+              value={short}
+              onChangeText={this.handleChangeIdentifier}
+            />
+          ) : (
+            <Picker
+              selectedValue={group}
+              onValueChange={this.handleGroupChange}
+            >
+              {Groups.map(g => <Picker.Item key={g} value={g} label={g} />)}
+            </Picker>
+          )}
+        </View>
+      );
+    }
+  }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings;

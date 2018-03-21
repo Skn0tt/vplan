@@ -26,7 +26,9 @@ import {
   FETCH_INFO_STUDENT,
   FETCH_INFO_STUDENT_ERROR,
   FETCH_INFO_STUDENT_SUCCESS,
-  FETCH_INFO_TEACHER_SUCCESS
+  FETCH_INFO_TEACHER_SUCCESS,
+  SET_IS_TEACHER,
+  SET_SHORT
 } from "./actions";
 import { Class, Group, Entry } from "vplan-types";
 import { AppState, AllEntriesRecord, InfoRecord } from "./types";
@@ -65,7 +67,7 @@ const reducer = handleActions(
     [FETCH_ENTRIES_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .update("entries", entries => entries.merge(action.payload!)),
 
     /**
      * ## FETCH_ENTRIES_STUDENT
@@ -77,7 +79,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .update("entries", entries => entries.merge(action.payload!)),
 
     /**
      * ## FETCH_ENTRIES_TEACHER
@@ -89,7 +91,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload)),
+        .update("entries", entries => entries.merge(action.payload!)),
 
     /**
      * ## PUT_ENTRIES
@@ -101,7 +103,7 @@ const reducer = handleActions(
      */
     ...asyncReducer(FETCH_INFO, FETCH_INFO_ERROR),
     [FETCH_INFO_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
-      state.update("loading", decrement).set("info", Map(action.payload)),
+      state.update("loading", decrement).set("info", Map(action.payload!)),
 
     /**
      * ## FETCH_INFO_TEACHER
@@ -133,6 +135,18 @@ const reducer = handleActions(
      */
 
     /**
+     * ## SET_IS_TEACHER
+     */
+    [SET_IS_TEACHER]: (state, action: Action<boolean>) =>
+      state.set("isTeacher", action.payload),
+
+    /**
+     * ## SET_SHORT
+     */
+    [SET_SHORT]: (state, action: Action<string>) =>
+      state.set("short", action.payload),
+
+    /**
      * ## SET_GROUP
      */
     [SET_GROUP]: (state, action: Action<Group>) =>
@@ -144,13 +158,13 @@ const reducer = handleActions(
       state.updateIn(
         ["marked", getGroup(state)],
         Set(),
-        (marked: Set<string>) => marked.add(action.payload)
+        (marked: Set<string>) => marked.add(action.payload!)
       ),
     [REMOVE_MARKED]: (state, action: Action<Class>) =>
       state.updateIn(
         ["marked", getGroup(state)],
         Set(),
-        (marked: Set<string>) => marked.delete(action.payload)
+        (marked: Set<string>) => marked.delete(action.payload!)
       )
   } as ReducerMap<AppState, Object>,
   new AppState({}) // initial State

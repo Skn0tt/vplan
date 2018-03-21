@@ -1,56 +1,57 @@
 {
   "name": "vplan-app",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
-  "devDependencies": {
-    "@types/react-native": "^0.52.16",
-    "@types/react-native-vector-icons": "^4.4.3",
-    "@types/react-navigation": "^1.2.1",
-    "@types/react-redux": "^5.0.15",
-    "babel-eslint": "^8.0.2",
-    "babel-preset-react-native-stage-0": "^1.0.1",
-    "eslint": "^4.12.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.5.1",
-    "eslint-plugin-react-native": "^3.2.0",
-    "haul": "^1.0.0-beta.13",
-    "jest": "^21.2.1",
-    "react-native": "^0.54.0",
-    "react-test-renderer": "16.0.0-beta.5",
-    "redux": "^3.7.2",
-    "ts-loader": "^3.5.0",
-    "typescript": "^2.7.2",
-    "webpack": "^3.1.0"
-  },
   "scripts": {
-    "start": "react-native start",
-    "tsc": "tsc",
-    "watch": "tsc --watch",
-    "build": "yarn tsc && cd android && ./gradlew assembleRelease",
-    "test": "jest --watch",
-    "emu:android": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_26_x86",
+    "start:ios": "react-native run-ios",
+    "start:android": "react-native run-android",
+    "test": "jest",
     "haul": "haul"
   },
-  "jest": {
-    "preset": "react-native"
-  },
   "dependencies": {
-    "appcenter": "^1.0.1",
-    "appcenter-analytics": "^1.0.1",
-    "appcenter-crashes": "^1.0.1",
-    "immutable": "^3.8.2",
-    "moment": "^2.19.3",
-    "react": "16.0.0-beta.5",
-    "react-native": "^0.53.0",
-    "react-native-blur": "^3.2.2",
-    "react-native-modal": "^5.0.0",
-    "react-native-swipeable": "^0.6.0",
-    "react-native-vector-icons": "^4.4.2",
-    "react-navigation": "^1.0.0-beta.21",
+    "lodash": "^4.17.5",
+    "react": "^16.3.0-alpha.1",
+    "react-native": "^0.54.2",
+    "react-native-elements": "^0.19.0",
+    "react-native-vector-icons": "^4.5.0",
+    "react-navigation": "^1.5.7",
     "react-redux": "^5.0.7",
-    "vplan-redux": "^0.0.1",
+    "vplan-redux": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "@types/lodash": "^4.14.105",
+    "@types/react": "^16.0.40",
+    "@types/react-native": "^0.52.18",
+    "@types/react-native-vector-icons": "^4.4.3",
+    "@types/react-navigation": "^1.2.3",
+    "@types/react-redux": "^5.0.15",
+    "@types/react-test-renderer": "^16.0.1",
+    "babel-jest": "23.0.0-alpha.0",
+    "babel-preset-react-native": "4.0.0",
+    "haul": "^1.0.0-beta.13",
+    "jest": "22.4.2",
+    "metro-bundler": "^0.22.1",
+    "react-native-typescript-transformer": "^1.2.3",
+    "react-test-renderer": "^16.3.0-alpha.1",
+    "ts-jest": "^22.4.1",
+    "ts-loader": "3.5.0",
+    "typescript": "^2.7.2",
     "vplan-types": "^0.0.1"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "transform": {
+      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "\\.snap$",
+      "<rootDir>/node_modules/",
+      "<rootDir>/lib/"
+    ],
+    "cacheDirectory": ".jest/cache"
   }
 }
