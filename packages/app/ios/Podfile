@@ -6,8 +6,9 @@ target 'vplanApp' do
   # use_frameworks!
 
   # Pods for vplanApp
-
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'React', :path => '../node_modules/react-native'
+  pod 'RNVectorIcons', :path => '../../../node_modules/react-native-vector-icons'
 
   target 'vplanAppTests' do
     inherit! :search_paths
@@ -27,4 +28,12 @@ target 'vplanApp-tvOS' do
     # Pods for testing
   end
 
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
 end

@@ -3,7 +3,6 @@ import { StackNavigator } from "react-navigation";
 
 import Home from "./routes/Home";
 import Settings from "./routes/Settings";
-import Info from "./routes/Info";
 
 const MainStack = StackNavigator(
   {
