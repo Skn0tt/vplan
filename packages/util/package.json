@@ -1,0 +1,10 @@
+{
+  "name": "vplan-util",
+  "version": "0.0.1",
+  "description": "Utility for vplan.",
+  "main": "src/index.ts",
+  "repository": "gitlab.com/skn0tt/vplan",
+  "author": "Simon Knott",
+  "license": "MIT",
+  "private": true
+}

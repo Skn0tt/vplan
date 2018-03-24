@@ -9,6 +9,7 @@ import {
 import { Entry } from "vplan-types";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "./styles";
+import * as util from "vplan-util";
 
 /**
  * # Component Types
@@ -27,7 +28,7 @@ const SettingsButton: React.SFC<Props> = props => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Icon name="ios-settings" color="white" size={24} />
+        <Icon name="ios-settings" color={util.white} size={24} />
       </View>
     </TouchableOpacity>
   );

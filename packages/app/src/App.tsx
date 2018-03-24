@@ -13,13 +13,13 @@ import Routes from "./Routes";
 import styles from "./styles";
 
 const store = createStore({
-  baseUrl: "http://localhost/api",
+  baseUrl: "http://whale.fritz.box/api",
   storage: AsyncStorage
 });
 
 const App: React.SFC<{}> = () => (
   <View style={styles.root}>
-    <StatusBar barStyle="light-content" />
+    <StatusBar backgroundColor="#2196f3" barStyle="light-content" />
     <Provider store={store}>
       <Routes />
     </Provider>

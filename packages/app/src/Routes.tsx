@@ -1,6 +1,8 @@
 import * as React from "react";
 import { StackNavigator } from "react-navigation";
 
+import * as util from "vplan-util";
+
 import Home from "./routes/Home";
 import Settings from "./routes/Settings";
 
@@ -20,7 +22,7 @@ const MainStack = StackNavigator(
     navigationOptions: {
       headerTintColor: "white",
       headerStyle: {
-        backgroundColor: "#2196f3"
+        backgroundColor: util.blue500
       }
     }
   }

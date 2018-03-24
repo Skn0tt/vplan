@@ -26,7 +26,7 @@ import {
 import { Dispatch, connect } from "react-redux";
 import { Action } from "redux";
 import { Entry, Class } from "vplan-types";
-import _ from "lodash";
+import * as _ from "lodash";
 import EntryListItem from "./elements/EntryListItem";
 import {
   NavigationScreenOptions,

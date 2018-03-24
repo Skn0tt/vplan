@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import * as util from "vplan-util";
 
 export default StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ export default StyleSheet.create({
     paddingHorizontal: 12
   },
   marked: {
-    backgroundColor: "#FF5722"
+    backgroundColor: util.deepOrange500
   },
   hours: {
     paddingTop: 10
@@ -18,7 +19,7 @@ export default StyleSheet.create({
     padding: 12
   },
   whiteText: {
-    color: "white"
+    color: util.white
   },
   title: {
     fontSize: 16,
@@ -26,6 +27,6 @@ export default StyleSheet.create({
   },
   subTitle: {
     fontSize: 12,
-    color: "#616161"
+    color: util.lightGray
   }
 });

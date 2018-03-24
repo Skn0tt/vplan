@@ -62,7 +62,7 @@ export const fetchEntriesTeacher = async () => {
     const data = await fetch(`${config.baseUrl}/entries/teacher`);
     const json = await data.json();
 
-    return transform({ teacher: json });
+    return Map(json);
   } catch (error) {
     throw error;
   }
@@ -73,8 +73,11 @@ export const fetchEntriesStudent = async () => {
     const data = await fetch(`${config.baseUrl}/entries/student`);
     const json = await data.json();
 
-    return transform({ student: json });
+    console.log(data);
+
+    return Map(json);
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };

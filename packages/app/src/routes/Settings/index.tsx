@@ -11,11 +11,11 @@ import {
   getGroup
 } from "vplan-redux";
 import { Dispatch, Action } from "redux";
-import { Group, Short, Groups } from "vplan-types";
-
-/**
- * # Helpers
- */
+import { Short, Group } from "vplan-types";
+import ShortInput from "./elements/ShortInput";
+import GroupInput from "./elements/GroupInput";
+import ModeSwitch from "./elements/ModeSwitch";
+import styles from "./styles";
 
 /**
  * # Component Types
@@ -59,8 +59,8 @@ const Settings = connect(mapStateToProps, mapDispatchToProps)(
      * ## Action Handlers
      */
     handleChangeIsTeacher = this.props.setIsTeacher;
-    handleChangeIdentifier = this.props.setShort;
-    handleGroupChange = this.props.setGroup;
+    handleChangeShort = this.props.setShort;
+    handleChangeGroup = this.props.setGroup;
 
     /**
      * ## Render
@@ -69,26 +69,20 @@ const Settings = connect(mapStateToProps, mapDispatchToProps)(
       const { isTeacher, short, group } = this.props;
 
       return (
-        <View>
-          <Text>{isTeacher ? "Lehrer" : "Schüler"}</Text>
-          <Switch
-            value={isTeacher}
-            onValueChange={this.handleChangeIsTeacher}
-            // Colour!
-          />
-          {isTeacher ? (
-            <TextInput
-              value={short}
-              onChangeText={this.handleChangeIdentifier}
+        <View style={styles.container}>
+          <View style={styles.item}>
+            <ModeSwitch
+              isTeacher={isTeacher}
+              onChange={this.handleChangeIsTeacher}
             />
-          ) : (
-            <Picker
-              selectedValue={group}
-              onValueChange={this.handleGroupChange}
-            >
-              {Groups.map(g => <Picker.Item key={g} value={g} label={g} />)}
-            </Picker>
-          )}
+          </View>
+          <View style={styles.item}>
+            {isTeacher ? (
+              <ShortInput short={short} onChange={this.handleChangeShort} />
+            ) : (
+              <GroupInput group={group} onChange={this.handleChangeGroup} />
+            )}
+          </View>
         </View>
       );
     }

@@ -79,7 +79,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload!)),
+        .setIn(["entries", "student"], action.payload),
 
     /**
      * ## FETCH_ENTRIES_TEACHER
@@ -91,7 +91,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .update("entries", entries => entries.merge(action.payload!)),
+        .setIn(["entries", "teacher"], action.payload),
 
     /**
      * ## PUT_ENTRIES

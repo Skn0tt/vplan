@@ -2,7 +2,7 @@ import * as React from "react";
 import { View, Text, AppState } from "react-native";
 import { Entry } from "vplan-types";
 import styles from "./styles";
-import _ from "lodash";
+import * as _ from "lodash";
 
 /**
  * # Helpers
