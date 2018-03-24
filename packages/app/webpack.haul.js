@@ -1,5 +1,5 @@
 module.exports = ({ platform }, { module, resolve }) => ({
-  entry: `./src/index.${platform}.tsx`,
+  entry: `./src/index.tsx`,
   module: {
     ...module,
     rules: [

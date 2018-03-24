@@ -1,4 +1,4 @@
-package com.vplanapp;
+package de.simonknott.vplan.app;
 
 import com.facebook.react.ReactActivity;
 

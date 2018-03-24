@@ -73,14 +73,11 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+  entryFile: "index.js",
+  cliPath: "../node_modules/haul/bin/cli.js"
 ]
 
-project.ext.react = [
-  cliPath: "node_modules/haul/bin/cli.js"
-]
-
-apply from: "../../../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
@@ -103,7 +100,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.vplanapp"
+        applicationId "de.simonknott.vplan.app"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1

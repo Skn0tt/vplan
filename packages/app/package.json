@@ -5,8 +5,9 @@
   "scripts": {
     "start:ios": "react-native run-ios",
     "start:android": "react-native run-android",
-    "test": "jest",
-    "haul": "haul"
+    "start:bundler": "yarn haul",
+    "emu:android": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_26_x86",
+    "test": "jest"
   },
   "dependencies": {
     "lodash": "^4.17.5",
@@ -16,7 +17,8 @@
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.5.7",
     "react-redux": "^5.0.7",
-    "vplan-redux": "^0.0.1"
+    "vplan-redux": "^0.0.1",
+    "vplan-util": "^0.0.1"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
@@ -28,6 +30,8 @@
     "@types/react-redux": "^5.0.15",
     "@types/react-test-renderer": "^16.0.1",
     "babel-jest": "23.0.0-alpha.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react-native": "4.0.0",
     "haul": "^1.0.0-beta.13",
     "jest": "22.4.2",
