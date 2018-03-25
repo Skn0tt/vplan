@@ -13,7 +13,7 @@ import Routes from "./Routes";
 import styles from "./styles";
 
 const store = createStore({
-  baseUrl: "http://whale.fritz.box/api",
+  baseUrl: "https://vplan.simonknott.de/api",
   storage: AsyncStorage
 });
 
