@@ -8,21 +8,16 @@ import {
   StudentEntriesMap,
   fetchEntriesStudent,
   setGroup,
-  getGroup
+  getGroup,
+  fetchInfoStudent
 } from "vplan-redux";
 import { Action } from "redux";
 import { RouteComponentProps } from "react-router";
-import {
-  WithStyles,
-  withStyles,
-  Grid,
-  TextField,
-  List,
-  ListItem,
-  ListItemText
-} from "material-ui";
+import { WithStyles, withStyles, TextField } from "material-ui";
+import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
+import Information from "../../components/Information";
 
 /**
  * Helpers
@@ -44,12 +39,14 @@ const mapStateToProps = (state: AppState) =>
   } as StateProps);
 
 interface DispatchProps {
-  refresh(): void;
+  refreshEntries(): void;
+  refreshInfo(): void;
   setGroup(g: Group): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
-    refresh: () => dispatch(fetchEntriesStudent()),
+    refreshEntries: () => dispatch(fetchEntriesStudent()),
+    refreshInfo: () => dispatch(fetchInfoStudent()),
     setGroup: (g: Group) => dispatch(setGroup(g))
   } as DispatchProps);
 
@@ -64,45 +61,63 @@ type Props = StateProps &
 const Home = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(
     class extends React.PureComponent<Props> {
+      /**
+       * ## Lifecycle
+       */
       componentDidMount() {
-        this.props.refresh();
-        setInterval(this.props.refresh, 10 * 1000);
+        this.handleRefresh();
+        setInterval(this.handleRefresh, 10 * 1000);
       }
+
+      /**
+       * ## Handlers
+       */
+      handleRefresh = () => {
+        this.props.refreshEntries();
+        this.props.refreshInfo();
+      };
 
       handleSetGroup = (g: Group) => {
         this.props.setGroup(g);
         this.props.history.push("/" + g);
       };
 
+      /**
+       * ## Render
+       */
       render() {
-        const { group, setGroup, entries, classes, match } = this.props;
+        const { group, setGroup, entries, classes, match, info } = this.props;
 
         const showGroup = match.params.group || group;
 
         const showEntries = entries.get(showGroup) || [];
 
         return (
-          <EntriesView
-            title={
-              <TextField
-                id="select-currency-native"
-                select
-                value={showGroup}
-                label="Klasse"
-                fullWidth
-                onChange={e => this.handleSetGroup(e.target.value as Group)}
-                SelectProps={{ native: true }}
-              >
-                {Groups.map(group => (
-                  <option key={group} value={group}>
-                    {group}
-                  </option>
-                ))}
-              </TextField>
-            }
-            entries={showEntries}
-            allowMarking
-          />
+          <>
+            <EntriesView
+              title={
+                <TextField
+                  id="select-currency-native"
+                  select
+                  value={showGroup}
+                  label="Klasse"
+                  fullWidth
+                  className={classes.select}
+                  onChange={e => this.handleSetGroup(e.target.value as Group)}
+                  SelectProps={{ native: true }}
+                >
+                  {Groups.map(group => (
+                    <option key={group} value={group}>
+                      {group}
+                    </option>
+                  ))}
+                </TextField>
+              }
+              entries={showEntries}
+              allowMarking
+            />
+            <Information title="Informationen" info={info} />
+          </>
         );
       }
     }

@@ -15,9 +15,10 @@ type Props = OwnProps & WithStyles;
 
 const AppBar: React.SFC<Props> = props => {
   const { children, classes } = props;
+
   return (
     <div className={classes.root}>
-      <MUIAppBar position="static" className={classes.appBar}>
+      <MUIAppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="title" className={classes.title}>
             vPlan

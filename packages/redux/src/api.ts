@@ -73,11 +73,8 @@ export const fetchEntriesStudent = async () => {
     const data = await fetch(`${config.baseUrl}/entries/student`);
     const json = await data.json();
 
-    console.log(data);
-
     return Map(json);
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

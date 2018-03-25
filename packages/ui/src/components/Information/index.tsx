@@ -8,26 +8,29 @@ import {
   ListItemText,
   Paper,
   Typography,
-  ListSubheader
+  ListSubheader,
+  WithStyles,
+  withStyles
 } from "material-ui";
+import styles from "./styles";
 
 /**
  * # Component Types
  */
 interface OwnProps {
-  title: string;
+  title?: string;
   info: string[];
 }
 
-type Props = OwnProps;
+type Props = OwnProps & WithStyles;
 
 /**
  * # Component
  */
 const Information: React.SFC<Props> = props => {
-  const { info, title } = props;
+  const { info, title, classes } = props;
   return (
-    <Paper>
+    <Paper className={classes.container}>
       <List subheader={<ListSubheader>{title}</ListSubheader>}>
         {info.map(item => (
           <ListItem key={item}>
@@ -39,4 +42,4 @@ const Information: React.SFC<Props> = props => {
   );
 };
 
-export default Information;
+export default withStyles(styles)(Information);
