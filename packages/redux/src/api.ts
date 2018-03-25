@@ -84,7 +84,7 @@ export const fetchDayInfo = async () => {
     const data = await fetch(`${config.baseUrl}/dayInfo`);
     const json = await data.json();
 
-    json;
+    return json;
   } catch (error) {
     throw error;
   }

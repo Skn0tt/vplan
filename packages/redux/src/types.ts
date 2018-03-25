@@ -84,6 +84,13 @@ interface IAppState {
   short: Short;
 }
 
+const defaultDayInfo = {
+  week: "A",
+  missingTeachers: [],
+  blockedRooms: [],
+  missingGroups: []
+};
+
 export class AppState extends Record(
   {
     entries: new AllEntriesRecord({}),
@@ -92,7 +99,10 @@ export class AppState extends Record(
     teachers: Map<string, TeacherInfo>(),
     marked: Map<Group, Set<Class>>(),
     info: new InfoRecord({}),
-    dayInfo: {},
+    dayInfo: {
+      today: defaultDayInfo,
+      tomorrow: defaultDayInfo
+    },
     isTeacher: false,
     short: ""
   } as IAppState,

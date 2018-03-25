@@ -28,7 +28,9 @@ import {
   fetchInfoStudentSuccess,
   fetchInfoTeacherError,
   fetchInfoTeacherSuccess,
-  FETCH_DAYINFO
+  FETCH_DAYINFO,
+  fetchDayInfoSuccess,
+  fetchDayInfoError
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
@@ -128,9 +130,9 @@ function* fetchDayInfoSaga(action: Action<void>) {
   try {
     const result = yield call(api.fetchDayInfo);
 
-    yield put(fetchTeachersSuccess(result));
+    yield put(fetchDayInfoSuccess(result));
   } catch (error) {
-    yield put(fetchTeachersError(error));
+    yield put(fetchDayInfoError(error));
   }
 }
 
