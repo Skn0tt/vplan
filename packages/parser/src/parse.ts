@@ -5,7 +5,8 @@ import {
   Types,
   StudentEntry,
   TeacherEntry,
-  Group
+  Group,
+  DayInfo
 } from "vplan-types";
 import * as _ from "lodash";
 import { Row } from "vplan-parser";
@@ -24,8 +25,11 @@ const getBetweenTags = (tag: string, input: string) =>
 
 const getCenter = (input: string) => getBetweenTags("center", input);
 const getTable = (input: string) => getBetweenTags("table", input);
+const getDiv = (input: string) => getBetweenTags("div", input);
 const getTableTeacher = (input: string) =>
   getTable(getBetweenFirstAndLast("<p>", input));
+
+const dropFirst = _.tail;
 
 const lines = (input: string) => input.split("\n");
 const getTableRows = (input: string) => lines(input).slice(1);
@@ -49,7 +53,12 @@ const isValid = (item: string) => invalid.indexOf(item) === -1;
 
 const sanitizeInvalid = (item: string) => (isValid(item) ? item : "");
 
-export default (isTeachersView: boolean) => (input: string): Row[] => {
+const getWeek = (input: string): "A" | "B" =>
+  getDiv(getCenter(input)).slice(-1) as "A" | "B";
+
+export const parseTable = (isTeachersView: boolean) => (
+  input: string
+): Row[] => {
   const center = getCenter(input);
   const table = isTeachersView ? getTableTeacher(center) : getTable(center);
   const tableRows = removeLast(1, removeTableHead(getTableRows(table)));
@@ -58,4 +67,27 @@ export default (isTeachersView: boolean) => (input: string): Row[] => {
   );
 
   return arrs;
+};
+
+export const parseDayInfo = (input: string): DayInfo => {
+  const infoTable = removeFirstTag(getTable(getCenter(input)));
+  const rows = dropFirst(removeLast(1, getTableRows(infoTable)));
+  const arrs = rows.map(row => getDataFields(removeOuterTag(row)));
+
+  const missingTeachersArr = arrs.find(v =>
+    v[0].startsWith("Abwesende Lehrer")
+  );
+  const missingGroupsArr = arrs.find(v => v[0].startsWith("Abwesende Klassen"));
+  const blockedRoomsArr = arrs.find(v => v[0].startsWith("Blockierte"));
+
+  return {
+    week: getWeek(input),
+    blockedRooms: !!blockedRoomsArr ? blockedRoomsArr[1].split(", ") : [],
+    missingGroups: !!missingGroupsArr
+      ? (missingGroupsArr[1].split(", ") as Group[])
+      : [],
+    missingTeachers: !!missingTeachersArr
+      ? missingTeachersArr[1].split(", ")
+      : []
+  };
 };

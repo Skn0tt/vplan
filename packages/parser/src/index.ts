@@ -1,6 +1,6 @@
 import sample2 from "./sampleinputteacher2";
-import parse from "./parse";
-import { Entry, Grouped } from "vplan-types";
+import { parseDayInfo, parseTable } from "./parse";
+import { Entry, Grouped, DayInfo } from "vplan-types";
 import group from "./group";
 import { convertStudent, convertTeacher } from "./convert";
 import merge from "./merge";
@@ -31,7 +31,7 @@ const parseHTML = (
  * Parse Teacher
  */
 const parseTeacherDay = (input: Buffer, day: Date) =>
-  parseHTML(input, parse(true), convertTeacher(day));
+  parseHTML(input, parseTable(true), convertTeacher(day));
 export const parseTeacherView = (today: Buffer, tomorrow: Buffer) =>
   merge(
     parseTeacherDay(today, todayDate()),
@@ -42,6 +42,15 @@ export const parseTeacherView = (today: Buffer, tomorrow: Buffer) =>
  * Parse Students
  */
 const parseStudentDay = (input: Buffer) =>
-  parseHTML(input, parse(false), convertStudent);
+  parseHTML(input, parseTable(false), convertStudent);
 export const parseStudentView = (today: Buffer, tomorrow: Buffer) =>
   merge(parseStudentDay(today), parseStudentDay(tomorrow));
+
+/**
+ * Parse Missing Teachers
+ */
+const parseDay = (input: Buffer): DayInfo => parseDayInfo(encoding(input));
+export const parseDayInfoBoth = (today: Buffer, tomorrow: Buffer) => ({
+  today: parseDay(today),
+  tomorrow: parseDay(tomorrow)
+});

@@ -6,9 +6,17 @@ import {
   TeacherEntriesMap,
   fetchEntriesTeacher,
   getInfo,
-  fetchInfo
+  fetchInfo,
+  fetchDayInfo,
+  getDayInfo
 } from "vplan-redux";
-import { TeacherEntry, TeacherEntries, Short, Info } from "vplan-types";
+import {
+  TeacherEntry,
+  TeacherEntries,
+  Short,
+  Info,
+  AllDayInfo
+} from "vplan-types";
 import { connect, Dispatch } from "react-redux";
 import { Action } from "redux";
 import { List } from "immutable";
@@ -20,9 +28,10 @@ import * as _ from "lodash";
 import { withRouter, RouteComponentProps } from "react-router";
 import Absent from "./components/Absent";
 import EntriesView from "../../components/EntriesView";
+import AllDayInfoView from "./components/AllDayInfo";
 
 /**
- * Helpers
+ * # Helpers
  */
 const getItems = (entries: TeacherEntriesMap): Item[] =>
   entries
@@ -33,26 +42,30 @@ const getItems = (entries: TeacherEntriesMap): Item[] =>
     .toArray();
 
 /**
- * Component Types
+ * # Component Types
  */
 interface StateProps {
   entries: TeacherEntriesMap;
   info: Info;
+  dayInfo: AllDayInfo;
 }
 const mapStateToProps = (state: AppState) =>
   ({
     entries: getTeacherEntries(state),
-    info: getInfo(state)
+    info: getInfo(state),
+    dayInfo: getDayInfo(state)
   } as StateProps);
 
 interface DispatchProps {
   refreshEntries(): void;
   refreshInfo(): void;
+  refreshDayInfo(): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
     refreshEntries: () => dispatch(fetchEntriesTeacher()),
-    refreshInfo: () => dispatch(fetchInfo())
+    refreshInfo: () => dispatch(fetchInfo()),
+    refreshDayInfo: () => dispatch(fetchDayInfo())
   } as DispatchProps);
 
 type Props = StateProps &
@@ -61,35 +74,36 @@ type Props = StateProps &
   WithStyles;
 
 /**
- * Component
+ * # Component
  */
 const Teacher = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(
     withRouter(
       class extends React.Component<Props> {
         /**
-         * Component Lifecycle
+         * ## Component Lifecycle
          */
         componentDidMount() {
-          this.props.refreshEntries();
-          this.props.refreshInfo();
-          setInterval(() => {
-            this.props.refreshEntries();
-            this.props.refreshInfo();
-          }, 10 * 1000);
+          this.handleRefresh();
+          setInterval(this.handleRefresh, 10 * 1000);
         }
 
         /**
-         * Handlers
+         * ## Handlers
          */
         handleShortChange = (short: Short) =>
           this.props.history.push(`/teacher/${short}`);
+        handleRefresh = () => {
+          this.props.refreshEntries();
+          this.props.refreshInfo();
+          this.props.refreshDayInfo();
+        };
 
         /**
-         * Render
+         * ## Render
          */
         render() {
-          const { entries, classes, match, info } = this.props;
+          const { entries, classes, match, info, dayInfo } = this.props;
           const { short } = match.params;
 
           const showEntries = entries.get(short === "etc" ? "" : short);
@@ -116,7 +130,7 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
                     <Information title="Infos Schüler" info={info.student} />
                   </Grid>
                   <Grid item>
-                    <Absent now={["BES", "GRÜTZ"]} next={[]} />
+                    <AllDayInfoView info={dayInfo} />
                   </Grid>
                 </Grid>
               </div>

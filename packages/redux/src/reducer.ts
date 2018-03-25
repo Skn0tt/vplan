@@ -28,9 +28,12 @@ import {
   FETCH_INFO_STUDENT_SUCCESS,
   FETCH_INFO_TEACHER_SUCCESS,
   SET_IS_TEACHER,
-  SET_SHORT
+  SET_SHORT,
+  FETCH_DAYINFO,
+  FETCH_DAYINFO_ERROR,
+  FETCH_DAYINFO_SUCCESS
 } from "./actions";
-import { Class, Group, Entry } from "vplan-types";
+import { Class, Group, Entry, AllDayInfo } from "vplan-types";
 import { AppState, AllEntriesRecord, InfoRecord } from "./types";
 import { Map, Set } from "immutable";
 import { getGroup } from "./selectors";
@@ -92,6 +95,13 @@ const reducer = handleActions(
       state
         .update("loading", decrement)
         .setIn(["entries", "teacher"], action.payload),
+
+    /**
+     * ## FETCH_DAYINFO
+     */
+    ...asyncReducer(FETCH_DAYINFO, FETCH_DAYINFO_ERROR),
+    [FETCH_DAYINFO_SUCCESS]: (state, action: Action<AllDayInfo>) =>
+      state.update("loading", decrement).set("dayInfo", action.payload),
 
     /**
      * ## PUT_ENTRIES

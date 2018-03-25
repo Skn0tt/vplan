@@ -101,6 +101,18 @@ export type AllEntries = {
 };
 export type Grouped<T> = { [type: string]: T[] };
 
+export type DayInfo = {
+  week: "A" | "B";
+  missingTeachers: Short[];
+  missingGroups: Group[];
+  blockedRooms: string[];
+};
+
+export type AllDayInfo = {
+  today: DayInfo;
+  tomorrow: DayInfo;
+};
+
 /**
  * Informationen
  */

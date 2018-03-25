@@ -79,6 +79,17 @@ export const fetchEntriesStudent = async () => {
   }
 };
 
+export const fetchDayInfo = async () => {
+  try {
+    const data = await fetch(`${config.baseUrl}/dayInfo`);
+    const json = await data.json();
+
+    return json;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const fetchTeachers = async () => {
   try {
     const data = await fetch(`${config.baseUrl}/teachers`);

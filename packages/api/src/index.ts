@@ -8,6 +8,7 @@ import * as dotenv from "dotenv";
 import entries from "./routes/entries";
 import status from "./routes/status";
 import info from "./routes/info";
+import dayInfo from "./routes/dayInfo";
 
 // Env
 dotenv.config();
@@ -33,6 +34,7 @@ app.options("*", cors({ origin: true }));
 app.use("/entries", entries);
 app.use("/status", status);
 app.use("/info", info);
+app.use("/dayInfo", dayInfo);
 
 app.listen(app.get("port"), () => {
   console.log(

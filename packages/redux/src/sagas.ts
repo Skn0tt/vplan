@@ -27,7 +27,10 @@ import {
   fetchInfoStudentError,
   fetchInfoStudentSuccess,
   fetchInfoTeacherError,
-  fetchInfoTeacherSuccess
+  fetchInfoTeacherSuccess,
+  FETCH_DAYINFO,
+  fetchDayInfoSuccess,
+  fetchDayInfoError
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
@@ -123,6 +126,16 @@ function* fetchTeachersSaga(action: Action<void>) {
   }
 }
 
+function* fetchDayInfoSaga(action: Action<void>) {
+  try {
+    const result = yield call(api.fetchDayInfo);
+
+    yield put(fetchDayInfoSuccess(result));
+  } catch (error) {
+    yield put(fetchDayInfoError(error));
+  }
+}
+
 function* rootSaga() {
   yield takeEvery(FETCH_ENTRIES, fetchEntriesSaga);
   yield takeEvery(FETCH_TEACHERS, fetchTeachersSaga);
@@ -131,6 +144,7 @@ function* rootSaga() {
   yield takeEvery(FETCH_INFO, fetchInfoSaga);
   yield takeEvery(FETCH_INFO_TEACHER, fetchInfoTeacherSaga);
   yield takeEvery(FETCH_INFO_STUDENT, fetchInfoStudentSaga);
+  yield takeEvery(FETCH_DAYINFO, fetchDayInfoSaga);
   yield takeEvery(PUT_INFO, putInfoSaga);
   yield takeEvery(PUT_ENTRIES, putEntriesSaga);
 }

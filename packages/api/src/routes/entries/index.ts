@@ -5,13 +5,21 @@ import {
   StudentEntries,
   TeacherEntries,
   AllEntries,
-  Teacher
+  Teacher,
+  DayInfo,
+  AllDayInfo
 } from "vplan-types";
-import { parseStudentView, parseTeacherView } from "vplan-parser";
+import {
+  parseStudentView,
+  parseTeacherView,
+  parseDayInfoBoth
+} from "vplan-parser";
 import * as multer from "multer";
 import { promisify } from "util";
 import { returnRedis, redisErrHandler, client } from "../../helpers/redis";
 import auth from "../../helpers/auth";
+import { parseDayInfo } from "parser/src/parse";
+import { DAYINFO } from "../dayInfo";
 
 const entriesRouter: Router = Router();
 
@@ -48,6 +56,7 @@ entriesRouter.put(
   (req, res, next) => {
     let student: StudentEntries;
     let teacher: TeacherEntries;
+    let dayInfo: AllDayInfo;
 
     // Parse
     try {
@@ -58,6 +67,8 @@ entriesRouter.put(
 
       student = parseStudentView(studentToday, studentTomorrow);
       teacher = parseTeacherView(teacherToday, teacherTomorrow);
+
+      dayInfo = parseDayInfoBoth(teacherToday, teacherTomorrow);
     } catch (error) {
       return res
         .status(400)
@@ -72,6 +83,7 @@ entriesRouter.put(
       JSON.stringify({ student, teacher }),
       redisErrHandler(next)
     );
+    client.set(DAYINFO, JSON.stringify(dayInfo), redisErrHandler(next));
 
     return res
       .status(200)
