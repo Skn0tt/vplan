@@ -12,7 +12,7 @@ stages:
 # Build
 #
 Build API:
-  image: mhart/alpine-node
+  image: docker
   stage: build
   services:
     - docker:dind
@@ -26,8 +26,8 @@ Build API:
     - make build
     - docker push $CONTAINER_API_IMAGE
 
-Build UI:
-  image: mhart/alpine-node
+.Build UI:
+  image: docker
   stage: build
   services:
     - docker:dind
