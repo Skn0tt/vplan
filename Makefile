@@ -4,6 +4,12 @@ dev: build-docker
 		-f docker-compose.dev.yml \
 		up
 
+prod: build-docker
+	docker-compose \
+		-f docker-compose.yml \
+		-f docker-compose.prod.yml \
+		up
+
 up: build-docker
 	docker-compose \
 		-f docker-compose.yml \
