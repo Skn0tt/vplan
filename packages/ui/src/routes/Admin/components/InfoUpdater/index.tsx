@@ -14,7 +14,7 @@ import {
 import { Delete as DeleteIcon, Add as AddIcon } from "material-ui-icons";
 import styles from "./styles";
 import TitleBar from "../../../../elements/TitleBar";
-import _ = require("lodash");
+import * as _ from "lodash";
 
 /**
  * # Component Types

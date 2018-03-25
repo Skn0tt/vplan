@@ -9,8 +9,8 @@ import {
 } from "material-ui";
 import styles from "./styles";
 import { Entry } from "vplan-types";
-import * as Tappable from "react-tappable";
-import _ = require("lodash");
+import Tappable from "react-tappable";
+import * as _ from "lodash";
 
 /**
  * # Helper Functions
@@ -87,7 +87,7 @@ const EntryItem: React.SFC<Props> = props => {
               isMarked ? classes.markedAvatar : classes[color(entry.type)]
             }
           >
-            {time(entry)}
+            {time(entry).length}
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={text(entry)} secondary={secondaryText(entry)} />

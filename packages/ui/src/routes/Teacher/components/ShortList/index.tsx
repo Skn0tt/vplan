@@ -11,7 +11,7 @@ import {
   WithStyles,
   withStyles
 } from "material-ui";
-import _ = require("lodash");
+import * as _ from "lodash";
 import styles from "./styles";
 
 /**
@@ -40,7 +40,7 @@ export type Item = {
   nmb: number;
 };
 interface OwnProps {
-  onChange(s: Short);
+  onChange(s: Short): void;
   items: Item[];
 }
 

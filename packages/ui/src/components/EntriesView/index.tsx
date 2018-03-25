@@ -4,7 +4,7 @@ import { Entry, Class } from "vplan-types";
 import { withStyles, List, Paper, Typography, WithStyles } from "material-ui";
 import EntryHeader from "../../elements/EntryHeader";
 import EntryItem from "../../elements/EntryItem";
-import _ = require("lodash");
+import * as _ from "lodash";
 import { connect } from "react-redux";
 import TitleBar from "../../elements/TitleBar";
 import { AppState, addMarked, removeMarked, isMarked } from "vplan-redux";
