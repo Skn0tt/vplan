@@ -14,7 +14,8 @@ import {
   AllEntries,
   TeacherEntries,
   Info,
-  Entry
+  Entry,
+  AllDayInfo
 } from "vplan-types";
 import { createSelector, Selector } from "reselect";
 
@@ -60,6 +61,9 @@ export const getOwnEntries = createSelector<
 >([isTeacher, getIdentifier, getEntries], (isTeacher, id, entries) =>
   entries.getIn([isTeacher ? "teacher" : "student", id])
 );
+
+export const getDayInfo: Selector<AppState, AllDayInfo> = state =>
+  state.get("dayInfo");
 
 export const getStudentEntries = createSelector<
   AppState,

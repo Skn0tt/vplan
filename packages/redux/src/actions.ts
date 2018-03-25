@@ -1,5 +1,5 @@
 import { createAction } from "redux-actions";
-import { Group, Class, Entry, Teacher, Info } from "vplan-types";
+import { Group, Class, Entry, Teacher, Info, AllDayInfo } from "vplan-types";
 import {
   AllEntriesRecord,
   PutEntriesPayload,
@@ -109,6 +109,18 @@ export const fetchInfoStudentError = createAction<Error>(
 );
 export const fetchInfoStudentSuccess = createAction<string[]>(
   FETCH_INFO_STUDENT_SUCCESS
+);
+
+/**
+ * ## FETCH_DAYINFO
+ */
+export const FETCH_DAYINFO = "FETCH_DAYINFO";
+export const FETCH_DAYINFO_ERROR = "FETCH_DAYINFO_ERROR";
+export const FETCH_DAYINFO_SUCCESS = "FETCH_DAYINFO_SUCCESS";
+export const fetchDayInfo = createAction(FETCH_DAYINFO);
+export const fetchDayInfoError = createAction<Error>(FETCH_DAYINFO_ERROR);
+export const fetchDayInfoSuccess = createAction<AllDayInfo>(
+  FETCH_DAYINFO_SUCCESS
 );
 
 /**
