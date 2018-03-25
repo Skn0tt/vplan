@@ -8,7 +8,8 @@ import {
   TeacherEntry,
   StudentEntry,
   Short,
-  Info
+  Info,
+  AllDayInfo
 } from "vplan-types";
 
 /**
@@ -79,6 +80,7 @@ interface IAppState {
   marked: Map<Group, Set<Class>>;
   info: InfoRecord;
   isTeacher: boolean;
+  dayInfo: AllDayInfo;
   short: Short;
 }
 
@@ -90,6 +92,7 @@ export class AppState extends Record(
     teachers: Map<string, TeacherInfo>(),
     marked: Map<Group, Set<Class>>(),
     info: new InfoRecord({}),
+    dayInfo: {},
     isTeacher: false,
     short: ""
   } as IAppState,
