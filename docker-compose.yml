@@ -25,6 +25,7 @@ services:
     depends_on:
       - redis
     environment:
+      - PASSWORD
       - NODE_ENV=production
       - VIRTUAL_HOST=${HOST}
       - VIRTUAL_PATH=/api/
