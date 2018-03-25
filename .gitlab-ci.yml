@@ -12,13 +12,14 @@ stages:
 # Build
 #
 Build API:
-  image: docker
+  image: mhart/alpine-node
   stage: build
   services:
     - docker:dind
   tags:
     - docker
   before_script:
+    - apk add make
     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
     - cd packages/api
@@ -26,13 +27,14 @@ Build API:
     - docker push $CONTAINER_API_IMAGE
 
 Build UI:
-  image: docker
+  image: mhart/alpine-node
   stage: build
   services:
     - docker:dind
   tags:
     - docker
   before_script:
+    - apk add make
     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
     - cd packages/ui
