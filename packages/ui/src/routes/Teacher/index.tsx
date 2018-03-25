@@ -16,7 +16,7 @@ import { Grid, withStyles, WithStyles, Typography, Paper } from "material-ui";
 import ShortList, { Item } from "./components/ShortList";
 import Information from "../../components/Information";
 import styles from "./styles";
-import _ = require("lodash");
+import * as _ from "lodash";
 import { withRouter, RouteComponentProps } from "react-router";
 import Absent from "./components/Absent";
 import EntriesView from "../../components/EntriesView";
@@ -28,7 +28,7 @@ const getItems = (entries: TeacherEntriesMap): Item[] =>
   entries
     .map((value, key) => ({
       short: key || "etc",
-      nmb: value.length
+      nmb: !!value ? value.length : 0
     }))
     .toArray();
 

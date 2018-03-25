@@ -1,6 +1,6 @@
 build: src
 	yarn build
-	docker build \
+	cker build \
 		-t registry.gitlab.com/skn0tt/vplan/vplan-ui \
 		.
 

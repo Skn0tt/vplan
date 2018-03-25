@@ -15,7 +15,7 @@ import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
 import { Entries, StudentEntries, Group, Entry } from "vplan-types";
 import { Map } from "immutable";
-import _ = require("lodash");
+import * as _ from "lodash";
 import Information from "../../components/Information";
 
 /**

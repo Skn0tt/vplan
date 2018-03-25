@@ -2,22 +2,26 @@
   "name": "vplan-ui",
   "version": "0.0.1",
   "description": "the ui for vplan",
-  "main": "dist/index.html",
+  "main": "src/index.html",
   "repository": "https://gitlab.com/skn0tt/vplan",
   "author": "Simon Knott",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url ./"
+    "start": "parcel src/index.html -o index.html",
+    "build":
+      "parcel build src/index.html --public-url ./ -o index.html && yarn serviceworker",
+    "serviceworker": "yarn workbox generateSW"
   },
   "dependencies": {
     "create-react-class": "^15.6.3",
+    "es6-promise": "^4.2.4",
     "lodash": "^4.17.5",
     "material-ui": "^1.0.0-beta.36",
     "material-ui-icons": "^1.0.0-beta.36",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -27,14 +31,15 @@
   "devDependencies": {
     "@types/lodash": "^4.14.104",
     "@types/react-dropzone": "^4.2.0",
-    "@types/react-loadable": "^5.3.3",
     "@types/react-router": "^4.0.22",
     "@types/react-router-dom": "^4.2.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "parcel-bundler": "^1.6.2",
-    "react-scripts-ts": "^2.14.0",
     "typescript": "^2.7.2",
-    "vplan-types": "^0.0.1"
-  }
+    "vplan-types": "^0.0.1",
+    "workbox-build": "^3.0.1",
+    "workbox-cli": "^3.0.1"
+  },
+  "swCacheId": "vplan-ui"
 }
