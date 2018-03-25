@@ -11,19 +11,38 @@ import createStore from "vplan-redux";
 import { Provider } from "react-redux";
 import Routes from "./Routes";
 import styles from "./styles";
+import startPolling from "./etc/poll";
+import * as util from "vplan-util";
 
-const store = createStore({
+export const store = createStore({
   baseUrl: "https://vplan.simonknott.de/api",
   storage: AsyncStorage
 });
 
-const App: React.SFC<{}> = () => (
-  <View style={styles.root}>
-    <StatusBar backgroundColor="#2196f3" barStyle="light-content" />
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  </View>
-);
+/**
+ * # Component
+ */
+class App extends React.PureComponent {
+  /**
+   * ## Lifecylce
+   */
+  componentDidMount() {
+    startPolling();
+  }
+
+  /**
+   * ## Render
+   */
+  render() {
+    return (
+      <View style={styles.root}>
+        <StatusBar backgroundColor={util.blue500} barStyle="light-content" />
+        <Provider store={store}>
+          <Routes />
+        </Provider>
+      </View>
+    );
+  }
+}
 
 export default App;

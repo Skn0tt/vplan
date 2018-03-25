@@ -9,7 +9,8 @@ import {
   StudentEntry,
   Short,
   Info,
-  AllDayInfo
+  AllDayInfo,
+  Entry
 } from "vplan-types";
 
 /**
