@@ -41,36 +41,21 @@ import {
 import SettingsButton from "./elements/SettingsButton";
 import SectionHeader from "./elements/SectionHeader";
 import InfoModalButton from "./elements/InfoModalButton";
+import { compareEntries, localiseDate } from "vplan-util";
 
 /**
  * # Helpers
  */
 const sectionize = (entries: Entry[]): SectionListData<Entry>[] =>
   _.values(_.groupBy(entries, "day")).map(v => ({
-    data: v,
-    key: "" + v[0].day
+    data: v
   }));
-
-const compareEntries = (a: Entry, b: Entry): number => {
-  if (a.day !== b.day) {
-    return +a.day - +b.day;
-  }
-
-  return a.from - b.from;
-};
 
 const sort = (entries: Entry[]) =>
   entries ? entries.sort(compareEntries) : entries;
 
 const hashEntry = (entry: Entry) =>
   entry.class + entry.day + entry.room + entry.from + entry.substituteTeacher;
-
-const dateString = (inp: string): string =>
-  new Date(Number(inp)).toLocaleDateString("de-DE", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
 
 /**
  * # Component Types
@@ -181,7 +166,9 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
             />
           )}
           renderSectionHeader={({ section }) => (
-            <SectionHeader title={dateString(section.key!)} />
+            <SectionHeader
+              title={localiseDate(new Date(section.data[0].day))}
+            />
           )}
           keyExtractor={hashEntry}
           refreshing={isLoading}

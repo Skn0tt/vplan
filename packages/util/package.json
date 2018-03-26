@@ -6,5 +6,8 @@
   "repository": "gitlab.com/skn0tt/vplan",
   "author": "Simon Knott",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "vplan-types": "^0.0.1"
+  }
 }

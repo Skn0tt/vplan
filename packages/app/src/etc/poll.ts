@@ -12,6 +12,7 @@ import {
   isMarked
 } from "vplan-redux";
 import { Entry } from "vplan-types";
+import { notify, setBadge } from "./push";
 
 const wait = (t: number) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -23,10 +24,6 @@ const complete = () =>
       }
     });
   });
-
-const notify = (entry: Entry): void => {
-  console.log(entry);
-};
 
 const routine = async (): Promise<void> => {
   console.log("[js] Background poll started");
@@ -48,6 +45,8 @@ const routine = async (): Promise<void> => {
   const newEntries = diff(getOwnEntries(oldState), getOwnEntries(newState));
 
   const markedNewEntries = newEntries.filter(v => isMarked(v.class)(newState));
+
+  setBadge(markedNewEntries.length);
 
   markedNewEntries.forEach(notify);
 
