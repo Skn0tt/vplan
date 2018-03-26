@@ -1,4 +1,4 @@
-import { put, call, takeEvery } from "redux-saga/effects";
+import { put, call, takeEvery, select } from "redux-saga/effects";
 import * as api from "./api";
 import {
   fetchEntriesError,
@@ -34,7 +34,10 @@ import {
 } from "./actions";
 import { Action } from "redux-actions";
 import { Map } from "immutable";
-import { PutEntriesPayload, PutInfoPayload } from "./types";
+import { PutEntriesPayload, PutInfoPayload, AppState } from "./types";
+import { config, getOwnEntries, isMarked } from "./";
+import diff from "./diff";
+import { Entries, StudentEntries, Entry } from "vplan-types";
 
 function* fetchEntriesSaga(action: Action<void>) {
   try {
@@ -48,9 +51,24 @@ function* fetchEntriesSaga(action: Action<void>) {
 
 function* fetchEntriesStudentSaga(action: Action<void>) {
   try {
+    const oldEntries: Entry[] = yield select(getOwnEntries);
+
     const result = yield call(api.fetchEntriesStudent);
 
     yield put(fetchEntriesStudentSuccess(result));
+
+    if (!!config.onNewEntriesReceived) {
+      const newEntries: Entry[] = yield select(getOwnEntries);
+      const state: AppState = yield select(v => v);
+
+      const diffEntries = diff(oldEntries, newEntries);
+
+      const markedNewEntries = diffEntries.filter(v =>
+        isMarked(v.class)(state)
+      );
+
+      config.onNewEntriesReceived(markedNewEntries);
+    }
   } catch (error) {
     yield put(fetchEntriesStudentError(error));
   }

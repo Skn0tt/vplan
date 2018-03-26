@@ -28,6 +28,19 @@ const second: Entry = {
   type: Types.VERTRETUNG
 };
 
+const third: Entry = {
+  class: "6C",
+  day: +new Date(),
+  from: 1,
+  to: 2,
+  teacher: "BES",
+  group: "5A",
+  substituteClass: "BIO",
+  substituteTeacher: "SPI",
+  room: "B204",
+  type: Types.VERTRETUNG
+};
+
 describe("Diff Algorithm", () => {
   it("should return empty array", () => {
     const result = diff([], []);
@@ -39,11 +52,33 @@ describe("Diff Algorithm", () => {
     expect(result).to.be.empty;
   });
 
+  it("should return empty array", () => {
+    const result = diff([first, first], [first, first]);
+    expect(result).to.be.empty;
+  });
+
   it("should return one entry", () => {
     const result = diff([first], [first, second]);
 
     expect(result).to.be.lengthOf(1);
     expect(result).to.contain(second);
+    expect(result).to.not.contain(first);
+  });
+
+  it("should return one entry", () => {
+    const result = diff([first, first], [first, second]);
+
+    expect(result).to.be.lengthOf(1);
+    expect(result).to.contain(second);
+    expect(result).to.not.contain(first);
+  });
+
+  it("should return two entries", () => {
+    const result = diff([first, first, first], [first, second, third]);
+
+    expect(result).to.be.lengthOf(2);
+    expect(result).to.contain(second);
+    expect(result).to.contain(third);
     expect(result).to.not.contain(first);
   });
 });

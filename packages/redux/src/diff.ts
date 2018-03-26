@@ -1,6 +1,8 @@
 import { Entry } from "vplan-types";
 import * as _ from "lodash";
+import { hashEntry } from "vplan-util";
 
-export const diff = (a: Entry[], b: Entry[]): Entry[] => _.difference(b, a);
+export const diff = (oldE: Entry[], newE: Entry[]): Entry[] =>
+  _.differenceBy(newE, oldE, hashEntry);
 
 export default diff;

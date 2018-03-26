@@ -25,30 +25,19 @@ const complete = () =>
     });
   });
 
+export const onNewEntriesReceived = (entries: Entry[]) => {
+  entries.forEach(notify);
+  setBadge(entries.length);
+};
+
 const routine = async (): Promise<void> => {
-  console.log("[js] Background poll started");
+  console.log(" [bf] Background poll started");
 
-  const oldState = store.getState() as AppState;
-
-  if (isTeacher(oldState)) {
+  if (isTeacher(store.getState() as AppState)) {
     store.dispatch(fetchEntriesTeacher());
   } else {
     store.dispatch(fetchEntriesStudent());
   }
-
-  await wait(50);
-
-  await complete;
-
-  const newState = store.getState() as AppState;
-
-  const newEntries = diff(getOwnEntries(oldState), getOwnEntries(newState));
-
-  const markedNewEntries = newEntries.filter(v => isMarked(v.class)(newState));
-
-  setBadge(markedNewEntries.length);
-
-  markedNewEntries.forEach(notify);
 
   BackgroundFetch.finish();
 };
@@ -61,10 +50,22 @@ const start = (): void => {
       startOnBoot: true
     },
     routine,
-    (error: Error) => console.log("[js] RNBackgroundFetch failed to start")
+    (error: Error) => console.log(" [js] RNBackgroundFetch failed to start")
   );
 
-  console.log("[js] RNBackgroundFetch configured");
+  BackgroundFetch.status(status => {
+    switch (status) {
+      case BackgroundFetch.STATUS_RESTRICTED:
+        console.log(" [bf] BackgroundFetch restricted");
+        break;
+      case BackgroundFetch.STATUS_DENIED:
+        console.log(" [bf] BackgroundFetch denied");
+        break;
+      case BackgroundFetch.STATUS_AVAILABLE:
+        console.log(" [bf] BackgroundFetch is enabled");
+        break;
+    }
+  });
 };
 
 export default start;

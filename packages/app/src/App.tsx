@@ -4,13 +4,14 @@ import createStore from "vplan-redux";
 import { Provider } from "react-redux";
 import Routes from "./Routes";
 import styles from "./styles";
-import startPolling from "./etc/poll";
+import startPolling, { onNewEntriesReceived } from "./etc/poll";
 import startPushing from "./etc/push";
 import * as util from "vplan-util";
 
 export const store = createStore({
   baseUrl: "https://vplan.simonknott.de/api",
-  storage: AsyncStorage
+  storage: AsyncStorage,
+  onNewEntriesReceived
 });
 
 /**

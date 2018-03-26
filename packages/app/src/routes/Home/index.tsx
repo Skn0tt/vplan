@@ -41,7 +41,7 @@ import {
 import SettingsButton from "./elements/SettingsButton";
 import SectionHeader from "./elements/SectionHeader";
 import InfoModalButton from "./elements/InfoModalButton";
-import { compareEntries, localiseDate } from "vplan-util";
+import { compareEntries, localiseDate, hashEntry } from "vplan-util";
 
 /**
  * # Helpers
@@ -53,9 +53,6 @@ const sectionize = (entries: Entry[]): SectionListData<Entry>[] =>
 
 const sort = (entries: Entry[]) =>
   entries ? entries.sort(compareEntries) : entries;
-
-const hashEntry = (entry: Entry) =>
-  entry.class + entry.day + entry.room + entry.from + entry.substituteTeacher;
 
 /**
  * # Component Types
