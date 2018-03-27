@@ -3,27 +3,7 @@ import { View, Text, AppState, TouchableOpacity } from "react-native";
 import { Entry } from "vplan-types";
 import Hours from "../Hours";
 import styles from "./styles";
-
-/**
- * # Helpers
- */
-const text = (entry: Readonly<Entry>): string =>
-  entry.class ? entry.class + " " + entry.teacher : entry.teacher;
-
-const secondaryText = (entry: Readonly<Entry>): string => {
-  let result: string = entry.type;
-  if (entry.substituteTeacher) {
-    result += ", ";
-    result += entry.substituteTeacher;
-
-    if (entry.room) {
-      result += "@";
-      result += entry.room;
-    }
-  }
-
-  return result;
-};
+import { secondaryText, text } from "vplan-util";
 
 /**
  * # Component Types

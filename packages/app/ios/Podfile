@@ -9,6 +9,7 @@ target 'vplanApp' do
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
   pod 'React', :path => '../node_modules/react-native'
   pod 'RNVectorIcons', :path => '../../../node_modules/react-native-vector-icons'
+  pod 'RNBackgroundFetch', :path => '../../../node_modules/react-native-background-fetch'
 
   target 'vplanAppTests' do
     inherit! :search_paths
