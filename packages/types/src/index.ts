@@ -66,12 +66,6 @@ export type Class = string;
 
 export type Teacher = string;
 
-export type TeacherInfo = {
-  name: string;
-  short: Teacher;
-  subjects: ReadonlyArray<string>;
-};
-
 export type Short = Teacher | Group;
 
 export type TeacherEntry = StudentEntry & {

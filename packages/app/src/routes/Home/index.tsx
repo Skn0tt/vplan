@@ -41,13 +41,18 @@ import {
 import SettingsButton from "./elements/SettingsButton";
 import SectionHeader from "./elements/SectionHeader";
 import InfoModalButton from "./elements/InfoModalButton";
-import { compareEntries, localiseDate, hashEntry } from "vplan-util";
+import {
+  compareEntries,
+  localiseDate,
+  hashEntry,
+  groupByDay
+} from "vplan-util";
 
 /**
  * # Helpers
  */
 const sectionize = (entries: Entry[]): SectionListData<Entry>[] =>
-  _.values(_.groupBy(entries, "day")).map(v => ({
+  groupByDay(entries).map(v => ({
     data: v
   }));
 
