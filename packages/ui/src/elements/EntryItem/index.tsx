@@ -11,6 +11,7 @@ import styles from "./styles";
 import { Entry } from "vplan-types";
 import Tappable from "react-tappable";
 import * as _ from "lodash";
+import { text, secondaryText } from "vplan-util";
 
 /**
  * # Helper Functions
@@ -25,24 +26,6 @@ const time = (entry: Readonly<Entry>): string => {
   }
 
   return "" + from;
-};
-
-const text = (entry: Readonly<Entry>): string =>
-  entry.class ? entry.class + " " + entry.teacher : entry.teacher;
-
-const secondaryText = (entry: Readonly<Entry>): string => {
-  let result: string = entry.type;
-  if (entry.substituteTeacher) {
-    result += ", ";
-    result += entry.substituteTeacher;
-
-    if (entry.room) {
-      result += "@";
-      result += entry.room;
-    }
-  }
-
-  return result;
 };
 
 const hash = (input: string): number =>

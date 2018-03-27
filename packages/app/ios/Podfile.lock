@@ -3,18 +3,23 @@ PODS:
     - React/Core (= 0.54.2)
   - React/Core (0.54.2):
     - yoga (= 0.54.2.React)
+  - RNBackgroundFetch (2.4.1):
+    - React
   - RNVectorIcons (4.5.0):
     - React
   - yoga (0.54.2.React)
 
 DEPENDENCIES:
   - React (from `../node_modules/react-native`)
+  - RNBackgroundFetch (from `../../../node_modules/react-native-background-fetch`)
   - RNVectorIcons (from `../../../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
   React:
     :path: ../node_modules/react-native
+  RNBackgroundFetch:
+    :path: ../../../node_modules/react-native-background-fetch
   RNVectorIcons:
     :path: ../../../node_modules/react-native-vector-icons
   yoga:
@@ -22,9 +27,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   React: c237e42de9c70e5cac6eeb52b4cfd3a0910c1f00
+  RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
   RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 9e5c949982ac5ecf75f7fd392f297de338efc178
+PODFILE CHECKSUM: 087ca503f2ac97a81a68b90e5d76224dd8aba6bb
 
 COCOAPODS: 1.4.0

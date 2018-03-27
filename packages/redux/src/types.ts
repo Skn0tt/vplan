@@ -3,13 +3,13 @@ import {
   Group,
   Teacher,
   Class,
-  TeacherInfo,
   AllEntries,
   TeacherEntry,
   StudentEntry,
   Short,
   Info,
-  AllDayInfo
+  AllDayInfo,
+  Entry
 } from "vplan-types";
 
 /**
@@ -76,7 +76,6 @@ interface IAppState {
   entries: AllEntriesRecord;
   loading: number;
   group: Group;
-  teachers: Map<string, TeacherInfo>;
   marked: Map<Group, Set<Class>>;
   info: InfoRecord;
   isTeacher: boolean;
@@ -96,7 +95,6 @@ export class AppState extends Record(
     entries: new AllEntriesRecord({}),
     loading: 0,
     group: "5A",
-    teachers: Map<string, TeacherInfo>(),
     marked: Map<Group, Set<Class>>(),
     info: new InfoRecord({}),
     dayInfo: {

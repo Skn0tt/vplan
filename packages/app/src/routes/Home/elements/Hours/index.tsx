@@ -33,7 +33,7 @@ type Colors =
   | "blue900"
   | "lightBlue500"
   | "cyan500";
-const pick = (arr: any[], ind: number) => _.nth(arr, ind % arr.length);
+const pick = (arr: any[], ind: number) => arr[ind % arr.length];
 const color = (type: string): Colors => pick(colors, hash(type));
 
 const getStyles = (marked: boolean, item: Entry) =>

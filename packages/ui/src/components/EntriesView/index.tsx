@@ -9,29 +9,13 @@ import { connect } from "react-redux";
 import TitleBar from "../../elements/TitleBar";
 import { AppState, addMarked, removeMarked, isMarked } from "vplan-redux";
 import { Dispatch, Action } from "redux";
+import { compareEntries, localiseDate, groupByDay } from "vplan-util";
 
 /**
  * # Helpers
  */
-const sectionize = (entries: ReadonlyArray<Entry>): Entry[][] => {
-  const groups = _.groupBy(entries, "day");
-  return _.values(groups);
-};
-
-const compareEntries = (a: Entry, b: Entry): number => {
-  if (a.day !== b.day) {
-    return +a.day - +b.day;
-  }
-
-  return a.from - b.from;
-};
-
-const localiseDate = (date: Date) =>
-  date.toLocaleDateString("de-DE", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
+const sectionize = (entries: ReadonlyArray<Entry>): Entry[][] =>
+  groupByDay(entries);
 
 /**
  * # Component Types

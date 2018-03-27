@@ -8,7 +8,6 @@ import {
   Group,
   Teacher,
   Class,
-  TeacherInfo,
   StudentEntries,
   StudentEntry,
   AllEntries,
@@ -95,7 +94,3 @@ export const isMarked = (c: Class): Selector<AppState, boolean> => state =>
 export const getGroup: Selector<AppState, Group> = state => state.get("group");
 export const isLoading: Selector<AppState, boolean> = state =>
   state.get("loading") > 0;
-
-export const getTeacherInfo = (
-  short: string
-): Selector<AppState, TeacherInfo> => state => state.getIn(["teachers", short]);

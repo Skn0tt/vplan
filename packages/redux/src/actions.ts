@@ -52,18 +52,6 @@ export const fetchEntriesTeacherError = createAction<Error>(
 );
 
 /**
- * ## FETCH_TEACHERS
- */
-export const FETCH_TEACHERS = "FETCH_TEACHERS";
-export const FETCH_TEACHERS_ERROR = "FETCH_TEACHERS_ERROR";
-export const FETCH_TEACHERS_SUCCESS = "FETCH_TEACHERS_SUCCESS";
-export const fetchTeachers = createAction(FETCH_TEACHERS);
-export const fetchTeachersError = createAction<Error>(FETCH_TEACHERS_ERROR);
-export const fetchTeachersSuccess = createAction<ReadonlyArray<Teacher>>(
-  FETCH_TEACHERS_SUCCESS
-);
-
-/**
  * ## PUT_ENTRIES
  */
 export const PUT_ENTRIES = "PUT_ENTRIES";
