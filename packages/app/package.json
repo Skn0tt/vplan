@@ -6,6 +6,7 @@
     "start:ios": "react-native run-ios",
     "start:android": "react-native run-android",
     "start:bundler": "yarn haul",
+    "release:android": "cd android && ./gradlew assembleRelease",
     "emu:android": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_26_x86",
     "test": "jest"
   },
@@ -27,7 +28,6 @@
     "@types/lodash": "^4.14.105",
     "@types/react": "^16.0.40",
     "@types/react-native": "^0.52.18",
-    "@types/react-native-push-notification": "^3.0.2",
     "@types/react-native-vector-icons": "^4.4.3",
     "@types/react-navigation": "^1.2.3",
     "@types/react-redux": "^5.0.15",
