@@ -6,6 +6,7 @@
     "start:ios": "react-native run-ios",
     "start:android": "react-native run-android",
     "start:bundler": "yarn haul",
+    "release:android": "cd android && ./gradlew assembleRelease",
     "emu:android": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_26_x86",
     "test": "jest"
   },
