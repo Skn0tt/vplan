@@ -72,9 +72,23 @@ import com.android.build.OutputFile
  * ]
  */
 
+def getPassword(String currentUser, String keyChain) {
+    def stdout = new ByteArrayOutputStream()
+    def stderr = new ByteArrayOutputStream()
+    exec {
+        commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
+        standardOutput = stdout
+        errorOutput = stderr
+        ignoreExitValue true
+    }
+    //noinspection GroovyAssignabilityCheck
+    stdout.toString().trim()
+}
+ 
+
 project.ext.react = [
-  entryFile: "index.js",
-  cliPath: "../node_modules/haul/bin/cli.js"
+    entryFile: "index.js",
+    cliPath: "./node_modules/haul/bin/cli.js"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -95,6 +109,8 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+def pass = getPassword("skn0tt","vplan-app_keystore")
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -109,6 +125,14 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+        release {
+            storeFile file(VPLAN_APP_RELEASE_STORE_FILE)
+            storePassword pass
+            keyAlias VPLAN_APP_RELEASE_KEY_ALIAS
+            keyPassword pass
+        }
+    }
     splits {
         abi {
             reset()
@@ -121,6 +145,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release

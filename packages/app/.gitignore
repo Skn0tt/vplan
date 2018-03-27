@@ -1,6 +1,7 @@
 # TypeScript
 #
-./lib/
+lib
+dist
 
 # Jest
 #
