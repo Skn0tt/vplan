@@ -147,7 +147,7 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
                   );
                 })
                 .toArray()}
-              <Grid item>
+              <Grid item className={classes.item}>
                 <Information title="Informationen" info={info} />
               </Grid>
             </Grid>
