@@ -32,9 +32,11 @@ const enhancer = composeEnhancers(
   autoRehydrate()
 );
 
-const removeLoadingTransform = createTransform(
+const removeUnneededTransform = createTransform(
   (inboundState, key) =>
-    key === "root" ? inboundState.delete("loading") : inboundState
+    key === "root"
+      ? inboundState.delete("loading").delete("errors")
+      : inboundState
 );
 
 const store = createStore(reducer, enhancer);
@@ -44,7 +46,7 @@ let persistor;
 export const persist = () =>
   (persistor = persistStore(store, {
     storage: config.storage || asyncLocalStorage,
-    transforms: [removeLoadingTransform]
+    transforms: [removeUnneededTransform]
   }));
 
 sagaMiddleware.run(sagas);

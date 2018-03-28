@@ -5,6 +5,7 @@ import store from "./etc/store";
 import Routes from "./Routes";
 import theme from "./theme";
 import Loading from "./elements/Loading";
+import Messager from "./components/Messager";
 
 const App: React.SFC<{}> = () => (
   <div>
@@ -12,6 +13,7 @@ const App: React.SFC<{}> = () => (
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <Routes />
+        <Messager />
       </MuiThemeProvider>
     </Provider>
   </div>

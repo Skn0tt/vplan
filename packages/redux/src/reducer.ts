@@ -31,11 +31,12 @@ import {
   SET_SHORT,
   FETCH_DAYINFO,
   FETCH_DAYINFO_ERROR,
-  FETCH_DAYINFO_SUCCESS
+  FETCH_DAYINFO_SUCCESS,
+  REMOVE_ERROR
 } from "./actions";
 import { Class, Group, Entry, AllDayInfo } from "vplan-types";
 import { AppState, AllEntriesRecord, InfoRecord } from "./types";
-import { Map, Set } from "immutable";
+import { Map, Set, List } from "immutable";
 import { getGroup } from "./selectors";
 
 /**
@@ -43,10 +44,13 @@ import { getGroup } from "./selectors";
  */
 const increment = (i: number) => i + 1;
 const decrement = (i: number) => i - 1;
+const push = (item: any) => (list: List<any>) => list.push(item);
+const remove = (ind: number) => (list: List<any>) => list.remove(ind);
 
 const asyncReducer = (start: string, error: string) => ({
   [start]: (state: AppState) => state.update("loading", increment),
-  [error]: (state: AppState) => state.update("loading", decrement)
+  [error]: (state: AppState, action: Action<Error>) =>
+    state.update("loading", decrement).update("errors", push(action.payload))
 });
 
 const asyncReducerFull = (start: string, error: string, success: string) => ({
@@ -145,6 +149,12 @@ const reducer = handleActions(
      */
 
     /**
+     * ## REMOVE_ERROR
+     */
+    [REMOVE_ERROR]: (state, action: Action<number>) =>
+      state.update("errors", remove(action.payload)),
+
+    /**
      * ## SET_IS_TEACHER
      */
     [SET_IS_TEACHER]: (state, action: Action<boolean>) =>
@@ -161,6 +171,7 @@ const reducer = handleActions(
      */
     [SET_GROUP]: (state, action: Action<Group>) =>
       state.set("group", action.payload),
+
     /**
      * ## MARKED
      */
