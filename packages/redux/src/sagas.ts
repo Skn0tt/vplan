@@ -53,7 +53,7 @@ const createSaga = (
 
       yield put(onSuccess(result));
     } catch (error) {
-      yield put(error(error));
+      yield put(onError(error));
     }
   };
 
@@ -74,7 +74,7 @@ const createSagaWithComparison = (
       const newEntries: Entry[] = yield select(getOwnEntries);
       onCompare(oldEntries, newEntries);
     } catch (error) {
-      yield put(error(error));
+      yield put(onError(error));
     }
   };
 

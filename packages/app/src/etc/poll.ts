@@ -14,8 +14,6 @@ import {
 import { Entry } from "vplan-types";
 import { notify, setBadge } from "./push";
 
-const wait = (t: number) => new Promise(resolve => setTimeout(resolve, t));
-
 const complete = () =>
   new Promise(resolve => {
     store.subscribe(() => {

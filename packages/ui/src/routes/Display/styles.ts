@@ -8,6 +8,10 @@ const styles = (theme: Theme): StyleRules => ({
   item: {
     height: "50%",
     width: "20%"
+  },
+  information: {
+    height: "50%",
+    width: "40%"
   }
 });
 

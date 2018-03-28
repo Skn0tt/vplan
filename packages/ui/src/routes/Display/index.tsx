@@ -37,7 +37,7 @@ const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
   );
 
 const bound = (int: number, max: number) => (int > max ? max : int);
-const pages = (entries: Entry[], amount: number) => _.chunk(entries, amount);
+const pages = (entries: any[], amount: number) => _.chunk(entries, amount);
 const pick = (arr: any[], int: number) => int % arr.length;
 
 /**
@@ -121,10 +121,14 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
         const { entries, classes, info } = this.props;
         const { page } = this.state;
 
-        const grouped = group(entries).sortBy(
-          (v, k) => k,
-          (a, b) => a.localeCompare(b)
-        );
+        const grouped = group(entries)
+          .set("Q3", entries.get("Q2"))
+          .sortBy((v, k) => k, (a, b) => a.localeCompare(b));
+
+        const g9 = grouped.size > 8;
+
+        const pagedInfo = pages(info, 6);
+        const pickedInfo = pick(pagedInfo, page);
 
         return (
           <div className={classes.container}>
@@ -147,8 +151,11 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
                   );
                 })
                 .toArray()}
-              <Grid item className={classes.item}>
-                <Information title="Informationen" info={info} />
+              <Grid item className={g9 ? classes.item : classes.information}>
+                <Information
+                  title="Informationen"
+                  info={pagedInfo[pickedInfo] || []}
+                />
               </Grid>
             </Grid>
           </div>
