@@ -5,6 +5,12 @@ const styles = (theme: Theme): StyleRules => ({
   container: {
     marginLeft: 24,
     marginRight: 24
+  },
+  itemContainer: {
+    marginTop: 12
+  },
+  item: {
+    width: "33%"
   }
 });
 

@@ -133,15 +133,16 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
               label="Secret"
               type="password"
               fullWidth
+              placeholder="Geben sie hier das Secret ein"
               autoComplete="current-password"
               margin="normal"
               onChange={e => this.setState({ secret: e.target.value })}
             />
-            <Grid container>
-              <Grid item>
+            <Grid container className={classes.itemContainer}>
+              <Grid item className={classes.item}>
                 <EntriesUpdater onSend={this.handlePutEntries} />
               </Grid>
-              <Grid item>
+              <Grid item className={classes.item}>
                 <InfoUpdater
                   title="Schülerinfos"
                   button="Schülerinfos aktualisieren"
@@ -149,7 +150,7 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
                   onSend={this.handlePutStudentInfo}
                 />
               </Grid>
-              <Grid item>
+              <Grid item className={classes.item}>
                 <InfoUpdater
                   title="Lehrerinfos"
                   button="Lehrerinfos aktualisieren"

@@ -18,6 +18,7 @@ import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
 import Information from "../../components/Information";
+import { Observable } from "rxjs";
 
 /**
  * Helpers
@@ -66,8 +67,13 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
        */
       componentDidMount() {
         this.handleRefresh();
-        setInterval(this.handleRefresh, 10 * 1000);
+        this.refreshClock.subscribe(this.handleRefresh);
       }
+
+      /**
+       * ## Rx
+       */
+      refreshClock = Observable.interval(10 * 1000);
 
       /**
        * ## Handlers

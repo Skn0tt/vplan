@@ -87,7 +87,7 @@ const InfoUpdater = withStyles(styles)(
 
       return (
         <div>
-          <TitleBar>{title}</TitleBar>
+          <TitleBar primary={title} />
           <List>
             {infos.map((value, index) => (
               <ListItem key={value + index}>
@@ -104,6 +104,7 @@ const InfoUpdater = withStyles(styles)(
             ))}
           </List>
           <TextField
+            multiline
             value={field}
             className={classes.textField}
             onChange={e => this.setState({ field: e.target.value })}

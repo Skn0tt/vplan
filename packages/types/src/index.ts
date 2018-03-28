@@ -69,11 +69,11 @@ export type Teacher = string;
 export type Short = Teacher | Group;
 
 export type TeacherEntry = StudentEntry & {
-  group: Group;
   substituteClass: Class;
 };
 
 export type StudentEntry = {
+  group: Group;
   type: Types;
   from: number;
   to: number;

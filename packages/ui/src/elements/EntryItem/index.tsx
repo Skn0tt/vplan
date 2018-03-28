@@ -11,7 +11,7 @@ import styles from "./styles";
 import { Entry } from "vplan-types";
 import Tappable from "react-tappable";
 import * as _ from "lodash";
-import { text, secondaryText } from "vplan-util";
+import { text, secondaryText, textWithClass } from "vplan-util";
 
 /**
  * # Helper Functions
@@ -48,6 +48,7 @@ interface OwnProps {
   isMarked: boolean;
   addMarked();
   removeMarked();
+  showGroup: boolean;
 }
 
 type Props = OwnProps & WithStyles;
@@ -56,7 +57,14 @@ type Props = OwnProps & WithStyles;
  * # Component
  */
 const EntryItem: React.SFC<Props> = props => {
-  const { entry, classes, isMarked, removeMarked, addMarked } = props;
+  const {
+    entry,
+    classes,
+    isMarked,
+    removeMarked,
+    addMarked,
+    showGroup
+  } = props;
 
   return (
     <Tappable
@@ -70,10 +78,13 @@ const EntryItem: React.SFC<Props> = props => {
               isMarked ? classes.markedAvatar : classes[color(entry.type)]
             }
           >
-            {time(entry).length}
+            {time(entry)}
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={text(entry)} secondary={secondaryText(entry)} />
+        <ListItemText
+          primary={showGroup ? textWithClass(entry) : text(entry)}
+          secondary={secondaryText(entry)}
+        />
       </ListItem>
     </Tappable>
   );
