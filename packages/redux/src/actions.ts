@@ -126,6 +126,12 @@ export const putInfoSuccess = createAction<InfoRecord>(PUT_INFO_SUCCESS);
  */
 
 /**
+ * ## REMOVE_ERROR
+ */
+export const REMOVE_ERROR = "REMOVE_ERROR";
+export const removeError = createAction<number>(REMOVE_ERROR);
+
+/**
  * ## SET_IS_TEACHER
  */
 export const SET_IS_TEACHER = "SET_IS_TEACHER";

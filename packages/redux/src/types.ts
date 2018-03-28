@@ -81,6 +81,7 @@ interface IAppState {
   isTeacher: boolean;
   dayInfo: AllDayInfo;
   short: Short;
+  errors: List<Error>;
 }
 
 const defaultDayInfo = {
@@ -102,7 +103,8 @@ export class AppState extends Record(
       tomorrow: defaultDayInfo
     },
     isTeacher: false,
-    short: ""
+    short: "",
+    errors: List<Error>()
   } as IAppState,
   "AppState"
 ) {
