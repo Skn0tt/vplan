@@ -121,9 +121,10 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
         const { entries, classes, info } = this.props;
         const { page } = this.state;
 
-        const grouped = group(entries)
-          .set("Q3", entries.get("Q2"))
-          .sortBy((v, k) => k, (a, b) => a.localeCompare(b));
+        const grouped = group(entries).sortBy(
+          (v, k) => k,
+          (a, b) => a.localeCompare(b)
+        );
 
         const g9 = grouped.size > 8;
 
