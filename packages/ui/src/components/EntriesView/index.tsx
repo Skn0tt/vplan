@@ -30,7 +30,8 @@ interface OwnProps {
   entries: ReadonlyArray<Entry>;
   allowMarking?: boolean;
   title?: string | JSX.Element;
-  pageString?: string;
+  subtitle?: string;
+  showGroups?: boolean;
 }
 
 interface StateProps {
@@ -63,16 +64,17 @@ const EntriesView: React.SFC<Props> = props => {
     addMarked,
     removeMarked,
     allowMarking,
-    pageString,
+    subtitle,
     title,
-    classes
+    classes,
+    showGroups
   } = props;
 
   const sections = sectionize(entries);
 
   return (
     <div className={classes.container}>
-      {title && <TitleBar primary={title} secondary={pageString} />}
+      {title && <TitleBar primary={title} secondary={subtitle} />}
       <List>
         {sections.map((section, index) => (
           <React.Fragment key={index}>
@@ -85,6 +87,7 @@ const EntriesView: React.SFC<Props> = props => {
                 <EntryItem
                   key={index}
                   entry={entry}
+                  showGroup={showGroups}
                   isMarked={isMarked(entry.class)}
                   addMarked={() => allowMarking && addMarked(entry.class)}
                   removeMarked={() => allowMarking && removeMarked(entry.class)}

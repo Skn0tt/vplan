@@ -138,9 +138,10 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
                     <Grid item key={key} className={classes.item}>
                       <EntriesView
                         entries={paged[picked]}
-                        pageString={`${picked + 1} / ${paged.length}`}
+                        subtitle={`${picked + 1} / ${paged.length}`}
                         title={key}
                         allowMarking={false}
+                        showGroups
                       />
                     </Grid>
                   );

@@ -5,6 +5,7 @@ import group from "./group";
 import { convertStudent, convertTeacher } from "./convert";
 import merge from "./merge";
 import encoding from "./encoding";
+import sampleinput from "./sampleinput";
 
 export type Row = string[];
 

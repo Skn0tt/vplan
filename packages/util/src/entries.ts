@@ -1,6 +1,10 @@
-import { Entry } from "vplan-types";
+import { Entry, Group } from "vplan-types";
 
 export const validClass = (entry: Entry) => entry.class !== "---";
+
+const isNumber = (s: string): boolean => !isNaN(+s);
+
+export const isLower = (g: Group): boolean => isNumber(g.charAt(0));
 
 export const hashEntry = (entry: Entry) =>
   entry.class + entry.day + entry.room + entry.from + entry.substituteTeacher;

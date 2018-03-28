@@ -34,7 +34,7 @@ const getHours = (input: string) => {
   return { from: Number(from), to: Number(to) };
 };
 
-const mapTeacher = (day: Date) => (row: string[]): TeacherEntry => {
+const mapTeacher = (day: Date) => _ => (row: string[]): TeacherEntry => {
   const { from, to } = getHours(row[1]);
   return {
     from,
@@ -50,11 +50,12 @@ const mapTeacher = (day: Date) => (row: string[]): TeacherEntry => {
   };
 };
 
-const mapStudent = (row: string[]): StudentEntry => {
+const mapStudent = (group: Group) => (row: string[]): StudentEntry => {
   const { from, to } = getHours(row[2]);
   return {
     from,
     to,
+    group,
     type: row[0] as Types,
     class: row[4],
     day: getDate(row[1]),
@@ -66,8 +67,8 @@ const mapStudent = (row: string[]): StudentEntry => {
 
 const convert = (
   input: Grouped<Row>,
-  map: (row: Row) => Entry
-): Grouped<Entry> => _.mapValues(input, (v, k, o) => v.map(map));
+  map: (key: string) => (row: Row) => Entry
+): Grouped<Entry> => _.mapValues(input, (v, k, o) => v.map(map(k)));
 
 const isLength = (length: number, value: string) => value.length === length;
 const isUpperCase = (value: string) => value.toUpperCase() === value;
