@@ -3,10 +3,10 @@ import { Theme } from "material-ui/styles/createMuiTheme";
 
 const styles = (theme: Theme): StyleRules => ({
   titleBar: {
-    width: "100%",
-    textAlign: "center",
-    padding: 12
-  }
+    padding: 12,
+    textAlign: "center"
+  },
+  secondary: {}
 });
 
 export default styles;

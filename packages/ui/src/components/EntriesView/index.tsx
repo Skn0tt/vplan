@@ -1,8 +1,14 @@
 import * as React from "react";
 import styles from "./styles";
 import { Entry, Class } from "vplan-types";
-import { withStyles, List, Paper, Typography, WithStyles } from "material-ui";
-import EntryHeader from "../../elements/EntryHeader";
+import {
+  withStyles,
+  List,
+  Paper,
+  Typography,
+  WithStyles,
+  ListSubheader
+} from "material-ui";
 import EntryItem from "../../elements/EntryItem";
 import * as _ from "lodash";
 import { connect } from "react-redux";
@@ -24,6 +30,7 @@ interface OwnProps {
   entries: ReadonlyArray<Entry>;
   allowMarking?: boolean;
   title?: string | JSX.Element;
+  pageString?: string;
 }
 
 interface StateProps {
@@ -56,6 +63,7 @@ const EntriesView: React.SFC<Props> = props => {
     addMarked,
     removeMarked,
     allowMarking,
+    pageString,
     title,
     classes
   } = props;
@@ -64,11 +72,13 @@ const EntriesView: React.SFC<Props> = props => {
 
   return (
     <div className={classes.container}>
-      {title && <TitleBar>{title}</TitleBar>}
+      {title && <TitleBar primary={title} secondary={pageString} />}
       <List>
         {sections.map((section, index) => (
           <React.Fragment key={index}>
-            <EntryHeader title={localiseDate(new Date(section[0].day))} />
+            <ListSubheader>
+              {localiseDate(new Date(section[0].day))}
+            </ListSubheader>
             {section
               .sort(compareEntries)
               .map((entry, index) => (

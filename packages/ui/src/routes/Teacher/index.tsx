@@ -29,6 +29,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 import Absent from "./components/Absent";
 import EntriesView from "../../components/EntriesView";
 import AllDayInfoView from "./components/AllDayInfo";
+import { Observable } from "rxjs";
 
 /**
  * # Helpers
@@ -85,8 +86,13 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
          */
         componentDidMount() {
           this.handleRefresh();
-          setInterval(this.handleRefresh, 10 * 1000);
+          this.refreshClock.subscribe(this.handleRefresh);
         }
+
+        /**
+         * ## Rx
+         */
+        refreshClock = Observable.interval(10 * 1000);
 
         /**
          * ## Handlers

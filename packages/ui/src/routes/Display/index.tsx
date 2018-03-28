@@ -17,6 +17,7 @@ import { Entries, StudentEntries, Group, Entry } from "vplan-types";
 import { Map } from "immutable";
 import * as _ from "lodash";
 import Information from "../../components/Information";
+import { Observable } from "rxjs/Rx";
 
 /**
  * # Helpers
@@ -37,7 +38,7 @@ const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
 
 const bound = (int: number, max: number) => (int > max ? max : int);
 const pages = (entries: Entry[], amount: number) => _.chunk(entries, amount);
-const pick = (arr: any[], int: number) => arr[int % arr.length];
+const pick = (arr: any[], int: number) => int % arr.length;
 
 /**
  * # Component Types
@@ -65,6 +66,7 @@ type Props = StateProps & DispatchProps & WithStyles;
 
 interface State {
   page: number;
+  second: number;
 }
 
 /**
@@ -74,11 +76,19 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(
     class extends React.Component<Props, State> {
       /**
-       * # Intialization
+       * ## Intialization
        */
       state: State = {
+        second: 0,
         page: 0
       };
+
+      /**
+       * ## Rx
+       */
+      pageClock = Observable.interval(1000);
+      refreshClock = Observable.interval(10 * 1000);
+      refreshInfoClock = Observable.interval(60 * 1000);
 
       /**
        * ## Component Lifecycle
@@ -87,10 +97,22 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
         this.props.refresh();
         this.props.refreshInfo();
 
-        setInterval(() => this.setState({ page: this.state.page + 1 }), 5000);
-        setInterval(() => this.props.refresh(), 10000);
-        setInterval(() => this.props.refreshInfo(), 60000);
+        this.pageClock.subscribe(this.nextSecond);
+        this.refreshClock.subscribe(this.props.refresh());
+        this.refreshInfoClock.subscribe(this.props.refreshInfo());
       }
+
+      /**
+       * ## Handlers
+       */
+      nextSecond = () => {
+        this.setState({ second: (this.state.second + 1) % 5 });
+
+        if (this.state.second === 0) {
+          this.nextPage();
+        }
+      };
+      nextPage = () => this.setState({ page: (this.state.page + 1) % 100 });
 
       /**
        * ## Render
@@ -108,15 +130,21 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
           <div className={classes.container}>
             <Grid container spacing={16} justify="center">
               {grouped
-                .map((val, key) => (
-                  <Grid item key={key}>
-                    <EntriesView
-                      entries={pick(pages(val, 5), page)}
-                      title={key}
-                      allowMarking={false}
-                    />
-                  </Grid>
-                ))
+                .map((val, key) => {
+                  const paged = pages(val, 5);
+                  const picked = pick(paged, page);
+
+                  return (
+                    <Grid item key={key} className={classes.item}>
+                      <EntriesView
+                        entries={paged[picked]}
+                        pageString={`${picked + 1} / ${paged.length}`}
+                        title={key}
+                        allowMarking={false}
+                      />
+                    </Grid>
+                  );
+                })
                 .toArray()}
               <Grid item>
                 <Information title="Informationen" info={info} />

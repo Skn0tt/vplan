@@ -87,7 +87,7 @@ const EntriesUpdater = withStyles(styles)(
 
       return (
         <div>
-          <TitleBar>Einträge</TitleBar>
+          <TitleBar primary="Einträge" />
           <form>
             <Grid container className={classes.container}>
               <Grid item xs={6}>

@@ -87,7 +87,7 @@ const InfoUpdater = withStyles(styles)(
 
       return (
         <div>
-          <TitleBar>{title}</TitleBar>
+          <TitleBar primary={title} />
           <List>
             {infos.map((value, index) => (
               <ListItem key={value + index}>

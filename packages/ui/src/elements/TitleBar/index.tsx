@@ -6,21 +6,33 @@ import styles from "./styles";
  * # Component Types
  */
 
-interface OwnProps {}
+interface OwnProps {
+  primary: string | JSX.Element;
+  secondary?: string;
+}
 type Props = OwnProps & WithStyles;
 
 /**
  * # Component
  */
 const TitleBar: React.SFC<Props> = props => {
-  const { classes, children } = props;
+  const { classes, children, primary, secondary } = props;
 
   return (
     <Paper className={classes.titleBar}>
-      {typeof children === "string" ? (
-        <Typography variant="title">{children}</Typography>
+      {typeof primary !== "string" ? (
+        primary
       ) : (
-        children
+        <React.Fragment>
+          <Typography variant="title" className={classes.primary}>
+            {primary}
+          </Typography>
+          {!!secondary && (
+            <Typography variant="body1" className={classes.secondary}>
+              {secondary}
+            </Typography>
+          )}
+        </React.Fragment>
       )}
     </Paper>
   );
