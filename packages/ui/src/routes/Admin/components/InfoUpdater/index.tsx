@@ -104,6 +104,7 @@ const InfoUpdater = withStyles(styles)(
             ))}
           </List>
           <TextField
+            multiline
             value={field}
             className={classes.textField}
             onChange={e => this.setState({ field: e.target.value })}
