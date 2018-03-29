@@ -39,8 +39,6 @@
     "babel-preset-react-native": "4.0.0",
     "haul": "^1.0.0-beta.13",
     "jest": "22.4.2",
-    "metro-bundler": "^0.22.1",
-    "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "^16.3.0-alpha.1",
     "ts-jest": "^22.4.1",
     "ts-loader": "3.5.0",
