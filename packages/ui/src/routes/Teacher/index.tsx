@@ -124,7 +124,7 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
               </div>
               <div className={classes.center}>
                 {showEntries && (
-                  <EntriesView entries={showEntries} title={short} />
+                  <EntriesView entries={showEntries} title={short} showGroups />
                 )}
               </div>
               <div className={classes.right}>
