@@ -10,7 +10,7 @@ stages:
 # Build
 #
 Build API:
-  image: docker
+  image: skn0tt/dind-make
   stage: build
   services:
     - docker:dind
@@ -24,7 +24,7 @@ Build API:
     - docker push $API_IMAGE
 
 Build UI:
-  image: docker
+  image: skn0tt/dind-make
   stage: build
   services:
     - docker:dind
