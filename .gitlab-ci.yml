@@ -16,6 +16,8 @@ Build API:
     - docker:dind
   tags:
     - docker
+  only:
+    - master
   before_script:
     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
@@ -30,6 +32,8 @@ Build UI:
     - docker:dind
   tags:
     - docker
+  only:
+    - master
   before_script:
     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
