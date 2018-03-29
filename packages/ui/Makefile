@@ -1,7 +1,9 @@
+IMAGE_TAG ?= registry.gitlab.com/skn0tt/vplan/vplan-ui:latest
+
 build: src
 	cd ../.. && \
 	docker build \
-		-t registry.gitlab.com/skn0tt/vplan/vplan-ui \
+		-t $(IMAGE_TAG) \
 		-f packages/ui/Dockerfile \
 		.
 
