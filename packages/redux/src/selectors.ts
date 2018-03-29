@@ -2,7 +2,8 @@ import {
   AppState,
   AllEntriesRecord,
   StudentEntriesMap,
-  TeacherEntriesMap
+  TeacherEntriesMap,
+  InfoRecord
 } from "./types";
 import {
   Group,
@@ -35,6 +36,11 @@ export const getInfoTeacher: Selector<AppState, string[]> = state =>
 
 export const getInfoStudent: Selector<AppState, string[]> = state =>
   state.getIn(["info", "student"]);
+
+export const getOwnInfos: Selector<AppState, string[]> = state =>
+  isTeacher(state)
+    ? getInfoTeacher(state).concat(getInfoStudent(state))
+    : getInfoStudent(state);
 
 export const getEntries: Selector<AppState, AllEntriesRecord> = state =>
   state.get("entries");

@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   FlatList,
   SectionList,
-  SectionListData
+  SectionListData,
+  Modal
 } from "react-native";
 import {
   AppState,
@@ -36,7 +37,8 @@ import {
   NavigationActions,
   NavigationRoute,
   NavigationScreenProp,
-  NavigationScreenComponent
+  NavigationScreenComponent,
+  NavigationScreenProps
 } from "react-navigation";
 import SettingsButton from "./elements/SettingsButton";
 import SectionHeader from "./elements/SectionHeader";
@@ -47,6 +49,7 @@ import {
   hashEntry,
   groupByDay
 } from "vplan-util";
+import InfoModal from "./components/InfoModal";
 
 /**
  * # Helpers
@@ -94,7 +97,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
     refreshStudentInfo: () => dispatch(fetchInfoStudent())
   } as DispatchProps);
 
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & NavigationScreenProps;
 
 type Nav = { navigation: NavigationScreenProp<NavigationRoute> };
 
@@ -108,6 +111,11 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
      */
     static navigationOptions = ({ navigation }: Nav) => ({
       title: "vPlan",
+      headerLeft: (
+        <InfoModalButton
+          onPress={() => navigation.setParams({ showInfo: true })}
+        />
+      ),
       headerRight: (
         <SettingsButton
           onPress={() =>
@@ -152,30 +160,37 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         isLoading,
         addMarked,
         removeMarked,
-        isMarked
+        isMarked,
+        navigation: { state: { params: { showInfo } }, setParams }
       } = this.props;
 
       return (
-        <SectionList
-          sections={sectionize(sort(entries))}
-          renderItem={({ item }) => (
-            <EntryListItem
-              item={item as Entry}
-              onLongPress={() =>
-                isMarked(item as Entry) ? removeMarked(item) : addMarked(item)
-              }
-              marked={isMarked(item as Entry)}
-            />
-          )}
-          renderSectionHeader={({ section }) => (
-            <SectionHeader
-              title={localiseDate(new Date(section.data[0].day))}
-            />
-          )}
-          keyExtractor={hashEntry}
-          refreshing={isLoading}
-          onRefresh={this.handleRefresh}
-        />
+        <>
+          <InfoModal
+            show={showInfo}
+            onClose={() => setParams({ showInfo: false })}
+          />
+          <SectionList
+            sections={sectionize(sort(entries))}
+            renderItem={({ item }) => (
+              <EntryListItem
+                item={item as Entry}
+                onLongPress={() =>
+                  isMarked(item as Entry) ? removeMarked(item) : addMarked(item)
+                }
+                marked={isMarked(item as Entry)}
+              />
+            )}
+            renderSectionHeader={({ section }) => (
+              <SectionHeader
+                title={localiseDate(new Date(section.data[0].day))}
+              />
+            )}
+            keyExtractor={hashEntry}
+            refreshing={isLoading}
+            onRefresh={this.handleRefresh}
+          />
+        </>
       );
     }
   }

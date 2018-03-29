@@ -9,19 +9,14 @@ export const notify = (entry: Entry) =>
     message: secondaryText(entry)
   });
 
-export const setBadge = (i: number) =>
-  PushNotification.setApplicationIconBadgeNumber(i);
-
 const start = () => {
   PushNotification.configure({
     onNotification: notification => {
-      console.log("NOTIFICATION:", notification);
+      console.log(" [pn] notification: ", notification);
 
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     }
   });
-
-  setBadge(0);
 };
 
 export default start;
