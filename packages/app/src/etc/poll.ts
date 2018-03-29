@@ -12,7 +12,7 @@ import {
   isMarked
 } from "vplan-redux";
 import { Entry } from "vplan-types";
-import { notify, setBadge } from "./push";
+import { notify } from "./push";
 
 const complete = () =>
   new Promise(resolve => {
@@ -23,10 +23,8 @@ const complete = () =>
     });
   });
 
-export const onNewEntriesReceived = (entries: Entry[]) => {
+export const onNewEntriesReceived = (entries: Entry[]) =>
   entries.forEach(notify);
-  setBadge(entries.length);
-};
 
 const routine = async (): Promise<void> => {
   console.log(" [bf] Background poll started");

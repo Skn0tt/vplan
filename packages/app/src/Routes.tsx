@@ -19,6 +19,9 @@ const MainStack = StackNavigator(
   },
   {
     initialRouteName: "Home",
+    initialRouteParams: {
+      showInfo: false
+    },
     navigationOptions: {
       headerTintColor: "white",
       headerStyle: {
