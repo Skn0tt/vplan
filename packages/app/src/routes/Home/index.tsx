@@ -73,7 +73,7 @@ const mapStateToProps = (state: AppState) =>
     entries: getOwnEntries(state),
     isTeacher: isTeacher(state),
     isLoading: isLoading(state),
-    isMarked: i => isMarked(i.class)(state)
+    isMarked: e => isMarked(e)(state)
   } as StateProps);
 
 interface DispatchProps {
@@ -88,8 +88,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
     refreshTeacher: () => dispatch(fetchEntriesTeacher()),
     refreshStudent: () => dispatch(fetchEntriesStudent()),
-    addMarked: i => dispatch(addMarked(i.class)),
-    removeMarked: i => dispatch(removeMarked(i.class)),
+    addMarked: e => dispatch(addMarked(e)),
+    removeMarked: e => dispatch(removeMarked(e)),
     refreshAllInfo: () => dispatch(fetchInfo()),
     refreshStudentInfo: () => dispatch(fetchInfoStudent())
   } as DispatchProps);

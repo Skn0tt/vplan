@@ -23,7 +23,9 @@ const composeEnhancers = composeWithDevTools({
   name: "vplan-app"
 });
 
-const logger = createLogger();
+const logger = createLogger({
+  stateTransformer: state => state.toJS()
+});
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -147,13 +147,13 @@ export const setShort = createAction<string>(SET_SHORT);
  * ## ADD_MARKED
  */
 export const ADD_MARKED = "ADD_MARKED";
-export const addMarked = createAction<Class>(ADD_MARKED);
+export const addMarked = createAction<Entry>(ADD_MARKED);
 
 /**
  * ## REMOVE_MARKED
  */
 export const REMOVE_MARKED = "REMOVE_MARKED";
-export const removeMarked = createAction<Class>(REMOVE_MARKED);
+export const removeMarked = createAction<Entry>(REMOVE_MARKED);
 
 /**
  * ## SET_GROUP

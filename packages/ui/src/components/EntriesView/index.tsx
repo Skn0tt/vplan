@@ -35,21 +35,21 @@ interface OwnProps {
 }
 
 interface StateProps {
-  isMarked(c: Class): boolean;
+  isMarked(c: Entry): boolean;
 }
 const mapStateToProps = (state: AppState) =>
   ({
-    isMarked: (c: Class) => isMarked(c)(state)
+    isMarked: e => isMarked(e)(state)
   } as StateProps);
 
 interface DispatchProps {
-  addMarked(c: Class);
-  removeMarked(c: Class);
+  addMarked(e: Entry);
+  removeMarked(e: Entry);
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({
-    addMarked: (c: Class) => dispatch(addMarked(c)),
-    removeMarked: (c: Class) => dispatch(removeMarked(c))
+    addMarked: (e: Entry) => dispatch(addMarked(e)),
+    removeMarked: (e: Entry) => dispatch(removeMarked(e))
   } as DispatchProps);
 
 type Props = OwnProps & StateProps & DispatchProps & WithStyles;
@@ -88,9 +88,9 @@ const EntriesView: React.SFC<Props> = props => {
                   key={index}
                   entry={entry}
                   showGroup={showGroups}
-                  isMarked={isMarked(entry.class)}
-                  addMarked={() => allowMarking && addMarked(entry.class)}
-                  removeMarked={() => allowMarking && removeMarked(entry.class)}
+                  isMarked={isMarked(entry)}
+                  addMarked={() => allowMarking && addMarked(entry)}
+                  removeMarked={() => allowMarking && removeMarked(entry)}
                 />
               ))}
           </React.Fragment>

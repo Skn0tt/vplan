@@ -17,6 +17,7 @@ import {
   AllDayInfo
 } from "vplan-types";
 import { createSelector, Selector } from "reselect";
+import { getMark } from "vplan-util";
 
 const getState: Selector<AppState, AppState> = state => state;
 
@@ -88,8 +89,8 @@ export const filterTeacherEntries = (short: Teacher) =>
     entries => entries.get(short)
   );
 
-export const isMarked = (c: Class): Selector<AppState, boolean> => state =>
-  state.hasIn(["marked", getGroup(state), c]);
+export const isMarked = (e: Entry): Selector<AppState, boolean> => state =>
+  state.hasIn(["marked", getGroup(state), getMark(e)]);
 
 export const getGroup: Selector<AppState, Group> = state => state.get("group");
 export const isLoading: Selector<AppState, boolean> = state =>
