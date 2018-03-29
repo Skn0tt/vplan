@@ -1,4 +1,4 @@
-IMAGE_TAG ?= registry.gitlab.com/skn0tt/vplan/vplan-ui:latest
+IMAGE_TAG ?= registry.gitlab.com/skn0tt/vplan/ui:latest
 
 build: src
 	cd ../.. && \
@@ -8,4 +8,4 @@ build: src
 		.
 
 run: build
-	docker run -p 80:80 registry.gitlab.com/skn0tt/vplan/vplan-ui
+	docker run -p 80:80 registry.gitlab.com/skn0tt/vplan/ui
