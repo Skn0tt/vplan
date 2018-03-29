@@ -1,10 +1,15 @@
 import { Entry, Group } from "vplan-types";
 
+type Extractor<A, B> = (input: Readonly<A>) => Readonly<B>;
+type Validator<A> = (input: Readonly<A>) => boolean;
+
 export const validClass = (entry: Entry) => entry.class !== "---";
 
 const isNumber = (s: string): boolean => !isNaN(+s);
 
-export const isLower = (g: Group): boolean => isNumber(g.charAt(0));
+export const getMark: Extractor<Entry, String> = e => validClass(e) ? e.class : e.teacher;
+
+export const isLower: Validator<Group> = g => isNumber(g.charAt(0));
 
 export const hashEntry = (entry: Entry) =>
   entry.class + entry.day + entry.room + entry.from + entry.substituteTeacher;
