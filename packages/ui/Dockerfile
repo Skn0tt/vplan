@@ -5,6 +5,8 @@ RUN yarn global add lerna
 
 COPY package.json ./
 COPY tsconfig.json ./
+COPY yarn.lock ./
+COPY lerna.json ./
 
 RUN yarn install
 
@@ -12,8 +14,6 @@ COPY packages/ui ./packages/ui
 COPY packages/types ./packages/types
 COPY packages/redux ./packages/redux
 COPY packages/util ./packages/util
-
-COPY lerna.json ./
 
 RUN lerna bootstrap
 
