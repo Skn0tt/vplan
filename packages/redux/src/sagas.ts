@@ -90,7 +90,7 @@ const comparer = (oldEntries: Entry[], newEntries: Entry[]) => {
 
   const diffEntries = diff(oldEntries, newEntries);
 
-  const markedNewEntries = diffEntries.filter(v => isMarked(v.class)(state));
+  const markedNewEntries = diffEntries.filter(e => isMarked(e)(state));
 
   config.onNewEntriesReceived(markedNewEntries);
 };

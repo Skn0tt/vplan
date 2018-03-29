@@ -7,7 +7,8 @@ export const validClass = (entry: Entry) => entry.class !== "---";
 
 const isNumber = (s: string): boolean => !isNaN(+s);
 
-export const getMark: Extractor<Entry, String> = e => validClass(e) ? e.class : e.teacher;
+export const getMark: Extractor<Entry, string> = e =>
+  validClass(e) ? e.class : e.teacher;
 
 export const isLower: Validator<Group> = g => isNumber(g.charAt(0));
 
