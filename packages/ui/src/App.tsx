@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { Reboot, MuiThemeProvider } from "material-ui";
+import { CssBaseline, MuiThemeProvider } from "material-ui";
 import store from "./etc/store";
 import Routes from "./Routes";
 import theme from "./theme";
@@ -9,7 +9,7 @@ import Messager from "./components/Messager";
 
 const App: React.SFC<{}> = () => (
   <div>
-    <Reboot />
+    <CssBaseline />
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <Routes />

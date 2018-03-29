@@ -8,16 +8,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "parcel src/index.html -o index.html",
+    "start": "yarn parcel src/index.html -o index.html",
     "build":
-      "parcel build src/index.html --public-url ./ -o index.html && yarn serviceworker",
+      "yarn parcel build src/index.html --public-url ./ -o index && yarn serviceworker",
     "serviceworker": "yarn workbox generateSW"
   },
   "dependencies": {
     "create-react-class": "^15.6.3",
     "es6-promise": "^4.2.4",
     "lodash": "^4.17.5",
-    "material-ui": "^1.0.0-beta.36",
+    "material-ui": "^1.0.0-beta.39",
     "material-ui-icons": "^1.0.0-beta.36",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -27,7 +27,8 @@
     "react-router-dom": "^4.2.2",
     "react-tappable": "^1.0.2",
     "rxjs": "^5.5.8",
-    "vplan-redux": "^0.0.1"
+    "vplan-redux": "^0.0.1",
+    "vplan-util": "^0.0.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.104",

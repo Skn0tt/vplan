@@ -11,7 +11,6 @@ import {
   createTransform
 } from "redux-persist-immutable";
 import { AppState } from "./types";
-import { AsyncStorage } from "react-native";
 import { config } from "./";
 import { asyncLocalStorage } from "redux-persist/storages";
 

@@ -1,10 +1,9 @@
 import store, { persist } from "./store";
-import { AsyncStorage } from "react-native";
 import { Entry } from "vplan-types";
 
 export type Config = {
   baseUrl: string;
-  storage?: AsyncStorage;
+  storage: any;
   onNewEntriesReceived?: (entries: Entry[]) => void;
 };
 

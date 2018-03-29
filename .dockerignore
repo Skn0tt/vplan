@@ -5,4 +5,5 @@ packages/app/ios
 packages/old-app/android
 packages/old-app/ios
 packages/**/dist
+packages/**/lib
 packages/**/.cache
