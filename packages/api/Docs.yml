@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  version: "0.1"
+  title: vplan
+  description: >-
+    Dies ist die API-Dokumentation für vplan.<br/><br/>
+    *Wichtig für Basic-Auth:* Der Nutzername wird ignoriert - beachtet wird nur das Passwort.
+    
+tags:
+- name: "dayInfo"
+  description: "Informationen zum Tag (aus Untis)"
+- name: "entries"
+  description: "Einträge des Vertretungsplans (aus Untis)"
+- name: "info"
+  description: "Informationen für Schüler und Lehrer"
+- name: "etc"
+  description: "Sonstige Endpunkte"
+  
+
+servers:
+  - url: https://vplan.simonknott.de/api
+    description: Staging server
+
+paths:
+  # dayInfo
+  '/dayInfo':
+    get:
+      tags:
+        - dayInfo
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dayInfo"
+                
+  # info
+  '/info':
+    get:
+      description: "Alle Infos"
+      tags:
+        - info
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/allInfo"
+                
+    put:
+      description: "Alle Infos ändern"
+      tags:
+        - info
+      security:
+        - basic: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/allInfo"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/allInfo"
+          
+                
+  '/info/student':
+    get:
+      description: "Schüler-Infos"
+      tags:
+        - info
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/info"
+                
+    put:
+      description: "Schüler-Infos ändern"
+      tags:
+        - info
+      security:
+        - basic: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/info"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/info"
+                
+  '/info/teacher':
+    get:
+      description: "Lehrer-Infos"
+      tags:
+        - info
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/info"
+                
+    put:
+      description: "Lehrer-Infos ändern"
+      tags:
+        - info
+      security:
+        - basic: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/info"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/info"
+    
+    # entries
+  '/entries':
+    get:
+      description: "Alle Einträge"
+      tags:
+        - entries
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/allEntries"
+    put:
+      description: "Aktualisiere die Einträge"
+      tags:
+        - entries
+      security:
+        - basic: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                studentToday:
+                  type: string
+                  format: binary
+                  example: "student_001.htm"
+                studentTomorrow:
+                  type: string
+                  format: binary
+                  example: "student_002.htm"
+                teacherToday:
+                  type: string
+                  format: binary
+                  example: "teacher_001.htm"
+                teacherTomorrow:
+                  type: string
+                  format: binary
+                  example: "teacher_002.htm"
+                
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/allEntries"
+                
+  '/entries/student':
+    get:
+      description: "Schüler-Einträge"
+      tags:
+        - entries
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/entries"
+                
+                
+  '/entries/teacher':
+    get:
+      description: "Lehrer-Einträge"
+      tags:
+        - entries
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/entries"
+    
+  # etc
+  '/status':
+    get:
+      description: "Status der API"
+      tags:
+        - etc
+      responses:
+        200:
+          description: "OK"
+          
+components:
+  schemas:
+    dayInfo:
+      type: object
+      description: Informationen zum Tag (aus Untis)
+      properties:
+        today:
+          $ref: "#/components/schemas/singleDayInfo"
+          
+        tomorrow:
+          $ref: "#/components/schemas/singleDayInfo"
+    
+    singleDayInfo:
+      type: object
+      description: Informationen zu einem Tag (aus Untis)
+      properties:
+        week:
+          type: string
+          enum:
+            - "A"
+            - "B"
+        
+        blockedRooms:
+          type: array
+          items:
+            type: string
+        
+        missingGroups:
+          description: "Fehlende Klassen / Stufen"
+          type: array
+          items:
+            type: string
+        
+        missingTeachers:
+          type: array
+          items:
+            type: string
+            
+    allInfo:
+      type: object
+      properties:
+        student:
+          $ref: "#/components/schemas/info"
+          
+        teacher:
+          $ref: "#/components/schemas/info"
+    
+    info:
+      type: array
+      items:
+        type: string
+        
+    allEntries:
+      type: object
+      properties:
+        student:
+          $ref: "#/components/schemas/entries"
+          
+        teacher:
+          $ref: "#/components/schemas/entries"
+    
+    entries:
+      description: "Key: Klasse / Stufe / Lehrer, Value: Array der Einträge"
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/entryArray"
+    
+    entryArray:
+      type: array
+      items:
+        type: object
+        properties:
+          from:
+            type: integer
+            description: "Beginn des Eintrags [Schulstunde]"
+          to:
+            type: integer
+            description: "Ende des Eintrags [Schulstunde]"
+          day:
+            type: integer
+            description: "Tag des Eintrags [Epoch Time]"
+          type:
+            type: string
+            example: "Betreuung, Vertr., Klausur, Pausenaufsicht..."
+          group:
+            type: string
+            description: "Klasse bzw. Stufe"
+            example: "5A, 9B, EF, Q2"
+          class:
+            type: string
+            description: "geplantes Unterrichtsfach"
+            example: "E5, PH, E G1"
+          substituteClass:
+            type: string
+            description: "Ersatz-Unterrichtsfach"
+            example: "E5, PH, E G1"
+          teacher:
+            type: string
+            description: "geplanter Lehrer [Kürzel]"
+          substituteTeacher:
+            type: string
+            description: "Ersatz-Lehrer [Kürzel]"
+          room:
+            type: string
+            
+          
+
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
