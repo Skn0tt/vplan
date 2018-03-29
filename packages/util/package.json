@@ -7,8 +7,12 @@
   "author": "Simon Knott",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "yarn tsc"
+  },
   "devDependencies": {
     "@types/lodash": "^4.14.106",
+    "typescript": "^2.8.1",
     "vplan-types": "^0.0.1"
   },
   "dependencies": {

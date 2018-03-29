@@ -1,0 +1,38 @@
+variables:
+  IMAGE_BASE: registry.gitlab.com/skn0tt/vplan
+  UI_IMAGE: $IMAGE_BASE/ui:$CI_COMMIT_REF_NAME
+  API_IMAGE: $IMAGE_BASE/api:$CI_COMMIT_REF_NAME
+
+stages:
+  - build
+
+#
+# Build
+#
+Build API:
+  image: skn0tt/dind-make
+  stage: build
+  services:
+    - docker:dind
+  tags:
+    - docker
+  before_script:
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+  script:
+    - cd packages/api
+    - make build IMAGE_TAG=$API_IMAGE
+    - docker push $API_IMAGE
+
+Build UI:
+  image: skn0tt/dind-make
+  stage: build
+  services:
+    - docker:dind
+  tags:
+    - docker
+  before_script:
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+  script:
+    - cd packages/ui
+    - make build IMAGE_TAG=$UI_IMAGE
+    - docker push $UI_IMAGE
