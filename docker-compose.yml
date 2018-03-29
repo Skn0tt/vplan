@@ -21,7 +21,7 @@ services:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
 
   api:
-    image: registry.gitlab.com/skn0tt/vplan/api
+    image: registry.gitlab.com/skn0tt/vplan/api:master
     depends_on:
       - redis
     environment:
@@ -32,7 +32,7 @@ services:
       - VIRTUAL_PORT=3000
 
   ui:
-    image: registry.gitlab.com/skn0tt/vplan/ui
+    image: registry.gitlab.com/skn0tt/vplan/ui:master
     environment:
       - VIRTUAL_HOST=${HOST}
       - VIRTUAL_PATH=/
