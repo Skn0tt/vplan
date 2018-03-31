@@ -1,10 +1,7 @@
 FROM node as build
 WORKDIR /usr/src/app
 
-COPY package.json ./
-COPY tsconfig.json ./
-COPY yarn.lock ./
-COPY lerna.json ./
+COPY package.json yarn.lock tsconfig.json lerna.json ./
 
 COPY packages/ui ./packages/ui
 COPY packages/types ./packages/types
