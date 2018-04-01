@@ -41,44 +41,47 @@ const third: Entry = {
   type: Types.VERTRETUNG
 };
 
-describe("Diff Algorithm", () => {
-  it("should return empty array", () => {
-    const result = diff([], []);
-    expect(result).to.be.empty;
+describe("diff", () => {
+  describe("when passed equal input", () => {
+    it("should return empty array", () => {
+      const result = diff([], []);
+      expect(result).to.be.empty;
+    });
+
+    it("should return empty array", () => {
+      const result = diff([first], [first]);
+      expect(result).to.be.empty;
+    });
+
+    it("should return empty array", () => {
+      const result = diff([first, first], [first, first]);
+      expect(result).to.be.empty;
+    });
   });
 
-  it("should return empty array", () => {
-    const result = diff([first], [first]);
-    expect(result).to.be.empty;
-  });
+  describe("when passed different inputs", () => {
+    it("should return a single entry", () => {
+      const result = diff([first], [first, second]);
 
-  it("should return empty array", () => {
-    const result = diff([first, first], [first, first]);
-    expect(result).to.be.empty;
-  });
+      expect(result).to.be.lengthOf(1);
+      expect(result).to.contain(second);
+      expect(result).to.not.contain(first);
+    });
 
-  it("should return one entry", () => {
-    const result = diff([first], [first, second]);
+    it("should return one entry", () => {
+      const result = diff([first, first], [first, second]);
 
-    expect(result).to.be.lengthOf(1);
-    expect(result).to.contain(second);
-    expect(result).to.not.contain(first);
-  });
+      expect(result).to.be.lengthOf(1);
+      expect(result).to.contain(second);
+      expect(result).to.not.contain(first);
+    });
 
-  it("should return one entry", () => {
-    const result = diff([first, first], [first, second]);
+    it("should return one entry", () => {
+      const result = diff([first, first], [first, second]);
 
-    expect(result).to.be.lengthOf(1);
-    expect(result).to.contain(second);
-    expect(result).to.not.contain(first);
-  });
-
-  it("should return two entries", () => {
-    const result = diff([first, first, first], [first, second, third]);
-
-    expect(result).to.be.lengthOf(2);
-    expect(result).to.contain(second);
-    expect(result).to.contain(third);
-    expect(result).to.not.contain(first);
+      expect(result).to.be.lengthOf(1);
+      expect(result).to.contain(second);
+      expect(result).to.not.contain(first);
+    });
   });
 });
