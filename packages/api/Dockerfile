@@ -8,7 +8,7 @@ COPY packages/types ./packages/types
 COPY packages/parser ./packages/parser
 COPY packages/util ./packages/util
 
-RUN yarn
+RUN yarn --frozen-lockfile
 RUN yarn lerna bootstrap
 
 RUN yarn --cwd packages/api build
