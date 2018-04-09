@@ -69,7 +69,7 @@ export const getOwnEntries = createSelector<
 );
 
 export const getDayInfo: Selector<AppState, AllDayInfo> = state =>
-  state.get("dayInfo");
+  state.get("dayInfo").toJS();
 
 export const getStudentEntries = createSelector<
   AppState,

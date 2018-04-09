@@ -9,11 +9,7 @@ import {
   DayInfo,
   AllDayInfo
 } from "vplan-types";
-import {
-  parseStudentView,
-  parseTeacherView,
-  parseDayInfoBoth
-} from "vplan-parser";
+import { parseFiles, ParseResult } from "vplan-parser";
 import * as multer from "multer";
 import { promisify } from "util";
 import { returnRedis, redisErrHandler, client } from "../../helpers/redis";
@@ -41,34 +37,17 @@ entriesRouter.put(
   auth,
   upload.fields([
     {
-      name: "studentToday"
-    },
-    {
-      name: "studentTomorrow"
-    },
-    {
-      name: "teacherToday"
-    },
-    {
-      name: "teacherTomorrow"
+      name: "files"
     }
   ]),
   (req, res, next) => {
-    let student: StudentEntries;
-    let teacher: TeacherEntries;
-    let dayInfo: AllDayInfo;
+    let result: ParseResult;
 
     // Parse
     try {
-      const studentToday: Buffer = req.files["studentToday"][0].buffer;
-      const studentTomorrow: Buffer = req.files["studentTomorrow"][0].buffer;
-      const teacherToday: Buffer = req.files["teacherToday"][0].buffer;
-      const teacherTomorrow: Buffer = req.files["teacherTomorrow"][0].buffer;
+      const f: Buffer[] = req.files["files"].map(b => b.buffer);
 
-      student = parseStudentView(studentToday, studentTomorrow);
-      teacher = parseTeacherView(teacherToday, teacherTomorrow);
-
-      dayInfo = parseDayInfoBoth(teacherToday, teacherTomorrow);
+      result = parseFiles(f);
     } catch (error) {
       return res
         .status(400)
@@ -76,18 +55,26 @@ entriesRouter.put(
         .end();
     }
 
-    client.set(STUDENT_ENTRIES, JSON.stringify(student), redisErrHandler(next));
-    client.set(TEACHER_ENTRIES, JSON.stringify(teacher), redisErrHandler(next));
     client.set(
-      ALL_ENTRIES,
-      JSON.stringify({ student, teacher }),
+      STUDENT_ENTRIES,
+      JSON.stringify(result.entries.student),
       redisErrHandler(next)
     );
-    client.set(DAYINFO, JSON.stringify(dayInfo), redisErrHandler(next));
+    client.set(
+      TEACHER_ENTRIES,
+      JSON.stringify(result.entries.teacher),
+      redisErrHandler(next)
+    );
+    client.set(
+      ALL_ENTRIES,
+      JSON.stringify(result.entries),
+      redisErrHandler(next)
+    );
+    client.set(DAYINFO, JSON.stringify(result.info), redisErrHandler(next));
 
     return res
       .status(200)
-      .json({ student, teacher })
+      .json(result.entries)
       .end();
   }
 );

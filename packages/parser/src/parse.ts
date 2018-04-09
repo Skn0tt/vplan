@@ -20,6 +20,15 @@ const getBetweenFirstAndLast = (delimiter: string, input: string) =>
 const getBetween = (begin: string, end: string, input: string) =>
   input.substring(find(begin, input), find(end, input));
 
+const MON_TITLE_DIV = '<div class="mon_title">';
+const getMonTitle = (input: string) => {
+  const start = input.substring(
+    find(MON_TITLE_DIV, input) + MON_TITLE_DIV.length
+  );
+  const end = start.substring(0, find("</div>", start));
+  return end;
+};
+
 const getBetweenTags = (tag: string, input: string) =>
   getBetween(`<${tag}`, `</${tag}`, input);
 
@@ -47,6 +56,9 @@ const getDataFields = (row: string) =>
 
 const hasOuterTag = (row: string) => row.startsWith("<") && row.endsWith(">");
 
+export const isTeachersView = (input: string): boolean =>
+  input.includes("Nachrichten zum Tag");
+
 const invalid = ["&nbsp;", "+"];
 
 const isValid = (item: string) => invalid.indexOf(item) === -1;
@@ -55,6 +67,18 @@ const sanitizeInvalid = (item: string) => (isValid(item) ? item : "");
 
 const getWeek = (input: string): "A" | "B" =>
   getDiv(getCenter(input)).slice(-1) as "A" | "B";
+
+export const parseDate = (input: string): Date => {
+  const mon_title = getMonTitle(input);
+  console.log(mon_title);
+  const date = mon_title.split(" ")[0];
+  const nums = date.split(".").map(Number);
+
+  const result = new Date(0);
+  result.setFullYear(nums[2], nums[1] - 1, nums[0]);
+
+  return result;
+};
 
 export const parseTable = (isTeachersView: boolean) => (
   input: string
@@ -81,6 +105,7 @@ export const parseDayInfo = (input: string): DayInfo => {
   const blockedRoomsArr = arrs.find(v => v[0].startsWith("Blockierte"));
 
   return {
+    day: +parseDate(input),
     week: getWeek(input),
     blockedRooms: !!blockedRoomsArr ? blockedRoomsArr[1].split(", ") : [],
     missingGroups: !!missingGroupsArr

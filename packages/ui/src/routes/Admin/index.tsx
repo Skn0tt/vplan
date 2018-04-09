@@ -107,17 +107,9 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
           secret: this.state.secret
         });
 
-      handlePutEntries = (
-        studentToday: File,
-        studentTomorrow: File,
-        teacherToday: File,
-        teacherTomorrow: File
-      ) =>
+      handlePutEntries = (files: File[]) =>
         this.props.putEntries({
-          studentToday,
-          studentTomorrow,
-          teacherToday,
-          teacherTomorrow,
+          files,
           secret: this.state.secret
         });
 

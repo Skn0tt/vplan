@@ -11,7 +11,12 @@ import styles from "./styles";
 import { Entry } from "vplan-types";
 import Tappable from "react-tappable";
 import * as _ from "lodash";
-import { text, secondaryText, textWithClass } from "vplan-util";
+import {
+  text,
+  secondaryText,
+  textWithClass,
+  textWithLowerClass
+} from "vplan-util";
 
 /**
  * # Helper Functions
@@ -48,7 +53,7 @@ interface OwnProps {
   isMarked: boolean;
   addMarked();
   removeMarked();
-  showGroup: boolean;
+  showGroup: false | "lower" | "all";
 }
 
 type Props = OwnProps & WithStyles;
@@ -82,7 +87,13 @@ const EntryItem: React.SFC<Props> = props => {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={showGroup ? textWithClass(entry) : text(entry)}
+          primary={
+            showGroup
+              ? showGroup === "all"
+                ? textWithClass(entry)
+                : textWithLowerClass(entry)
+              : text(entry)
+          }
           secondary={secondaryText(entry)}
         />
       </ListItem>

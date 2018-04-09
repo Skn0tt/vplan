@@ -146,7 +146,7 @@ const Display = connect(mapStateToProps, mapDispatchToProps)(
                         subtitle={`${picked + 1} / ${paged.length}`}
                         title={key}
                         allowMarking={false}
-                        showGroups
+                        showGroups="lower"
                       />
                     </Grid>
                   );

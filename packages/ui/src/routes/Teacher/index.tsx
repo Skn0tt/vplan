@@ -124,7 +124,11 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
               </div>
               <div className={classes.center}>
                 {showEntries && (
-                  <EntriesView entries={showEntries} title={short} showGroups />
+                  <EntriesView
+                    entries={showEntries}
+                    title={short}
+                    showGroups="all"
+                  />
                 )}
               </div>
               <div className={classes.right}>
@@ -136,7 +140,7 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
                     <Information title="Infos Schüler" info={info.student} />
                   </Grid>
                   <Grid item>
-                    <AllDayInfoView info={dayInfo} />
+                    <AllDayInfoView allInfo={dayInfo} />
                   </Grid>
                 </Grid>
               </div>

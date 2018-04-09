@@ -1,11 +1,15 @@
 import sample2 from "./sampleinputteacher2";
-import { parseDayInfo, parseTable } from "./parse";
-import { Entry, Grouped, DayInfo } from "vplan-types";
+import { parseDayInfo, parseTable, isTeachersView, parseDate } from "./parse";
+import { Entry, Grouped, DayInfo, AllDayInfo, AllEntries } from "vplan-types";
 import group from "./group";
 import { convertStudent, convertTeacher } from "./convert";
 import merge from "./merge";
 import encoding from "./encoding";
+import * as _ from "lodash";
 import sampleinput from "./sampleinput";
+import sampleinput2 from "./sampleinput2";
+import sampleinputteacher from "./sampleinputteacher";
+import sampleinputteacher2 from "./sampleinputteacher2";
 
 export type Row = string[];
 
@@ -16,12 +20,11 @@ const day = 24 * 60 * 60 * 1000;
 const tomorrowDate = (): Date => new Date(+todayDate() + day);
 
 const parseHTML = (
-  input: Buffer,
+  input: string,
   parser: (input: string) => Row[],
   converter: (groups: Grouped<Row>) => Grouped<Entry>
 ): Readonly<Grouped<Entry>> => {
-  const utf8 = encoding(input);
-  const rows = parser(utf8);
+  const rows = parser(input);
   const groups = group(rows);
   const groupedEntries = converter(groups);
 
@@ -31,27 +34,37 @@ const parseHTML = (
 /**
  * Parse Teacher
  */
-const parseTeacherDay = (input: Buffer, day: Date) =>
-  parseHTML(input, parseTable(true), convertTeacher(day));
-export const parseTeacherView = (today: Buffer, tomorrow: Buffer) =>
-  merge(
-    parseTeacherDay(today, todayDate()),
-    parseTeacherDay(tomorrow, tomorrowDate())
-  );
+const parseTeacherDay = (input: string) =>
+  parseHTML(input, parseTable(true), convertTeacher(parseDate(input)));
 
 /**
  * Parse Students
  */
-const parseStudentDay = (input: Buffer) =>
+const parseStudentDay = (input: string) =>
   parseHTML(input, parseTable(false), convertStudent);
-export const parseStudentView = (today: Buffer, tomorrow: Buffer) =>
-  merge(parseStudentDay(today), parseStudentDay(tomorrow));
 
-/**
- * Parse Missing Teachers
- */
-const parseDay = (input: Buffer): DayInfo => parseDayInfo(encoding(input));
-export const parseDayInfoBoth = (today: Buffer, tomorrow: Buffer) => ({
-  today: parseDay(today),
-  tomorrow: parseDay(tomorrow)
-});
+export type ParseResult = { entries: AllEntries; info: AllDayInfo };
+export const parseFiles = (buffers: Buffer[]): ParseResult => {
+  const files = buffers.map(encoding);
+  const teacherViews: string[] = [];
+  const studentViews: string[] = [];
+
+  files.forEach(
+    f => (isTeachersView(f) ? teacherViews.push(f) : studentViews.push(f))
+  );
+  const studentEntries = merge(...studentViews.map(parseStudentDay));
+  const teacherEntries = merge(...teacherViews.map(parseTeacherDay));
+
+  const dayInfos = teacherViews.map(parseDayInfo);
+  const info: AllDayInfo = _.fromPairs(
+    dayInfos.map(i => [new Date(i.day).toISOString(), i])
+  );
+
+  return {
+    info,
+    entries: {
+      student: studentEntries,
+      teacher: teacherEntries
+    }
+  };
+};

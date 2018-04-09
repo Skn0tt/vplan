@@ -8,7 +8,13 @@ import {
   PutEntriesPayload,
   InfoRecord
 } from "./";
-import { StudentEntries, AllEntries, TeacherEntries, Entry } from "vplan-types";
+import {
+  StudentEntries,
+  AllEntries,
+  TeacherEntries,
+  Entry,
+  DayInfo
+} from "vplan-types";
 
 /**
  * # Helpers
@@ -84,7 +90,7 @@ export const fetchDayInfo = async () => {
     const data = await fetch(`${config.baseUrl}/dayInfo`);
     const json = await data.json();
 
-    return json;
+    return Map<number, DayInfo>(json);
   } catch (error) {
     throw error;
   }
@@ -105,10 +111,7 @@ export const putEntries = async (payload: PutEntriesPayload) => {
   try {
     const data = new FormData();
 
-    data.append("studentToday", payload.studentToday);
-    data.append("studentTomorrow", payload.studentTomorrow);
-    data.append("teacherToday", payload.teacherToday);
-    data.append("teacherTomorrow", payload.teacherTomorrow);
+    payload.files.forEach(f => data.append("files", f));
 
     const response = await fetch(
       `${config.baseUrl}/entries`,

@@ -31,7 +31,7 @@ interface OwnProps {
   allowMarking?: boolean;
   title?: string | JSX.Element;
   subtitle?: string;
-  showGroups?: boolean;
+  showGroups?: "lower" | "all";
 }
 
 interface StateProps {
