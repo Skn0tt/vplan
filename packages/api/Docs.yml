@@ -160,25 +160,12 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: object
               properties:
-                studentToday:
-                  type: string
-                  format: binary
-                  example: "student_001.htm"
-                studentTomorrow:
-                  type: string
-                  format: binary
-                  example: "student_002.htm"
-                teacherToday:
-                  type: string
-                  format: binary
-                  example: "teacher_001.htm"
-                teacherTomorrow:
-                  type: string
-                  format: binary
-                  example: "teacher_002.htm"
-                
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         200:
           description: OK

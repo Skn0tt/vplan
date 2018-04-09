@@ -1,4 +1,4 @@
-IMAGE_TAG ?= registry.gitlab.com/skn0tt/vplan/ui:latest
+IMAGE_TAG ?= registry.gitlab.com/skn0tt/vplan/ui:master
 
 build: src
 	cd ../.. && \

@@ -26,11 +26,14 @@ const lines = (input: string[]) =>
     .map(arr => arr.join(", "))
     .join("\n");
 
+const title = (date: Date) =>
+  `${date.toLocaleDateString("de", { weekday: "long" })} fehlt:`;
+
 /**
  * # Component Types
  */
 interface OwnProps {
-  info: AllDayInfo;
+  allInfo: AllDayInfo;
 }
 type Props = OwnProps & WithStyles;
 
@@ -38,12 +41,15 @@ type Props = OwnProps & WithStyles;
  * # Component
  */
 const AllDayInfo: React.SFC<Props> = props => {
-  const { info, classes } = props;
+  const { allInfo, classes } = props;
+
+  console.log(allInfo);
 
   return (
     <Paper className={classes.container}>
-      <SingleDayInfo info={info.today} title="Heute Fehlt" />
-      <SingleDayInfo info={info.tomorrow} title="Morgen Fehlt" />
+      {_.values(allInfo).map(info => (
+        <SingleDayInfo info={info} title={title(new Date(info.day))} />
+      ))}
     </Paper>
   );
 };

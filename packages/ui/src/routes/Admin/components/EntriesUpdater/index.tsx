@@ -13,12 +13,7 @@ const fileName = (file: File) => file && file.name;
  * # Component Types
  */
 interface OwnProps {
-  onSend(
-    studentToday: File,
-    studentTomorrow: File,
-    teacherToday: File,
-    teacherTomorrow: File
-  );
+  onSend(files: File[]);
 }
 type Props = OwnProps & WithStyles;
 
@@ -57,12 +52,12 @@ const EntriesUpdater = withStyles(styles)(
      * ## Event Handlers
      */
     handleSend = () =>
-      this.props.onSend(
+      this.props.onSend([
         this.state.studentToday,
         this.state.studentTomorrow,
         this.state.teacherToday,
         this.state.teacherTomorrow
-      );
+      ]);
     handleSetStudentToday = (file: File) =>
       this.setState({ studentToday: file });
     handleSetStudentTomorrow = (file: File) =>

@@ -9,17 +9,15 @@ import {
   Short,
   Info,
   AllDayInfo,
-  Entry
+  Entry,
+  DayInfo
 } from "vplan-types";
 
 /**
  * # Actions
  */
 export type PutEntriesPayload = {
-  studentToday: File;
-  studentTomorrow: File;
-  teacherToday: File;
-  teacherTomorrow: File;
+  files: File[];
   secret: string;
 };
 
@@ -70,6 +68,11 @@ export class InfoRecord extends Record(
 }
 
 /**
+ * # DayInfo
+ */
+type DayInfoMap = Map<string, DayInfo>;
+
+/**
  * AppState
  */
 interface IAppState {
@@ -79,17 +82,10 @@ interface IAppState {
   marked: Map<Group, Set<Class>>;
   info: InfoRecord;
   isTeacher: boolean;
-  dayInfo: AllDayInfo;
+  dayInfo: DayInfoMap;
   short: Short;
   errors: List<Error>;
 }
-
-const defaultDayInfo = {
-  week: "A",
-  missingTeachers: [],
-  blockedRooms: [],
-  missingGroups: []
-};
 
 export class AppState extends Record(
   {
@@ -98,10 +94,7 @@ export class AppState extends Record(
     group: "5A",
     marked: Map<Group, Set<Class>>(),
     info: new InfoRecord({}),
-    dayInfo: {
-      today: defaultDayInfo,
-      tomorrow: defaultDayInfo
-    },
+    dayInfo: Map<string, DayInfo>(),
     isTeacher: false,
     short: "",
     errors: List<Error>()
