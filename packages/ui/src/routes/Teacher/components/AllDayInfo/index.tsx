@@ -43,8 +43,6 @@ type Props = OwnProps & WithStyles;
 const AllDayInfo: React.SFC<Props> = props => {
   const { allInfo, classes } = props;
 
-  console.log(allInfo);
-
   return (
     <Paper className={classes.container}>
       {_.values(allInfo).map(info => (

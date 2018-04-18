@@ -1,4 +1,5 @@
 import { Entry, Group } from "vplan-types";
+import { today } from "./date";
 
 type Extractor<A, B> = (input: Readonly<A>) => Readonly<B>;
 type Validator<A> = (input: Readonly<A>) => boolean;
@@ -21,3 +22,5 @@ export const compareEntries = (a: Entry, b: Entry): number =>
   a.class.localeCompare(b.class) ||
   a.teacher.localeCompare(b.teacher) ||
   a.substituteTeacher.localeCompare(b.substituteTeacher);
+
+export const isFutureEntry = (e: Entry): boolean => e.day >= +today();

@@ -70,7 +70,6 @@ const getWeek = (input: string): "A" | "B" =>
 
 export const parseDate = (input: string): Date => {
   const mon_title = getMonTitle(input);
-  console.log(mon_title);
   const date = mon_title.split(" ")[0];
   const nums = date.split(".").map(Number);
 

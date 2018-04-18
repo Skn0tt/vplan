@@ -47,7 +47,8 @@ import {
   compareEntries,
   localiseDate,
   hashEntry,
-  groupByDay
+  groupByDay,
+  isFutureEntry
 } from "vplan-util";
 import InfoModal from "./components/InfoModal";
 
@@ -164,6 +165,8 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         navigation: { state: { params: { showInfo } }, setParams }
       } = this.props;
 
+      const sections = sectionize(sort(entries.filter(isFutureEntry)));
+
       return (
         <>
           <InfoModal
@@ -171,7 +174,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
             onClose={() => setParams({ showInfo: false })}
           />
           <SectionList
-            sections={sectionize(sort(entries))}
+            sections={sections}
             renderItem={({ item }) => (
               <EntryListItem
                 item={item as Entry}

@@ -15,7 +15,12 @@ import { connect } from "react-redux";
 import TitleBar from "../../elements/TitleBar";
 import { AppState, addMarked, removeMarked, isMarked } from "vplan-redux";
 import { Dispatch, Action } from "redux";
-import { compareEntries, localiseDate, groupByDay } from "vplan-util";
+import {
+  compareEntries,
+  localiseDate,
+  groupByDay,
+  isFutureEntry
+} from "vplan-util";
 
 /**
  * # Helpers
@@ -70,7 +75,9 @@ const EntriesView: React.SFC<Props> = props => {
     showGroups
   } = props;
 
-  const sections = sectionize(entries);
+  const filtered = entries.filter(isFutureEntry);
+
+  const sections = sectionize(filtered);
 
   return (
     <div className={classes.container}>
