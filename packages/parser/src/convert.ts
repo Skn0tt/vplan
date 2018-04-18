@@ -15,7 +15,7 @@ const getDate = (input: string): number => {
 
   const result = new Date();
   result.setHours(0, 0, 0, 0);
-  result.setDate(Number(day) - 1);
+  result.setDate(Number(day));
   result.setMonth(Number(month) - 1);
   return +result;
 };
