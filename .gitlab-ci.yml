@@ -57,8 +57,6 @@ Docs:
 # Coverage Pages
 pages:
   stage: docs
-  dependencies:
-    - Docs
   script:
     - mv site/ public/
   artifacts:
