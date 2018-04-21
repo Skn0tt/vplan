@@ -1,6 +1,6 @@
 {
   "name": "vplan-types",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "typings for vplan.",
   "main": "src/index.ts",
   "repository": "https://gitlab.com/skn0tt/vplan",

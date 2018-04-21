@@ -1,6 +1,6 @@
 {
   "name": "vplan-util",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "Utility for vplan.",
   "main": "src/index.ts",
   "repository": "gitlab.com/skn0tt/vplan",

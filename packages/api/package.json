@@ -1,6 +1,6 @@
 {
   "name": "vplan-api",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "the api of vplan.",
   "main": "dist/api/src/index.js",
   "repository": "https://gitlab.com/skn0tt/vplan",

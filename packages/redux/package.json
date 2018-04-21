@@ -1,6 +1,6 @@
 {
   "name": "vplan-redux",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "redux state management for vplan",
   "main": "src/index.ts",
   "repository": "https://gitlab.com/skn0tt/vplan",
