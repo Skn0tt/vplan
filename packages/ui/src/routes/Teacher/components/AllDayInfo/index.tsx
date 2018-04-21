@@ -14,6 +14,7 @@ import {
 import * as _ from "lodash";
 import styles from "./styles";
 import SingleDayInfo from "../../elements/SingleDayInfo";
+import { isInFuture } from "vplan-util";
 
 /**
  * # Helpers
@@ -43,9 +44,11 @@ type Props = OwnProps & WithStyles;
 const AllDayInfo: React.SFC<Props> = props => {
   const { allInfo, classes } = props;
 
+  const futureInfo = _.filter(allInfo, (_, k) => isInFuture(new Date(k)));
+
   return (
     <Paper className={classes.container}>
-      {_.values(allInfo).map(info => (
+      {_.values(futureInfo).map(info => (
         <SingleDayInfo info={info} title={title(new Date(info.day))} />
       ))}
     </Paper>

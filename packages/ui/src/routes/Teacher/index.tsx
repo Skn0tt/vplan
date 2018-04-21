@@ -30,6 +30,7 @@ import Absent from "./components/Absent";
 import EntriesView from "../../components/EntriesView";
 import AllDayInfoView from "./components/AllDayInfo";
 import { Observable } from "rxjs";
+import { isFutureEntry } from "vplan-util";
 
 /**
  * # Helpers
@@ -112,14 +113,20 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
           const { entries, classes, match, info, dayInfo } = this.props;
           const { short } = match.params;
 
-          const showEntries = entries.get(short === "etc" ? "" : short);
+          const futureEntries = entries
+            .map(v => v.filter(isFutureEntry))
+            .filter(v => v.length !== 0)
+            .toMap();
+          console.log(futureEntries.toJS());
+
+          const showEntries = futureEntries.get(short === "etc" ? "" : short);
 
           return (
             <div className={classes.container}>
               <div className={classes.left}>
                 <ShortList
                   onChange={this.handleShortChange}
-                  items={getItems(entries)}
+                  items={getItems(futureEntries)}
                 />
               </div>
               <div className={classes.center}>
