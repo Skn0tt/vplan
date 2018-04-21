@@ -4,7 +4,7 @@ import * as basicAuth from "basic-auth";
 const auth = (req: Request, res: Response, next: NextFunction) => {
   const credentials = basicAuth(req);
 
-  if (credentials && credentials.pass === process.env.PASSWORD) {
+  if (credentials && credentials.pass === process.env.SECRET) {
     return next();
   }
 

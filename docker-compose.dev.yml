@@ -6,7 +6,7 @@ services:
     ports:
       - 9229:9229
     environment:
-      - PASSWORD=root
+      - SECRET=root
       - NODE_ENV=development
 
   

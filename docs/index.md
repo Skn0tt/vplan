@@ -3,6 +3,13 @@
 _vPlan_ serves as a viewing tool for _Untis_.  
 It comes with a webinterface and an app.
 
+## Features
+
+* Push Notifications (App)
+* works offline (Web & App)
+* low requirements on server
+* easily deployable with docker
+
 ## Getting Started
 
 `vPlan` consists of two Docker images:
