@@ -21,8 +21,8 @@
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.5.7",
     "react-redux": "^5.0.7",
-    "vplan-redux": "^0.0.1",
-    "vplan-util": "^0.0.1"
+    "vplan-redux": "^0.5.0",
+    "vplan-util": "^0.5.0"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
@@ -43,7 +43,7 @@
     "ts-jest": "^22.4.1",
     "ts-loader": "3.5.0",
     "typescript": "^2.7.2",
-    "vplan-types": "^0.0.1"
+    "vplan-types": "^0.5.0"
   },
   "jest": {
     "preset": "react-native",

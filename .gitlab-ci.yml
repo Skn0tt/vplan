@@ -5,6 +5,7 @@ variables:
 
 stages:
   - build
+  - docs
 
 #
 # Build
@@ -40,3 +41,27 @@ Build UI:
     - cd packages/ui
     - make build IMAGE_TAG=$UI_IMAGE
     - docker push $UI_IMAGE
+
+# Documentation
+Docs:
+  image: python
+  stage: docs
+  before_script:
+    - pip install -r requirements.txt
+  script:
+    - mkdocs build
+  artifacts:
+    paths:
+      - site
+
+# Coverage Pages
+pages:
+  stage: docs
+  script:
+    - mv site/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - master

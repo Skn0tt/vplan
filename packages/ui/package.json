@@ -27,8 +27,8 @@
     "react-router-dom": "^4.2.2",
     "react-tappable": "^1.0.2",
     "rxjs": "^5.5.8",
-    "vplan-redux": "^0.0.1",
-    "vplan-util": "^0.0.1"
+    "vplan-redux": "^0.5.0",
+    "vplan-util": "^0.5.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.104",
@@ -40,7 +40,7 @@
     "parcel-bundler": "^1.6.2",
     "tslib": "^1.9.0",
     "typescript": "^2.7.2",
-    "vplan-types": "^0.0.1",
+    "vplan-types": "^0.5.0",
     "workbox-build": "^3.0.1",
     "workbox-cli": "^3.0.1"
   },
