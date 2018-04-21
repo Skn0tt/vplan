@@ -74,7 +74,7 @@ interface StateProps {
 }
 const mapStateToProps = (state: AppState) =>
   ({
-    entries: getOwnEntries(state),
+    entries: getOwnEntries(state) || [],
     isTeacher: isTeacher(state),
     isLoading: isLoading(state),
     isMarked: e => isMarked(e)(state)
