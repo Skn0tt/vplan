@@ -45,18 +45,20 @@ Build UI:
 # Documentation
 Docs:
   image: python
-  stage: docs
+  stage: build
   before_script:
     - pip install -r requirements.txt
   script:
     - mkdocs build
   artifacts:
     paths:
-      - site
+      - site/
 
 # Coverage Pages
 pages:
   stage: docs
+  dependencies:
+    - Docs
   script:
     - mv site/ public/
   artifacts:
