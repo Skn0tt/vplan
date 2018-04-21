@@ -18,3 +18,5 @@ export const today = (): Date => {
 
   return result;
 };
+
+export const isInFuture = (d: Date): boolean => +d >= +today();
