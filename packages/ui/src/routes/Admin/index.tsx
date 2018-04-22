@@ -44,16 +44,15 @@ const mapStateToProps = (state: AppState) =>
   } as StateProps);
 
 interface DispatchProps {
-  putInfo(payload: PutInfoPayload);
-  putEntries(payload: PutEntriesPayload);
-  fetchInfo();
+  putInfo(payload: PutInfoPayload): Action;
+  putEntries(payload: PutEntriesPayload): Action;
+  fetchInfo(): Action;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
-  ({
-    putInfo: payload => dispatch(putInfo(payload)),
-    putEntries: payload => dispatch(putEntries(payload)),
-    fetchInfo: payload => dispatch(fetchInfo())
-  } as DispatchProps);
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
+  putInfo: payload => dispatch(putInfo(payload)),
+  putEntries: payload => dispatch(putEntries(payload)),
+  fetchInfo: () => dispatch(fetchInfo())
+});
 
 type Props = StateProps & DispatchProps & WithStyles;
 

@@ -38,7 +38,8 @@ import {
   NavigationRoute,
   NavigationScreenProp,
   NavigationScreenComponent,
-  NavigationScreenProps
+  NavigationScreenProps,
+  NavigationParams
 } from "react-navigation";
 import SettingsButton from "./elements/SettingsButton";
 import SectionHeader from "./elements/SectionHeader";
@@ -162,8 +163,9 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         addMarked,
         removeMarked,
         isMarked,
-        navigation: { state: { params: { showInfo } }, setParams }
+        navigation: { state: { params }, setParams }
       } = this.props;
+      const showInfo: boolean = (params as NavigationParams).showInfo;
 
       const sections = sectionize(sort(entries.filter(isFutureEntry)));
 

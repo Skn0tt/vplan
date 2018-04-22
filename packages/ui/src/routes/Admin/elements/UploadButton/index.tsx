@@ -8,7 +8,7 @@ import styles from "./styles";
 interface OwnProps {
   accept: string;
   title: string;
-  onChange(file: File);
+  onChange(file: File): void;
 }
 
 type Props = OwnProps & WithStyles;
@@ -30,7 +30,7 @@ const UploadButton: React.SFC<Props> = props => {
         className={classes.input}
         id={"raised-button-file-" + title}
         type="file"
-        onChange={e => onChange(e.target.files[0])}
+        onChange={e => onChange(e.target.files![0])}
       />
       <label htmlFor={"raised-button-file-" + title}>
         <Button

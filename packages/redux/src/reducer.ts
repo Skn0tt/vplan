@@ -153,7 +153,7 @@ const reducer = handleActions(
      * ## REMOVE_ERROR
      */
     [REMOVE_ERROR]: (state, action: Action<number>) =>
-      state.update("errors", remove(action.payload)),
+      state.update("errors", remove(action.payload!)),
 
     /**
      * ## SET_IS_TEACHER

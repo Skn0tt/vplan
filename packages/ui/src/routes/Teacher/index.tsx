@@ -114,8 +114,8 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
           const { short } = match.params;
 
           const futureEntries = entries
-            .map(v => v.filter(isFutureEntry))
-            .filter(v => v.length !== 0)
+            .map(v => v!.filter(isFutureEntry))
+            .filter(v => v!.length !== 0)
             .toMap();
           console.log(futureEntries.toJS());
 

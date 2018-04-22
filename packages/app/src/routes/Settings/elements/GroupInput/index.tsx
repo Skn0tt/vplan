@@ -8,7 +8,7 @@ import styles from "./styles";
  */
 interface OwnProps {
   group: Group;
-  onChange(g: Group);
+  onChange(g: Group): void;
 }
 type Props = OwnProps;
 

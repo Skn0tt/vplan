@@ -8,7 +8,7 @@ import {
   Grouped,
   Entry
 } from "vplan-types";
-import _ = require("lodash");
+import * as _ from "lodash";
 
 const getDate = (input: string): number => {
   const [day, month] = input.split(".");
@@ -34,7 +34,7 @@ const getHours = (input: string) => {
   return { from: Number(from), to: Number(to) };
 };
 
-const mapTeacher = (day: Date) => _ => (row: string[]): TeacherEntry => {
+const mapTeacher = (day: Date) => (_: any) => (row: string[]): TeacherEntry => {
   const { from, to } = getHours(row[1]);
   return {
     from,
@@ -50,7 +50,7 @@ const mapTeacher = (day: Date) => _ => (row: string[]): TeacherEntry => {
   };
 };
 
-const mapStudent = (group: Group) => (row: string[]): StudentEntry => {
+const mapStudent = (group: string) => (row: string[]): StudentEntry => {
   const { from, to } = getHours(row[2]);
   return {
     from,

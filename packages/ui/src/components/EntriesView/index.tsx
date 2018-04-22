@@ -48,8 +48,8 @@ const mapStateToProps = (state: AppState) =>
   } as StateProps);
 
 interface DispatchProps {
-  addMarked(e: Entry);
-  removeMarked(e: Entry);
+  addMarked(e: Entry): void;
+  removeMarked(e: Entry): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
   ({

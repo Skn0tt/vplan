@@ -4,13 +4,15 @@ import { StudentEntry, TeacherEntry, Grouped } from "vplan-types";
 const group = (input: ReadonlyArray<Row>): Readonly<Grouped<Row>> => {
   const result: Grouped<Row> = {};
 
-  let current: string;
+  let current: string | null = null;
   for (const row of input) {
     if (row.length === 2) {
       current = row[0];
       result[current] = [];
     } else {
-      result[current].push(row);
+      if (!!current) {
+        result[current].push(row);
+      }
     }
   }
 

@@ -5,7 +5,7 @@ import {
   client,
   redisErrHandler
 } from "../../helpers/redis";
-import _ = require("lodash");
+import * as _ from "lodash";
 import auth from "../../helpers/auth";
 
 const infoRouter = Router();
