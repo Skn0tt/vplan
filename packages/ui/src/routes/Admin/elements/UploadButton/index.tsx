@@ -3,12 +3,27 @@ import { Button, WithStyles, withStyles } from "material-ui";
 import styles from "./styles";
 
 /**
+ * # Helpers
+ */
+const toArray = (files: FileList): File[] => {
+  const result: File[] = [];
+
+  let i = 0;
+  while (!!files[i]) {
+    result.push(files[i]);
+    i++;
+  }
+
+  return result;
+};
+
+/**
  * # Component Types
  */
 interface OwnProps {
   accept: string;
   title: string;
-  onChange(file: File): void;
+  onChange(files: File[]): void;
 }
 
 type Props = OwnProps & WithStyles;
@@ -30,7 +45,8 @@ const UploadButton: React.SFC<Props> = props => {
         className={classes.input}
         id={"raised-button-file-" + title}
         type="file"
-        onChange={e => onChange(e.target.files![0])}
+        onChange={e => onChange(toArray(e.target.files!))}
+        multiple
       />
       <label htmlFor={"raised-button-file-" + title}>
         <Button

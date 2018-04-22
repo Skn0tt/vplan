@@ -129,7 +129,7 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
               margin="normal"
               onChange={e => this.setState({ secret: e.target.value })}
             />
-            <Grid container className={classes.itemContainer}>
+            <Grid container className={classes.itemContainer} spacing={16}>
               <Grid item className={classes.item}>
                 <EntriesUpdater onSend={this.handlePutEntries} />
               </Grid>
