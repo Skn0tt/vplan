@@ -49,7 +49,7 @@ const start = (): void => {
     (error: Error) => console.log(" [js] RNBackgroundFetch failed to start")
   );
 
-  BackgroundFetch.status(status => {
+  BackgroundFetch.status((status: any) => {
     switch (status) {
       case BackgroundFetch.STATUS_RESTRICTED:
         console.log(" [bf] BackgroundFetch restricted");

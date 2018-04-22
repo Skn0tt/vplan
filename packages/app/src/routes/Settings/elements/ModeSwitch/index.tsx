@@ -8,7 +8,7 @@ import styles from "./styles";
  */
 interface OwnProps {
   isTeacher: boolean;
-  onChange(isTeacher: boolean);
+  onChange(isTeacher: boolean): void;
 }
 type Props = OwnProps;
 

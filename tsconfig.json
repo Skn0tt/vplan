@@ -6,6 +6,11 @@
     "skipLibCheck": true, // see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16825,
     "paths": {
       "vplan-*": ["./*/src"]
-    }
+    },
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true
   }
 }

@@ -21,7 +21,7 @@ import * as _ from "lodash";
  */
 interface OwnProps {
   infos: string[];
-  onSend(info: string[]);
+  onSend(info: string[]): void;
   title: string;
   button: string;
 }

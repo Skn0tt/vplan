@@ -23,7 +23,8 @@ import { Observable } from "rxjs/Rx";
  * # Helpers
  */
 const excluded = ["ABB", "GL"];
-const filter = (_, key: string) => excluded.indexOf(key) === -1;
+const filter = (_: any, key: string | undefined) =>
+  excluded.indexOf(key!) === -1;
 const isNumber = (i: string) => i > "0" && i <= "9";
 const isMinor = (inp: string) => isNumber(inp.charAt(0));
 const stage = (g: string) => (isMinor(g) ? g.charAt(0) : g);
@@ -32,7 +33,7 @@ const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
     entries
       .filter(filter)
       .forEach((value, key) =>
-        mutator.update(stage(key), [], arr => [...arr, ...value])
+        mutator.update(stage(key!), [], arr => [...arr, ...value!])
       )
   );
 
@@ -47,17 +48,17 @@ interface StateProps {
   entries: StudentEntriesMap;
   info: string[];
 }
-const mapStateToProps = (state: AppState) =>
+const mapStateToProps = (state: AppState): StateProps =>
   ({
     entries: getStudentEntries(state),
     info: getInfoStudent(state)
   } as StateProps);
 
 interface DispatchProps {
-  refresh();
-  refreshInfo();
+  refresh(): void;
+  refreshInfo(): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
   refresh: () => dispatch(fetchEntriesStudent()),
   refreshInfo: () => dispatch(fetchInfoStudent())
 });
@@ -72,98 +73,96 @@ interface State {
 /**
  * # Component
  */
-const Display = connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(
-    class extends React.Component<Props, State> {
-      /**
-       * ## Intialization
-       */
-      state: State = {
-        second: 0,
-        page: 0
-      };
+class Display extends React.Component<Props, State> {
+  /**
+   * ## Intialization
+   */
+  state: State = {
+    second: 0,
+    page: 0
+  };
 
-      /**
-       * ## Rx
-       */
-      pageClock = Observable.interval(1000);
-      refreshClock = Observable.interval(10 * 1000);
-      refreshInfoClock = Observable.interval(60 * 1000);
+  /**
+   * ## Rx
+   */
+  pageClock = Observable.interval(1000);
+  refreshClock = Observable.interval(10 * 1000);
+  refreshInfoClock = Observable.interval(60 * 1000);
 
-      /**
-       * ## Component Lifecycle
-       */
-      componentDidMount() {
-        this.props.refresh();
-        this.props.refreshInfo();
+  /**
+   * ## Component Lifecycle
+   */
+  componentDidMount() {
+    this.props.refresh();
+    this.props.refreshInfo();
 
-        this.pageClock.subscribe(this.nextSecond);
-        this.refreshClock.subscribe(this.props.refresh());
-        this.refreshInfoClock.subscribe(this.props.refreshInfo());
-      }
+    this.pageClock.subscribe(this.nextSecond);
+    this.refreshClock.subscribe(this.props.refresh);
+    this.refreshInfoClock.subscribe(this.props.refreshInfo);
+  }
 
-      /**
-       * ## Handlers
-       */
-      nextSecond = () => {
-        this.setState({ second: (this.state.second + 1) % 5 });
+  /**
+   * ## Handlers
+   */
+  nextSecond = () => {
+    this.setState({ second: (this.state.second + 1) % 5 });
 
-        if (this.state.second === 0) {
-          this.nextPage();
-        }
-      };
-      nextPage = () => this.setState({ page: (this.state.page + 1) % 100 });
-
-      /**
-       * ## Render
-       */
-      render() {
-        const { entries, classes, info } = this.props;
-        const { page } = this.state;
-
-        const grouped = group(entries).sortBy(
-          (v, k) => k,
-          (a, b) => a.localeCompare(b)
-        );
-
-        const g9 = grouped.size > 8;
-
-        const pagedInfo = pages(info, 6);
-        const pickedInfo = pick(pagedInfo, page);
-
-        return (
-          <div className={classes.container}>
-            <Grid container spacing={16} justify="center">
-              {grouped
-                .map((val, key) => {
-                  const paged = pages(val, 5);
-                  const picked = pick(paged, page);
-
-                  return (
-                    <Grid item key={key} className={classes.item}>
-                      <EntriesView
-                        entries={paged[picked]}
-                        subtitle={`${picked + 1} / ${paged.length}`}
-                        title={key}
-                        allowMarking={false}
-                        showGroups="lower"
-                      />
-                    </Grid>
-                  );
-                })
-                .toArray()}
-              <Grid item className={g9 ? classes.item : classes.information}>
-                <Information
-                  title="Informationen"
-                  info={pagedInfo[pickedInfo] || []}
-                />
-              </Grid>
-            </Grid>
-          </div>
-        );
-      }
+    if (this.state.second === 0) {
+      this.nextPage();
     }
-  )
-);
+  };
+  nextPage = () => this.setState({ page: (this.state.page + 1) % 100 });
 
-export default Display;
+  /**
+   * ## Render
+   */
+  render() {
+    const { entries, classes, info } = this.props;
+    const { page } = this.state;
+
+    const grouped = group(entries).sortBy(
+      (v, k) => k,
+      (a, b) => a!.localeCompare(b!)
+    );
+
+    const g9 = grouped.size > 8;
+
+    const pagedInfo = pages(info, 6);
+    const pickedInfo = pick(pagedInfo, page);
+
+    return (
+      <div className={classes.container}>
+        <Grid container spacing={16} justify="center">
+          {grouped
+            .map((val, key) => {
+              const paged = pages(val!, 5);
+              const picked = pick(paged, page);
+
+              return (
+                <Grid item key={key} className={classes.item}>
+                  <EntriesView
+                    entries={paged[picked]}
+                    subtitle={`${picked + 1} / ${paged.length}`}
+                    title={key}
+                    allowMarking={false}
+                    showGroups="lower"
+                  />
+                </Grid>
+              );
+            })
+            .toArray()}
+          <Grid item className={g9 ? classes.item : classes.information}>
+            <Information
+              title="Informationen"
+              info={pagedInfo[pickedInfo] || []}
+            />
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(Display)
+);

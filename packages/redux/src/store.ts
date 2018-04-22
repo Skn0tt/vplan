@@ -1,4 +1,4 @@
-import { compose, createStore, applyMiddleware } from "redux";
+import { compose, createStore, applyMiddleware, StoreEnhancer } from "redux";
 import { combineReducers } from "redux-immutable";
 import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -34,13 +34,13 @@ const enhancer = composeEnhancers(
 );
 
 const removeUnneededTransform = createTransform(
-  (inboundState, key) =>
+  (inboundState: AppState, key: string) =>
     key === "root"
       ? inboundState.delete("loading").delete("errors")
       : inboundState
 );
 
-const store = createStore(reducer, enhancer);
+const store = createStore(reducer, enhancer as StoreEnhancer<any>);
 
 let persistor;
 
