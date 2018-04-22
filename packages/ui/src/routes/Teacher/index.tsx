@@ -139,7 +139,7 @@ const Teacher = connect(mapStateToProps, mapDispatchToProps)(
                 )}
               </div>
               <div className={classes.right}>
-                <Grid container direction="column">
+                <Grid container direction="column" spacing={16}>
                   <Grid item>
                     <Information title="Infos Lehrer" info={info.teacher} />
                   </Grid>

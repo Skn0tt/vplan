@@ -18,10 +18,7 @@ interface OwnProps {
 type Props = OwnProps & WithStyles;
 
 interface State {
-  studentToday?: File;
-  studentTomorrow?: File;
-  teacherToday?: File;
-  teacherTomorrow?: File;
+  files: File[];
 }
 
 /**
@@ -32,95 +29,39 @@ const EntriesUpdater = withStyles(styles)(
     /**
      * ## Initialization
      */
-    state: State = {
-      studentToday: undefined,
-      studentTomorrow: undefined,
-      teacherToday: undefined,
-      teacherTomorrow: undefined
-    };
+    state: State = { files: [] };
 
     /**
      * ## Validation
      */
-    isValid = () =>
-      !!this.state.studentToday &&
-      !!this.state.studentTomorrow &&
-      !!this.state.teacherToday &&
-      !!this.state.teacherTomorrow;
+    isValid = () => this.state.files.length !== 0;
 
     /**
      * ## Event Handlers
      */
-    handleSend = () =>
-      this.isValid() &&
-      this.props.onSend([
-        this.state.studentToday!,
-        this.state.studentTomorrow!,
-        this.state.teacherToday!,
-        this.state.teacherTomorrow!
-      ]);
-    handleSetStudentToday = (file: File) =>
-      this.setState({ studentToday: file });
-    handleSetStudentTomorrow = (file: File) =>
-      this.setState({ studentTomorrow: file });
-    handleSetTeacherToday = (file: File) =>
-      this.setState({ teacherToday: file });
-    handleSetTeacherTomorrow = (file: File) => {
-      this.setState({ teacherTomorrow: file });
-    };
+    handleSend = () => this.props.onSend(this.state.files);
+    handleAddFiles = (files: File[]) => this.setState({ files });
 
     /**
      * ## Render
      */
     render() {
       const { classes } = this.props;
-      const {
-        studentToday,
-        studentTomorrow,
-        teacherToday,
-        teacherTomorrow
-      } = this.state;
+      const { files } = this.state;
 
       return (
         <div>
           <TitleBar primary="Einträge" />
           <form>
-            <Grid container className={classes.container}>
-              <Grid item xs={6}>
+            <Grid container className={classes.container} spacing={8}>
+              <Grid item xs={12}>
                 <UploadButton
                   accept="text/html"
-                  onChange={this.handleSetStudentToday}
+                  onChange={this.handleAddFiles}
                   title={
-                    !!studentToday ? fileName(studentToday) : "Schüler heute"
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <UploadButton
-                  accept="text/html"
-                  onChange={this.handleSetStudentTomorrow}
-                  title={
-                    studentTomorrow
-                      ? fileName(studentTomorrow)
-                      : "Schüler morgen"
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <UploadButton
-                  accept="text/html"
-                  onChange={this.handleSetTeacherToday}
-                  title={teacherToday ? fileName(teacherToday) : "Lehrer heute"}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <UploadButton
-                  accept="text/html"
-                  onChange={this.handleSetTeacherTomorrow}
-                  title={
-                    teacherTomorrow
-                      ? fileName(teacherTomorrow)
-                      : "Lehrer morgen"
+                    files.length === 0
+                      ? "Dateien hochladen"
+                      : files.map(f => f.name).join(", ")
                   }
                 />
               </Grid>
