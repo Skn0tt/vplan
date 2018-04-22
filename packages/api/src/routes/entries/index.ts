@@ -35,19 +35,16 @@ entriesRouter.get("/teacher", returnRedis(TEACHER_ENTRIES));
 entriesRouter.put(
   "/",
   auth,
-  upload.fields([
-    {
-      name: "files"
-    }
-  ]),
+  upload.fields([{ name: "files" }]),
   (req, res, next) => {
     let result: ParseResult;
 
     // Parse
     try {
-      const f: Buffer[] = req.files["files"].map(b => b.buffer);
+      const { files } = req.files as { [key: string]: Express.Multer.File[] };
+      const buffers: Buffer[] = files.map(b => b.buffer);
 
-      result = parseFiles(f);
+      result = parseFiles(buffers);
     } catch (error) {
       return res
         .status(400)

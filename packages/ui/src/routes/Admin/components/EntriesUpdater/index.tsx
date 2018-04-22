@@ -7,21 +7,21 @@ import TitleBar from "../../../../elements/TitleBar";
 /**
  * # Helpers
  */
-const fileName = (file: File) => file && file.name;
+const fileName = (file: File) => file.name;
 
 /**
  * # Component Types
  */
 interface OwnProps {
-  onSend(files: File[]);
+  onSend(files: File[]): void;
 }
 type Props = OwnProps & WithStyles;
 
 interface State {
-  studentToday: File;
-  studentTomorrow: File;
-  teacherToday: File;
-  teacherTomorrow: File;
+  studentToday?: File;
+  studentTomorrow?: File;
+  teacherToday?: File;
+  teacherTomorrow?: File;
 }
 
 /**
@@ -33,10 +33,10 @@ const EntriesUpdater = withStyles(styles)(
      * ## Initialization
      */
     state: State = {
-      studentToday: null,
-      studentTomorrow: null,
-      teacherToday: null,
-      teacherTomorrow: null
+      studentToday: undefined,
+      studentTomorrow: undefined,
+      teacherToday: undefined,
+      teacherTomorrow: undefined
     };
 
     /**
@@ -52,11 +52,12 @@ const EntriesUpdater = withStyles(styles)(
      * ## Event Handlers
      */
     handleSend = () =>
+      this.isValid() &&
       this.props.onSend([
-        this.state.studentToday,
-        this.state.studentTomorrow,
-        this.state.teacherToday,
-        this.state.teacherTomorrow
+        this.state.studentToday!,
+        this.state.studentTomorrow!,
+        this.state.teacherToday!,
+        this.state.teacherTomorrow!
       ]);
     handleSetStudentToday = (file: File) =>
       this.setState({ studentToday: file });
@@ -89,28 +90,38 @@ const EntriesUpdater = withStyles(styles)(
                 <UploadButton
                   accept="text/html"
                   onChange={this.handleSetStudentToday}
-                  title={fileName(studentToday) || "Schüler heute"}
+                  title={
+                    !!studentToday ? fileName(studentToday) : "Schüler heute"
+                  }
                 />
               </Grid>
               <Grid item xs={6}>
                 <UploadButton
                   accept="text/html"
                   onChange={this.handleSetStudentTomorrow}
-                  title={fileName(studentTomorrow) || "Schüler morgen"}
+                  title={
+                    studentTomorrow
+                      ? fileName(studentTomorrow)
+                      : "Schüler morgen"
+                  }
                 />
               </Grid>
               <Grid item xs={6}>
                 <UploadButton
                   accept="text/html"
                   onChange={this.handleSetTeacherToday}
-                  title={fileName(teacherToday) || "Lehrer heute"}
+                  title={teacherToday ? fileName(teacherToday) : "Lehrer heute"}
                 />
               </Grid>
               <Grid item xs={6}>
                 <UploadButton
                   accept="text/html"
                   onChange={this.handleSetTeacherTomorrow}
-                  title={fileName(teacherTomorrow) || "Lehrer morgen"}
+                  title={
+                    teacherTomorrow
+                      ? fileName(teacherTomorrow)
+                      : "Lehrer morgen"
+                  }
                 />
               </Grid>
             </Grid>

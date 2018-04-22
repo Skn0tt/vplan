@@ -51,9 +51,9 @@ const color = (type: string) => pick(colors, hash(type));
 interface OwnProps {
   entry: Readonly<Entry>;
   isMarked: boolean;
-  addMarked();
-  removeMarked();
-  showGroup: false | "lower" | "all";
+  addMarked(): void;
+  removeMarked(): void;
+  showGroup?: undefined | "lower" | "all";
 }
 
 type Props = OwnProps & WithStyles;
@@ -76,7 +76,7 @@ const EntryItem: React.SFC<Props> = props => {
       pressDelay={200}
       onPress={() => (isMarked ? removeMarked() : addMarked())}
     >
-      <ListItem className={isMarked ? classes.marked : null}>
+      <ListItem className={isMarked ? classes.marked : undefined}>
         <ListItemAvatar>
           <Avatar
             className={
@@ -88,7 +88,7 @@ const EntryItem: React.SFC<Props> = props => {
         </ListItemAvatar>
         <ListItemText
           primary={
-            showGroup
+            !!showGroup
               ? showGroup === "all"
                 ? textWithClass(entry)
                 : textWithLowerClass(entry)

@@ -32,7 +32,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
 });
 
 interface DispatchProps {
-  refresh();
+  refresh(): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
   refresh: () => dispatch(fetchInfo())

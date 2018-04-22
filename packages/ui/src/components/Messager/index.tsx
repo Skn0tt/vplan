@@ -16,9 +16,9 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 interface DispatchProps {
-  remove(i: number);
+  remove(i: number): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
   remove: i => dispatch(removeError(i))
 });
 

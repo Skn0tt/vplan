@@ -8,7 +8,7 @@ import styles from "./styles";
  */
 interface OwnProps {
   short: Short;
-  onChange(s: Short);
+  onChange(s: Short): void;
 }
 type Props = OwnProps;
 
