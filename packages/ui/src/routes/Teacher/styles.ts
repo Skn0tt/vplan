@@ -11,14 +11,15 @@ const styles = (theme: Theme): StyleRules => ({
   },
   left: {
     order: 1,
-    flexBasis: "300px"
+    minWidth: "20%"
   },
   center: {
     order: 2,
-    minWidth: "500px"
+    minWidth: "30%"
   },
   right: {
-    order: 3
+    order: 3,
+    minWidth: "20%"
   }
 });
 

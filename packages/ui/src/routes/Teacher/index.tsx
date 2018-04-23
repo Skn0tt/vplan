@@ -51,24 +51,22 @@ interface StateProps {
   info: Info;
   dayInfo: AllDayInfo;
 }
-const mapStateToProps = (state: AppState) =>
-  ({
-    entries: getTeacherEntries(state),
-    info: getInfo(state),
-    dayInfo: getDayInfo(state)
-  } as StateProps);
+const mapStateToProps = (state: AppState): StateProps => ({
+  entries: getTeacherEntries(state),
+  info: getInfo(state),
+  dayInfo: getDayInfo(state)
+});
 
 interface DispatchProps {
   refreshEntries(): void;
   refreshInfo(): void;
   refreshDayInfo(): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
-  ({
-    refreshEntries: () => dispatch(fetchEntriesTeacher()),
-    refreshInfo: () => dispatch(fetchInfo()),
-    refreshDayInfo: () => dispatch(fetchDayInfo())
-  } as DispatchProps);
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
+  refreshEntries: () => dispatch(fetchEntriesTeacher()),
+  refreshInfo: () => dispatch(fetchInfo()),
+  refreshDayInfo: () => dispatch(fetchDayInfo())
+});
 
 type Props = StateProps &
   DispatchProps &
@@ -78,85 +76,76 @@ type Props = StateProps &
 /**
  * # Component
  */
-const Teacher = connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(
-    withRouter(
-      class extends React.Component<Props> {
-        /**
-         * ## Component Lifecycle
-         */
-        componentDidMount() {
-          this.handleRefresh();
-          this.refreshClock.subscribe(this.handleRefresh);
-        }
+class Teacher extends React.Component<Props> {
+  /**
+   * ## Component Lifecycle
+   */
+  componentDidMount() {
+    this.handleRefresh();
+    this.refreshClock.subscribe(this.handleRefresh);
+  }
 
-        /**
-         * ## Rx
-         */
-        refreshClock = Observable.interval(10 * 1000);
+  /**
+   * ## Rx
+   */
+  refreshClock = Observable.interval(10 * 1000);
 
-        /**
-         * ## Handlers
-         */
-        handleShortChange = (short: Short) =>
-          this.props.history.push(`/teacher/${short}`);
-        handleRefresh = () => {
-          this.props.refreshEntries();
-          this.props.refreshInfo();
-          this.props.refreshDayInfo();
-        };
+  /**
+   * ## Handlers
+   */
+  handleShortChange = (short: Short) =>
+    this.props.history.push(`/teacher/${short}`);
+  handleRefresh = () => {
+    this.props.refreshEntries();
+    this.props.refreshInfo();
+    this.props.refreshDayInfo();
+  };
 
-        /**
-         * ## Render
-         */
-        render() {
-          const { entries, classes, match, info, dayInfo } = this.props;
-          const { short } = match.params;
+  /**
+   * ## Render
+   */
+  render() {
+    const { entries, classes, match, info, dayInfo } = this.props;
+    const { short } = match.params;
 
-          const futureEntries = entries
-            .map(v => v!.filter(isFutureEntry))
-            .filter(v => v!.length !== 0)
-            .toMap();
-          console.log(futureEntries.toJS());
+    const futureEntries = entries
+      .map(v => v!.filter(isFutureEntry))
+      .filter(v => v!.length !== 0)
+      .toMap();
 
-          const showEntries = futureEntries.get(short === "etc" ? "" : short);
+    const showEntries = futureEntries.get(short === "etc" ? "" : short);
 
-          return (
-            <div className={classes.container}>
-              <div className={classes.left}>
-                <ShortList
-                  onChange={this.handleShortChange}
-                  items={getItems(futureEntries)}
-                />
-              </div>
-              <div className={classes.center}>
-                {showEntries && (
-                  <EntriesView
-                    entries={showEntries}
-                    title={short}
-                    showGroups="all"
-                  />
-                )}
-              </div>
-              <div className={classes.right}>
-                <Grid container direction="column" spacing={16}>
-                  <Grid item>
-                    <Information title="Infos Lehrer" info={info.teacher} />
-                  </Grid>
-                  <Grid item>
-                    <Information title="Infos Schüler" info={info.student} />
-                  </Grid>
-                  <Grid item>
-                    <AllDayInfoView allInfo={dayInfo} />
-                  </Grid>
-                </Grid>
-              </div>
-            </div>
-          );
-        }
-      }
-    )
-  )
+    return (
+      <div className={classes.container}>
+        <div className={classes.left}>
+          <ShortList
+            onChange={this.handleShortChange}
+            items={getItems(futureEntries)}
+          />
+        </div>
+        <main className={classes.center}>
+          {showEntries && (
+            <EntriesView entries={showEntries} title={short} showGroups="all" />
+          )}
+        </main>
+        <div className={classes.right}>
+          <Grid container direction="column" spacing={16}>
+            <Grid item>
+              <Information title="Infos Lehrer" info={info.teacher} />
+            </Grid>
+            <Grid item>
+              <Information title="Infos Schüler" info={info.student} />
+            </Grid>
+            <Grid item>
+              <AllDayInfoView allInfo={dayInfo} />
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(withRouter(Teacher))
 );
-
-export default Teacher;
