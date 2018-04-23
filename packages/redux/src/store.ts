@@ -13,6 +13,7 @@ import {
 import { AppState } from "./types";
 import { config } from "./";
 import { asyncLocalStorage } from "redux-persist/storages";
+import { Map } from "immutable";
 
 const rootReducer = combineReducers({
   root: reducer
@@ -34,8 +35,8 @@ const enhancer = composeEnhancers(
 );
 
 const removeUnneededTransform = createTransform(
-  (inboundState: AppState, key: string) =>
-    key === "root"
+  (inboundState: AppState | any, key: string) =>
+    inboundState instanceof AppState
       ? inboundState.delete("loading").delete("errors")
       : inboundState
 );

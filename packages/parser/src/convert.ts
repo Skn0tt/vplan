@@ -78,19 +78,27 @@ const nonTeacher: string[] = [];
 const isTeacher = (val: string): boolean =>
   !_.includes(nonTeacher, val) && validShort(val);
 
-const findShort = (entries: Entry[]): Short => {
+const findShort = (entries: Entry[]): Short | -1 => {
   const entryWithShort = entries.find(entry =>
     isTeacher(entry.substituteTeacher)
   );
-  return !!entryWithShort
-    ? entryWithShort.substituteTeacher
-    : entries[0].substituteTeacher;
+  if (!!entryWithShort) {
+    return entryWithShort.substituteTeacher;
+  }
+  const firstEntry = entries[0];
+  if (!!firstEntry) {
+    return firstEntry.substituteTeacher;
+  }
+  return -1;
 };
+
+const filterKeys = (...keys: string[]) => (object: { [key: string]: any }) =>
+  _.pickBy(object, (v, k) => keys.indexOf(k) === -1);
 
 const transformTeacherKeys = (
   input: Readonly<Grouped<Entry>>
 ): Readonly<Grouped<Entry>> =>
-  _.mapKeys(input, (value, key) => findShort(value));
+  filterKeys("-1")(_.mapKeys(input, (value, key) => findShort(value)));
 
 export const convertStudent = (
   input: Readonly<Grouped<Row>>
