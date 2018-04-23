@@ -11,7 +11,8 @@ import {
   WithStyles,
   withStyles,
   GridList,
-  GridListTile
+  GridListTile,
+  ButtonBase
 } from "material-ui";
 import * as _ from "lodash";
 import styles from "./styles";
@@ -40,7 +41,7 @@ export type Item = {
   nmb: number;
 };
 interface OwnProps {
-  onChange(s: Short): void;
+  onChange(i: Item): void;
   items: Item[];
 }
 
@@ -63,22 +64,25 @@ const ShortList: React.SFC<Props> = props => {
     )
     .map(s => ({ short: s, nmb: 1 }));
 
-  const newItems = items.concat(arr, arr, arr, arr);
-
   return (
-    <Paper className={classes.paper}>
+    <Paper>
       <Grid
         container
-        className={classes.container}
         direction="column"
-        style={{ width: "100%" }}
+        justify="flex-start"
+        wrap="wrap"
+        className={classes.container}
       >
         {items.sort(compareItems).map(item => (
-          <Grid item key={item.short}>
-            <ListItem onClick={() => onChange(item.short)} button>
-              <ListItemText primary={item.short} secondary={item.nmb} />
-            </ListItem>
-          </Grid>
+          <ButtonBase onClick={() => onChange(item)} key={item.short}>
+            <Grid item>
+              <ListItemText
+                primary={item.short}
+                secondary={item.nmb}
+                className={classes.shortItem}
+              />
+            </Grid>
+          </ButtonBase>
         ))}
       </Grid>
     </Paper>

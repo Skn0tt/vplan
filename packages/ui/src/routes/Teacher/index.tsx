@@ -116,19 +116,19 @@ class Teacher extends React.Component<Props> {
     const showEntries = futureEntries.get(short === "etc" ? "" : short);
 
     return (
-      <div className={classes.container}>
-        <div className={classes.left}>
+      <Grid container direction="row" justify="space-between">
+        <Grid item xs={3}>
           <ShortList
-            onChange={this.handleShortChange}
+            onChange={i => this.handleShortChange(i.short)}
             items={getItems(futureEntries)}
           />
-        </div>
-        <main className={classes.center}>
+        </Grid>
+        <Grid item xs={3}>
           {showEntries && (
             <EntriesView entries={showEntries} title={short} showGroups="all" />
           )}
-        </main>
-        <div className={classes.right}>
+        </Grid>
+        <Grid item xs={3}>
           <Grid container direction="column" spacing={16}>
             <Grid item>
               <Information title="Infos Lehrer" info={info.teacher} />
@@ -140,8 +140,8 @@ class Teacher extends React.Component<Props> {
               <AllDayInfoView allInfo={dayInfo} />
             </Grid>
           </Grid>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
