@@ -28,22 +28,22 @@ const SingleDayInfo: React.SFC<Props> = ({ title, info, classes }) => (
     <div className={classes.container}>
       <div className={classes.item}>
         {!!info.missingTeachers.length &&
-          info.missingTeachers.map(v => (
-            <Chip label={v} className={classes.chip} />
+          info.missingTeachers.map((v, i) => (
+            <Chip label={v} className={classes.chip} key={i} />
           ))}
       </div>
       <Divider />
       <div className={classes.item}>
         {!!info.missingGroups.length &&
-          info.missingGroups.map(v => (
-            <Chip label={v} className={classes.chip} />
+          info.missingGroups.map((v, i) => (
+            <Chip label={v} className={classes.chip} key={i} />
           ))}
       </div>
       <Divider />
       <div className={classes.item}>
         {!!info.blockedRooms.length &&
-          info.blockedRooms.map(v => (
-            <Chip label={v} className={classes.chip} />
+          info.blockedRooms.map((v, i) => (
+            <Chip label={v} className={classes.chip} key={i} />
           ))}
       </div>
     </div>

@@ -48,8 +48,8 @@ const AllDayInfo: React.SFC<Props> = props => {
 
   return (
     <Paper className={classes.container}>
-      {_.values(futureInfo).map(info => (
-        <SingleDayInfo info={info} title={title(new Date(info.day))} />
+      {_.values(futureInfo).map((info, i) => (
+        <SingleDayInfo key={i} info={info} title={title(new Date(info.day))} />
       ))}
     </Paper>
   );
