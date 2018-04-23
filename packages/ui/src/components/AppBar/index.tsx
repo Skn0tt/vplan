@@ -17,7 +17,7 @@ const AppBar: React.SFC<Props> = props => {
   const { children, classes } = props;
 
   return (
-    <div className={classes.root}>
+    <>
       <MUIAppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="title" className={classes.title}>
@@ -26,7 +26,7 @@ const AppBar: React.SFC<Props> = props => {
         </Toolbar>
       </MUIAppBar>
       <main className={classes.content}>{children}</main>
-    </div>
+    </>
   );
 };
 
