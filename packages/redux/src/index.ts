@@ -3,7 +3,7 @@ import { Entry } from "vplan-types";
 
 export type Config = {
   baseUrl: string;
-  storage: any;
+  storage?: any;
   onNewEntriesReceived?: (entries: Entry[]) => void;
 };
 
