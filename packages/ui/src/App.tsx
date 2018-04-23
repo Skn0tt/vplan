@@ -7,8 +7,8 @@ import theme from "./theme";
 import Loading from "./elements/Loading";
 import Messager from "./components/Messager";
 
-const App: React.SFC<{}> = () => (
-  <div>
+const App: React.SFC<void> = () => (
+  <>
     <CssBaseline />
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
@@ -16,7 +16,7 @@ const App: React.SFC<{}> = () => (
         <Messager />
       </MuiThemeProvider>
     </Provider>
-  </div>
+  </>
 );
 
 export default App;
