@@ -3,12 +3,24 @@
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "husky": "^0.14.3",
+    "jest": "^22.4.3",
     "lerna": "^2.9.0",
     "prettier": "1.11.1",
-    "pretty-quick": "^1.4.1"
+    "pretty-quick": "^1.4.1",
+    "ts-jest": "^22.4.4"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   }
 }
