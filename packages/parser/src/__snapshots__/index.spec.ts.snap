@@ -11087,6 +11087,26 @@ Object {
 }
 `;
 
+exports[`parser t_subst_009.htm 1`] = `
+Object {
+  "entries": Object {
+    "student": Object {},
+    "teacher": Object {},
+  },
+  "info": Object {
+    "2018-04-23T23:00:00.000Z": Object {
+      "blockedRooms": Array [],
+      "day": 1524524400000,
+      "missingGroups": Array [],
+      "missingTeachers": Array [
+        "HEL",
+      ],
+      "week": "A",
+    },
+  },
+}
+`;
+
 exports[`parser t_subst_010.htm 1`] = `
 Object {
   "entries": Object {

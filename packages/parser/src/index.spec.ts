@@ -1,6 +1,7 @@
 import { parseFiles } from "./";
 import * as fs from "fs";
 import * as chai from "chai";
+import * as _ from "lodash";
 
 const loadFile = (path: string): Promise<Buffer> =>
   new Promise((resolve, reject) => {
@@ -41,10 +42,6 @@ describe("parser", () => {
       const result = parseFiles([file]);
 
       expect(result).toBeInstanceOf(Object);
-      expect(result).not.toContainEqual("?");
-      expect(result).not.toContainEqual("½");
-      expect(result).not.toContain("ï");
-      expect(result).not.toContain("¿");
       expect(result).toMatchSnapshot();
     });
   }
