@@ -4,9 +4,6 @@ import { blue, green, red } from "material-ui/colors";
 import * as util from "vplan-util";
 
 const styles = (theme: Theme): StyleRules => ({
-  container: {
-    maxWidth: 400
-  },
   item: {
     margin: 10
   },

@@ -3,7 +3,9 @@ import { Theme } from "material-ui/styles/createMuiTheme";
 import { blue, green, red } from "material-ui/colors";
 
 const styles = (theme: Theme): StyleRules => ({
-  container: {}
+  container: {
+    width: "100%"
+  }
 });
 
 export default styles;
