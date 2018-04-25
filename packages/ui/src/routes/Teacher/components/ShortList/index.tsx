@@ -53,17 +53,6 @@ type Props = OwnProps & WithStyles;
 const ShortList: React.SFC<Props> = props => {
   const { onChange, items, classes } = props;
 
-  const arr = ["AJK", "JKJ", "JJK", "JLL"]
-    .concat(
-      ["AJK", "JKJ", "JJK", "JLL"].map(x =>
-        x
-          .split("")
-          .reverse()
-          .join("")
-      )
-    )
-    .map(s => ({ short: s, nmb: 1 }));
-
   return (
     <Paper>
       <Grid

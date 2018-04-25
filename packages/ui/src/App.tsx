@@ -7,7 +7,7 @@ import theme from "./theme";
 import Loading from "./elements/Loading";
 import Messager from "./components/Messager";
 
-const App: React.SFC<void> = () => (
+const App: React.SFC<{}> = () => (
   <>
     <CssBaseline />
     <Provider store={store}>

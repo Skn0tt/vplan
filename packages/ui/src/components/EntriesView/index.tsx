@@ -64,7 +64,7 @@ type Props = OwnProps & StateProps & DispatchProps & WithStyles;
  */
 const EntriesView: React.SFC<Props> = props => {
   const {
-    entries,
+    entries = [],
     isMarked,
     addMarked,
     removeMarked,
