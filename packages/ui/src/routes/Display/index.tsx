@@ -18,7 +18,7 @@ import { Map } from "immutable";
 import * as _ from "lodash";
 import Information from "../../components/Information";
 import { Observable } from "rxjs/Rx";
-import { compareEntries } from "vplan-util";
+import { compareEntries, isFutureEntry } from "vplan-util";
 
 /**
  * # Helpers
@@ -135,7 +135,8 @@ class Display extends React.Component<Props, State> {
         <Grid container spacing={16} justify="center">
           {grouped
             .map((val, key) => {
-              const sortedValues = val!.sort(compareEntries);
+              const futureValues = val!.filter(isFutureEntry);
+              const sortedValues = futureValues!.sort(compareEntries);
               const paged = pages(sortedValues!, 5);
               const picked = pick(paged, page);
 
@@ -143,7 +144,9 @@ class Display extends React.Component<Props, State> {
                 <Grid item key={key} className={classes.item}>
                   <EntriesView
                     entries={paged[picked]}
-                    subtitle={`${picked + 1} / ${paged.length}`}
+                    subtitle={`${_.isNaN(picked) ? 0 : picked + 1} / ${
+                      paged.length
+                    }`}
                     title={key}
                     allowMarking={false}
                     showGroups="lower"

@@ -4,7 +4,7 @@ import { blue, green, red } from "material-ui/colors";
 
 const styles = (theme: Theme): StyleRules => ({
   container: {
-    maxHeight: "90%",
+    height: "91vh",
     flex: 1
   },
   shortItem: {
