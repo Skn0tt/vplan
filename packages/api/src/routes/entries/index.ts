@@ -25,12 +25,15 @@ const upload = multer({ storage });
 const ALL_ENTRIES = "all_entries";
 const STUDENT_ENTRIES = "student_entries";
 const TEACHER_ENTRIES = "teacher_entries";
+const REFRESH_TIME = "refresh_time";
 
 entriesRouter.get("/", returnRedis(ALL_ENTRIES));
 
 entriesRouter.get("/student", returnRedis(STUDENT_ENTRIES));
 
 entriesRouter.get("/teacher", returnRedis(TEACHER_ENTRIES));
+
+entriesRouter.get("/refreshtime", returnRedis(REFRESH_TIME));
 
 entriesRouter.put(
   "/",
@@ -67,6 +70,7 @@ entriesRouter.put(
       JSON.stringify(result.entries),
       redisErrHandler(next)
     );
+    client.set(REFRESH_TIME, result.date.toISOString(), redisErrHandler(next));
     client.set(DAYINFO, JSON.stringify(result.info), redisErrHandler(next));
 
     return res
