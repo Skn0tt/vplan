@@ -39,7 +39,10 @@ const EntriesUpdater = withStyles(styles)(
     /**
      * ## Event Handlers
      */
-    handleSend = () => this.props.onSend(this.state.files);
+    handleSend = () => {
+      this.props.onSend(this.state.files);
+      this.setState({ files: [] });
+    };
     handleAddFiles = (files: File[]) => this.setState({ files });
 
     /**

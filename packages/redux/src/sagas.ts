@@ -27,7 +27,11 @@ import {
   fetchInfoTeacherSuccess,
   FETCH_DAYINFO,
   fetchDayInfoSuccess,
-  fetchDayInfoError
+  fetchDayInfoError,
+  fetchRefreshTime,
+  fetchRefreshTimeSuccess,
+  fetchRefreshTimeError,
+  FETCH_REFRESH_TIME
 } from "./actions";
 import { Action, ActionFunction1 } from "redux-actions";
 import { Map } from "immutable";
@@ -119,11 +123,16 @@ const fetchEntriesTeacherSaga = createSagaWithComparison(
   comparer
 );
 
-const putEntriesSaga = createSaga(
-  api.putEntries,
-  putEntriesSuccess,
-  putEntriesError
-);
+function* putEntriesSaga(action: Action<any>) {
+  try {
+    const result = yield call(api.putEntries, action.payload);
+
+    yield put(putEntriesSuccess());
+    yield put(fetchRefreshTime());
+  } catch (error) {
+    yield put(putEntriesError(error));
+  }
+}
 
 const fetchInfoSaga = createSaga(
   api.fetchInfo,
@@ -141,6 +150,12 @@ const fetchInfoStudentSaga = createSaga(
   api.fetchInfoStudent,
   fetchInfoStudentSuccess,
   fetchInfoStudentError
+);
+
+const fetchRefreshtimeSaga = createSaga(
+  api.fetchRefreshtime,
+  fetchRefreshTimeSuccess,
+  fetchRefreshTimeError
 );
 
 const putInfoSaga = createSaga(api.putInfo, putInfoSuccess, putInfoError);
@@ -162,6 +177,7 @@ function* rootSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_INFO_TEACHER, fetchInfoTeacherSaga);
   yield takeLatest(FETCH_INFO_STUDENT, fetchInfoStudentSaga);
+  yield takeLatest(FETCH_REFRESH_TIME, fetchRefreshtimeSaga);
   yield takeLatest(FETCH_DAYINFO, fetchDayInfoSaga);
 
   /**

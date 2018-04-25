@@ -2,6 +2,7 @@
 
 exports[`parser subst_001.1.htm 1`] = `
 Object {
+  "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
     "student": Object {
       "5D": Array [
@@ -404,6 +405,7 @@ Object {
 
 exports[`parser subst_001.htm 1`] = `
 Object {
+  "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
     "student": Object {
       "5D": Array [
@@ -863,6 +865,7 @@ Object {
 
 exports[`parser subst_002.1.htm 1`] = `
 Object {
+  "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
     "student": Object {
       "5A": Array [
@@ -1147,6 +1150,7 @@ Object {
 
 exports[`parser subst_002.htm 1`] = `
 Object {
+  "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
     "student": Object {
       "5A": Array [
@@ -1587,6 +1591,7 @@ Object {
 
 exports[`parser subst_003.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "-----": Array [
@@ -2766,6 +2771,7 @@ Object {
 
 exports[`parser subst_004.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "-----": Array [
@@ -3644,6 +3650,7 @@ Object {
 
 exports[`parser subst_005.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "-----": Array [
@@ -4621,6 +4628,7 @@ Object {
 
 exports[`parser subst_006.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "-----": Array [
@@ -5297,6 +5305,7 @@ Object {
 
 exports[`parser subst_007.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "6B": Array [
@@ -5480,6 +5489,7 @@ Object {
 
 exports[`parser subst_008.htm 1`] = `
 Object {
+  "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
     "student": Object {
       "5B": Array [
@@ -5645,6 +5655,7 @@ Object {
 
 exports[`parser subst_009.htm 1`] = `
 Object {
+  "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
     "student": Object {
       "-----": Array [],
@@ -5657,6 +5668,7 @@ Object {
 
 exports[`parser subst_010.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "5C": Array [
@@ -6127,6 +6139,7 @@ Object {
 
 exports[`parser subst_011.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {
       "5A": Array [
@@ -7201,6 +7214,7 @@ Object {
 
 exports[`parser t_subst_003.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -8380,6 +8394,7 @@ Object {
 
 exports[`parser t_subst_004.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -9112,6 +9127,7 @@ Object {
 
 exports[`parser t_subst_005.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -10169,6 +10185,7 @@ Object {
 
 exports[`parser t_subst_006.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -10803,6 +10820,7 @@ Object {
 
 exports[`parser t_subst_007.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -11048,6 +11066,7 @@ Object {
 
 exports[`parser t_subst_008.htm 1`] = `
 Object {
+  "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -11089,6 +11108,7 @@ Object {
 
 exports[`parser t_subst_009.htm 1`] = `
 Object {
+  "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {},
@@ -11109,6 +11129,7 @@ Object {
 
 exports[`parser t_subst_010.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -11314,6 +11335,7 @@ Object {
 
 exports[`parser t_subst_011.htm 1`] = `
 Object {
+  "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -12437,6 +12459,7 @@ Object {
 
 exports[`parser teacher_subst_001.htm 1`] = `
 Object {
+  "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {
@@ -12860,6 +12883,7 @@ Object {
 
 exports[`parser teacher_subst_002.htm 1`] = `
 Object {
+  "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
     "student": Object {},
     "teacher": Object {

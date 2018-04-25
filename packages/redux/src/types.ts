@@ -85,11 +85,13 @@ interface IAppState {
   dayInfo: DayInfoMap;
   short: Short;
   errors: List<Error>;
+  refreshtime: Date;
 }
 
 export class AppState extends Record(
   {
     entries: new AllEntriesRecord({}),
+    refreshtime: new Date(0),
     loading: 0,
     group: "5A",
     marked: Map<Group, Set<Class>>(),

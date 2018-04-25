@@ -86,6 +86,20 @@ export const fetchInfoTeacherSuccess = createAction<string[]>(
 );
 
 /**
+ * ## FETCH_REFRESH_TIME
+ */
+export const FETCH_REFRESH_TIME = "FETCH_REFRESH_TIME";
+export const FETCH_REFRESH_TIME_ERROR = "FETCH_REFRESH_TIME_ERROR";
+export const FETCH_REFRESH_TIME_SUCCESS = "FETCH_REFRESH_TIME_SUCCESS";
+export const fetchRefreshTime = createAction(FETCH_REFRESH_TIME);
+export const fetchRefreshTimeError = createAction<Error>(
+  FETCH_REFRESH_TIME_ERROR
+);
+export const fetchRefreshTimeSuccess = createAction<string[]>(
+  FETCH_REFRESH_TIME_SUCCESS
+);
+
+/**
  * ## FETCH_INFO_STUDENT
  */
 export const FETCH_INFO_STUDENT = "FETCH_INFO_STUDENT";

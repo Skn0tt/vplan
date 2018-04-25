@@ -68,6 +68,22 @@ const sanitizeInvalid = (item: string) => (isValid(item) ? item : "");
 const getWeek = (input: string): "A" | "B" =>
   getDiv(getCenter(input)).slice(-1) as "A" | "B";
 
+export const parseExportDate = (input: string): Date => {
+  const stand = getBetween("Stand: ", "</p>", input);
+  const date = stand.slice(7);
+  let parts = date.split(".");
+  parts = [parts[0], parts[1], ...parts[2].split(" ")];
+  parts = [parts[0], parts[1], parts[2], ...parts[3].split(":")];
+  const [day, month, year, hour, minute] = parts;
+
+  const result = new Date(0);
+  result.setFullYear(+year, +month - 1);
+  result.setDate(+day);
+  result.setHours(+hour - 1, +minute);
+
+  return result;
+};
+
 export const parseDate = (input: string): Date => {
   const mon_title = getMonTitle(input);
   const date = mon_title.split(" ")[0];

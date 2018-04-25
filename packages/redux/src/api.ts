@@ -96,12 +96,11 @@ export const fetchDayInfo = async () => {
   }
 };
 
-export const fetchTeachers = async () => {
+export const fetchRefreshtime = async (): Promise<Date> => {
   try {
-    const data = await fetch(`${config.baseUrl}/teachers`);
-    const json = await data.json();
-
-    return json;
+    const res = await fetch(`${config.baseUrl}/entries/refreshtime`);
+    const date = await res.text();
+    return new Date(date);
   } catch (error) {
     throw error;
   }

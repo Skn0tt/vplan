@@ -200,6 +200,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/entries"
+              
+  '/entries/refreshtime':
+    get:
+      description: "Lehrer-Einträge"
+      tags:
+        - entries
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: date-time 
     
   # etc
   '/status':

@@ -32,7 +32,10 @@ import {
   FETCH_DAYINFO,
   FETCH_DAYINFO_ERROR,
   FETCH_DAYINFO_SUCCESS,
-  REMOVE_ERROR
+  REMOVE_ERROR,
+  FETCH_REFRESH_TIME_ERROR,
+  FETCH_REFRESH_TIME,
+  FETCH_REFRESH_TIME_SUCCESS
 } from "./actions";
 import { Class, Group, Entry, AllDayInfo } from "vplan-types";
 import { AppState, AllEntriesRecord, InfoRecord } from "./types";
@@ -107,6 +110,13 @@ const reducer = handleActions(
     ...asyncReducer(FETCH_DAYINFO, FETCH_DAYINFO_ERROR),
     [FETCH_DAYINFO_SUCCESS]: (state, action: Action<AllDayInfo>) =>
       state.update("loading", decrement).set("dayInfo", action.payload),
+
+    /**
+     * ## FETCH_REFRESH_TIME
+     */
+    ...asyncReducer(FETCH_REFRESH_TIME, FETCH_REFRESH_TIME_ERROR),
+    [FETCH_REFRESH_TIME_SUCCESS]: (state, action: Action<Date>) =>
+      state.update("loading", decrement).set("refreshtime", action.payload),
 
     /**
      * ## PUT_ENTRIES
