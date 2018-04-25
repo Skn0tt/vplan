@@ -11,7 +11,7 @@ export const notify = (entry: Entry) =>
 
 const start = () => {
   PushNotification.configure({
-    onNotification: notification => {
+    onNotification: (notification: any) => {
       console.log(" [pn] notification: ", notification);
 
       notification.finish(PushNotificationIOS.FetchResult.NoData);

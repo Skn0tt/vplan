@@ -11,6 +11,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true
+    "strictFunctionTypes": true,
+    "importHelpers": true
   }
 }
