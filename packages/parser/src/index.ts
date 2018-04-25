@@ -1,5 +1,11 @@
 import sample2 from "./sampleinputteacher2";
-import { parseDayInfo, parseTable, isTeachersView, parseDate } from "./parse";
+import {
+  parseDayInfo,
+  parseTable,
+  isTeachersView,
+  parseDate,
+  parseExportDate
+} from "./parse";
 import { Entry, Grouped, DayInfo, AllDayInfo, AllEntries } from "vplan-types";
 import group from "./group";
 import { convertStudent, convertTeacher } from "./convert";
@@ -43,7 +49,7 @@ const parseTeacherDay = (input: string) =>
 const parseStudentDay = (input: string) =>
   parseHTML(input, parseTable(false), convertStudent);
 
-export type ParseResult = { entries: AllEntries; info: AllDayInfo };
+export type ParseResult = { entries: AllEntries; info: AllDayInfo; date: Date };
 export const parseFiles = (buffers: Buffer[]): ParseResult => {
   const files = buffers.map(encoding);
   const teacherViews: string[] = [];
@@ -59,12 +65,14 @@ export const parseFiles = (buffers: Buffer[]): ParseResult => {
   const info: AllDayInfo = _.fromPairs(
     dayInfos.map(i => [new Date(i.day).toISOString(), i])
   );
+  const date = Math.max(...files.map(parseExportDate).map(v => +v));
 
   return {
     info,
     entries: {
       student: studentEntries,
       teacher: teacherEntries
-    }
+    },
+    date: new Date(date)
   };
 };

@@ -42,7 +42,18 @@ describe("parser", () => {
       const result = parseFiles([file]);
 
       expect(result).toBeInstanceOf(Object);
+      expect(result.date).toBeInstanceOf(Date);
+      expect(result.date.toLocaleDateString()).toBeTruthy();
       expect(result).toMatchSnapshot();
     });
   }
+
+  describe("version detection", () => {
+    it("outputs the right timestamp", async () => {
+      const file = await loadFile(__dirname + "/../res/subst_001.htm");
+      const result = parseFiles([file]);
+
+      expect(result.date.toISOString()).toEqual("2018-03-08T11:37:00.000Z");
+    });
+  });
 });
