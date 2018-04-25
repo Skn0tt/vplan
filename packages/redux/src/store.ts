@@ -35,10 +35,8 @@ const enhancer = composeEnhancers(
 );
 
 const removeUnneededTransform = createTransform(
-  (inboundState: AppState | any, key: string) =>
-    inboundState instanceof AppState
-      ? inboundState.delete("loading").delete("errors")
-      : inboundState
+  (inboundState: AppState, key: string) =>
+    key === "loading" ? 0 : inboundState
 );
 
 const store = createStore(reducer, enhancer as StoreEnhancer<any>);
