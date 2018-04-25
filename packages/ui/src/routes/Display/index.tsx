@@ -23,9 +23,11 @@ import { compareEntries } from "vplan-util";
 /**
  * # Helpers
  */
+const is = <A, B extends A>(a: A) => (b: B) => a === b;
 const excluded = ["ABB", "GL"];
+const excluders = [is("ABB"), is("GL"), (v: string) => v[0] === "-"];
 const filter = (_: any, key: string | undefined) =>
-  excluded.indexOf(key!) === -1;
+  !excluders.some(excluder => excluder(key!));
 const isNumber = (i: string) => i > "0" && i <= "9";
 const isMinor = (inp: string) => isNumber(inp.charAt(0));
 const stage = (g: string) => (isMinor(g) ? g.charAt(0) : g);
