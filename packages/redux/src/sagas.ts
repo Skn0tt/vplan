@@ -27,7 +27,11 @@ import {
   fetchInfoTeacherSuccess,
   FETCH_DAYINFO,
   fetchDayInfoSuccess,
-  fetchDayInfoError
+  fetchDayInfoError,
+  fetchRefreshTime,
+  fetchRefreshTimeSuccess,
+  fetchRefreshTimeError,
+  FETCH_REFRESH_TIME
 } from "./actions";
 import { Action, ActionFunction1 } from "redux-actions";
 import { Map } from "immutable";
@@ -143,6 +147,12 @@ const fetchInfoStudentSaga = createSaga(
   fetchInfoStudentError
 );
 
+const fetchRefreshtime = createSaga(
+  api.fetchRefreshtime,
+  fetchRefreshTimeSuccess,
+  fetchRefreshTimeError
+);
+
 const putInfoSaga = createSaga(api.putInfo, putInfoSuccess, putInfoError);
 
 const fetchDayInfoSaga = createSaga(
@@ -162,6 +172,7 @@ function* rootSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_INFO_TEACHER, fetchInfoTeacherSaga);
   yield takeLatest(FETCH_INFO_STUDENT, fetchInfoStudentSaga);
+  yield takeLatest(FETCH_REFRESH_TIME, fetchRefreshtime);
   yield takeLatest(FETCH_DAYINFO, fetchDayInfoSaga);
 
   /**
