@@ -123,11 +123,16 @@ const fetchEntriesTeacherSaga = createSagaWithComparison(
   comparer
 );
 
-const putEntriesSaga = createSaga(
-  api.putEntries,
-  putEntriesSuccess,
-  putEntriesError
-);
+function* putEntriesSaga(action: Action<any>) {
+  try {
+    const result = yield call(api.putEntries, action.payload);
+
+    yield put(putEntriesSuccess());
+    yield put(fetchRefreshTime());
+  } catch (error) {
+    yield put(putEntriesError(error));
+  }
+}
 
 const fetchInfoSaga = createSaga(
   api.fetchInfo,
@@ -147,7 +152,7 @@ const fetchInfoStudentSaga = createSaga(
   fetchInfoStudentError
 );
 
-const fetchRefreshtime = createSaga(
+const fetchRefreshtimeSaga = createSaga(
   api.fetchRefreshtime,
   fetchRefreshTimeSuccess,
   fetchRefreshTimeError
@@ -172,7 +177,7 @@ function* rootSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_INFO_TEACHER, fetchInfoTeacherSaga);
   yield takeLatest(FETCH_INFO_STUDENT, fetchInfoStudentSaga);
-  yield takeLatest(FETCH_REFRESH_TIME, fetchRefreshtime);
+  yield takeLatest(FETCH_REFRESH_TIME, fetchRefreshtimeSaga);
   yield takeLatest(FETCH_DAYINFO, fetchDayInfoSaga);
 
   /**

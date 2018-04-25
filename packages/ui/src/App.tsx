@@ -6,13 +6,16 @@ import Routes from "./Routes";
 import theme from "./theme";
 import Loading from "./elements/Loading";
 import Messager from "./components/Messager";
+import ShowRefreshtime from "./components/ShowRefreshtime";
 
 const App: React.SFC<{}> = () => (
   <>
     <CssBaseline />
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
-        <Routes />
+        <ShowRefreshtime>
+          <Routes />
+        </ShowRefreshtime>
         <Messager />
       </MuiThemeProvider>
     </Provider>

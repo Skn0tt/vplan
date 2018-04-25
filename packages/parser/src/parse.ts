@@ -79,7 +79,7 @@ export const parseExportDate = (input: string): Date => {
   const result = new Date(0);
   result.setFullYear(+year, +month - 1);
   result.setDate(+day);
-  result.setHours(+hour, +minute);
+  result.setHours(+hour - 1, +minute);
 
   return result;
 };

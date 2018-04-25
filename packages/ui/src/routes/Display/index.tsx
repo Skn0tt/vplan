@@ -19,6 +19,7 @@ import * as _ from "lodash";
 import Information from "../../components/Information";
 import { Observable } from "rxjs/Rx";
 import { compareEntries, isFutureEntry } from "vplan-util";
+import ShowRefreshtime from "../../components/ShowRefreshtime";
 
 /**
  * # Helpers

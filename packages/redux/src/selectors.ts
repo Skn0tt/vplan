@@ -48,6 +48,9 @@ export const getEntries: Selector<AppState, AllEntriesRecord> = state =>
 export const isTeacher: Selector<AppState, boolean> = state =>
   state.get("isTeacher");
 
+export const getRefreshtime: Selector<AppState, Date> = state =>
+  state.get("refreshtime");
+
 export const getIdentifier = createSelector<
   AppState,
   AppState,
