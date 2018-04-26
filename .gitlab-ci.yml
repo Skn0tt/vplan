@@ -5,7 +5,7 @@ variables:
 
 stages:
   - build
-  - docs
+  - release
 
 #
 # Build
@@ -56,9 +56,31 @@ Docs:
     paths:
       - site/
 
+
+# Build App
+Build App:
+  image: farwayer/react-native
+  stage: release
+  artifacts:
+    paths:
+      - ./packages/app/android/app/build/outputs/apk/release/
+  only:
+    - master
+  # only:
+    # - tags
+  before_script:
+    - yarn
+  script:
+    - cd packages/app
+    # Gradle Properties
+    - echo $KEYSTORE_GRADLE_PROPERTIES | base64 -d >> ./android/gradle.properties
+    # Keystore
+    - echo $KEYSTORE | base64 -d > ./android/app/vplan-app.keystore
+    - yarn release:android:ci
+
 # Coverage Pages
 pages:
-  stage: docs
+  stage: release
   dependencies:
     - Docs
   script:

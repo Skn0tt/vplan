@@ -72,20 +72,6 @@ import com.android.build.OutputFile
  * ]
  */
 
-def getPassword(String currentUser, String keyChain) {
-    def stdout = new ByteArrayOutputStream()
-    def stderr = new ByteArrayOutputStream()
-    exec {
-        commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
-        standardOutput = stdout
-        errorOutput = stderr
-        ignoreExitValue true
-    }
-    //noinspection GroovyAssignabilityCheck
-    stdout.toString().trim()
-}
- 
-
 project.ext.react = [
     entryFile: "index.js",
     cliPath: "./node_modules/haul/bin/cli.js"
@@ -109,8 +95,6 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
-def pass = getPassword("skn0tt","vplan-app_keystore")
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -128,9 +112,9 @@ android {
     signingConfigs {
         release {
             storeFile file(VPLAN_APP_RELEASE_STORE_FILE)
-            storePassword pass
+            storePassword VPLAN_APP_RELEASE_STORE_PASSWORD
             keyAlias VPLAN_APP_RELEASE_KEY_ALIAS
-            keyPassword pass
+            keyPassword VPLAN_APP_RELEASE_KEY_PASSWORD
         }
     }
     splits {
