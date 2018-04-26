@@ -16,6 +16,8 @@ output: pdf_document
   * nicht mobilfähig
   * &rarr; Keine gute UX
 
+> 1 Seite
+
 ## Lösungsansatz
 
 * Webservice zur Auslieferung des Untis-Exports in schön
@@ -29,6 +31,7 @@ output: pdf_document
     * Schüler
     * Admin
 * Screenshots vom fertigen Produkt
+  > 1 Seite
 
 # Hauptteil
 
@@ -38,6 +41,8 @@ output: pdf_document
   * siehe Facharbeit
 * API / Client bzw. Server-Viewer
 
+> 2 Seiten
+
 ## Tools
 
 ### Javascript / Typescript
@@ -45,6 +50,8 @@ output: pdf_document
 * Wieso ist JS das richtige Tool?
 * Cross-Platform (Browser, App, Server)
 * Geschichte JS
+
+> 1 Seite
 
 #### Betrachtung: Dynamische Typisierung gut/schlecht?
 
@@ -56,6 +63,9 @@ output: pdf_document
   * slow development
   * schlechtes tooling
 * Typescript als Retter
+* Kurze Einführung in Typescript
+
+> 2 Seiten
 
 #### Betrachtung: JS everywhere
 
@@ -67,6 +77,8 @@ output: pdf_document
 * Schlecht:
   * Sprache lässt viel Freiraum, ermöglicht viele Paradigmen
 
+> 1.5 Seiten
+
 #### Betrachtung: Functional Javascript
 
 * Was geht gut?
@@ -75,6 +87,9 @@ output: pdf_document
 * Was fehlt?
   * Typisierung
   * Funktionale Typen (Mondas, Monoids, Applicatives etc...)
+* Beispiele (Vergleich Imperativ / Funktional)
+
+> 2 Seiten
 
 ### Docker
 
@@ -87,17 +102,27 @@ output: pdf_document
   * Rolling Deployments
   * High Avalability
 
+> 1 Seite
+
 ### React
 
 * React
 
   * DOM Diffing
-  * Redux
   * Component-based
+  * Code-Beispiel
+    > 1 Seite
+
+* Redux
+
+  * Code-Beispiel
+    > 1 Seite
 
 * React Native
   * React on mobile
   * Dynamically Transpiled? Precompiled? what is it? TODO: find out!
+  * Code-Beispiel
+    > 1 Seite
 
 ### Misc
 
@@ -107,26 +132,34 @@ output: pdf_document
   * Yarn
   * Code sharing
 
+> 1 Seite
+
 * CI
 
   * Gitlab
   * Advantages:
     * CI, CD
 
+> 1 Seite
+
 * TDD / BDD:
   * Anwendung parser
   * Snapshot testing
   * Beispiel TDD
 
+> 1 Seite
+
 ## Umsetzung / Beispiele
 
 * Parser
-
   * Explain Functional approaches (clean up code beforehand)
 
-* UI
+> 2 Seiten
 
+* UI
   * Explain Component Structure (Types, Helpers, Component, Component Lifecycle)
+
+> 2 Seiten
 
 * App
   * Explain antoher Component Structure (Types, Helpers, Component, Component Lifecycle)
@@ -137,15 +170,24 @@ output: pdf_document
 | div   | View      |
 | input | TextInput |
 
-* Redux
+* Push-Notifications (Problem: min 15 minutes, "Pull"-Notification)
 
+> 2 Seiten
+
+* Redux
   * Show Reducer flow with example (e.g. "entries")
+
+> 1 Seite
 
 * API
   * Redis
   * Express (Explain routes)
 
+> 2 Seiten
+
 # Schluss
 
 * Gutes projekt
 * Schönes beispiel für simple web-apps
+
+> 2 Seiten
