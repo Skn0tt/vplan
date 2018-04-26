@@ -66,8 +66,8 @@ Build App:
       - ./packages/app/android/app/build/outputs/apk/release/
   only:
     - master
-  # only:
-    # - tags
+  only:
+    - tags
   before_script:
     - yarn
   script:
