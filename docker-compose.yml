@@ -36,6 +36,7 @@ services:
     environment:
       - UI_HEADER
       - UI_TITLE
+      - UI_FAVICON_URL
       - CONFIG_VARS=UI_HEADER,UI_TITLE
       - VIRTUAL_HOST=${HOST}
       - VIRTUAL_PATH=/
