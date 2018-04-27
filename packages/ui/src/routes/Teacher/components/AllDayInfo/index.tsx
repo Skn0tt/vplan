@@ -28,7 +28,7 @@ const lines = (input: string[]) =>
     .join("\n");
 
 const title = (date: Date) =>
-  `${date.toLocaleDateString("de", { weekday: "long" })} fehlt:`;
+  `${date.toLocaleDateString("de", { weekday: "long" })} fehlen:`;
 
 /**
  * # Component Types
