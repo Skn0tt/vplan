@@ -34,6 +34,9 @@ services:
   ui:
     image: registry.gitlab.com/skn0tt/vplan/ui:master
     environment:
+      - UI_HEADER
+      - UI_TITLE
+      - CONFIG_VARS=UI_HEADER,UI_TITLE
       - VIRTUAL_HOST=${HOST}
       - VIRTUAL_PATH=/
       - VIRTUAL_PORT=80

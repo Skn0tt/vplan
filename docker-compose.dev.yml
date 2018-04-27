@@ -9,4 +9,6 @@ services:
       - SECRET=root
       - NODE_ENV=development
 
-  
+  ui:
+    volumes:
+      - ./packages/ui/dist:/app/

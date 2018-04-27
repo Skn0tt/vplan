@@ -21,7 +21,11 @@ const AppBar: React.SFC<Props> = props => {
       <MUIAppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="title" className={classes.title}>
-            vPlan
+            {
+              (document.title = !!window.__env
+                ? window.__env.UI_HEADER
+                : "vPlan")
+            }
           </Typography>
         </Toolbar>
       </MUIAppBar>
