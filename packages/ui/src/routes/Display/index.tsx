@@ -19,7 +19,7 @@ import * as _ from "lodash";
 import Information from "../../components/Information";
 import { Observable } from "rxjs/Rx";
 import { compareEntries, isFutureEntry } from "vplan-util";
-import ShowRefreshtime from "../../components/ShowRefreshtime";
+import ShowClock from "../../components/ShowClock";
 
 /**
  * # Helpers
@@ -132,38 +132,40 @@ class Display extends React.Component<Props, State> {
     const pickedInfo = pick(pagedInfo, page);
 
     return (
-      <div className={classes.container}>
-        <Grid container spacing={16} justify="center">
-          {grouped
-            .map((val, key) => {
-              const futureValues = val!.filter(isFutureEntry);
-              const sortedValues = futureValues!.sort(compareEntries);
-              const paged = pages(sortedValues!, 5);
-              const picked = pick(paged, page);
+      <ShowClock>
+        <div className={classes.container}>
+          <Grid container spacing={16} justify="center">
+            {grouped
+              .map((val, key) => {
+                const futureValues = val!.filter(isFutureEntry);
+                const sortedValues = futureValues!.sort(compareEntries);
+                const paged = pages(sortedValues!, 5);
+                const picked = pick(paged, page);
 
-              return (
-                <Grid item key={key} className={classes.item}>
-                  <EntriesView
-                    entries={paged[picked]}
-                    subtitle={`${_.isNaN(picked) ? 0 : picked + 1} / ${
-                      paged.length
-                    }`}
-                    title={key}
-                    allowMarking={false}
-                    showGroups="lower"
-                  />
-                </Grid>
-              );
-            })
-            .toArray()}
-          <Grid item className={g9 ? classes.item : classes.information}>
-            <Information
-              title="Informationen"
-              info={pagedInfo[pickedInfo] || []}
-            />
+                return (
+                  <Grid item key={key} className={classes.item}>
+                    <EntriesView
+                      entries={paged[picked]}
+                      subtitle={`${_.isNaN(picked) ? 0 : picked + 1} / ${
+                        paged.length
+                      }`}
+                      title={key}
+                      allowMarking={false}
+                      showGroups="lower"
+                    />
+                  </Grid>
+                );
+              })
+              .toArray()}
+            <Grid item className={g9 ? classes.item : classes.information}>
+              <Information
+                title="Informationen"
+                info={pagedInfo[pickedInfo] || []}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+      </ShowClock>
     );
   }
 }
