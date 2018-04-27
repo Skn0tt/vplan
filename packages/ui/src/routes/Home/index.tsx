@@ -18,13 +18,15 @@ import {
 } from "vplan-redux";
 import { Action } from "redux";
 import { RouteComponentProps } from "react-router";
-import { WithStyles, withStyles, TextField } from "material-ui";
+import { WithStyles, withStyles, TextField, withWidth } from "material-ui";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
 import Information from "../../components/Information";
+import ShortList, { ShortListItem } from "../../components/ShortList";
 import { Observable } from "rxjs";
 import { isFutureEntry } from "vplan-util";
+import { WithWidthProps, isWidthDown } from "material-ui/utils/withWidth";
 
 /**
  * Helpers
@@ -68,7 +70,8 @@ type Props = StateProps &
   DispatchProps &
   OwnProps &
   RouteComponentProps<{ group: Group }> &
-  WithStyles;
+  WithStyles &
+  WithWidthProps;
 
 /**
  * # Component
@@ -104,35 +107,62 @@ class Home extends React.PureComponent<Props> {
    * ## Render
    */
   render() {
-    const { group, setGroup, entries, classes, match, info } = this.props;
+    const {
+      group,
+      setGroup,
+      entries,
+      classes,
+      match,
+      info,
+      width
+    } = this.props;
 
     const showGroup = match.params.group || group;
 
-    const showEntries = entries.get(showGroup) || [];
-    const filteredEntries = showEntries.filter(isFutureEntry);
+    const filteredEntries = entries
+      .map(v => v!.filter(isFutureEntry))
+      .filter(v => v!.length > 0);
+
+    const showEntries = filteredEntries.get(showGroup) || [];
+
+    const items: ShortListItem[] = filteredEntries
+      .map((value, key) => ({
+        short: key!,
+        nmb: value!.length
+      }))
+      .toArray()
+      .sort((a, b) => a.short.localeCompare(b.short));
 
     return (
       <>
         <EntriesView
           title={
-            <TextField
-              id="select-currency-native"
-              select
-              value={showGroup}
-              label="Klasse"
-              fullWidth
-              className={classes.select}
-              onChange={e => this.handleSetGroup(e.target.value as Group)}
-              SelectProps={{ native: true }}
-            >
-              {Groups.map(group => (
-                <option key={group} value={group}>
-                  {group}
-                </option>
-              ))}
-            </TextField>
+            isWidthDown("md", width) ? (
+              <TextField
+                id="select-currency-native"
+                select
+                value={showGroup}
+                label="Klasse"
+                fullWidth
+                className={classes.select}
+                onChange={e => this.handleSetGroup(e.target.value as Group)}
+                SelectProps={{ native: true }}
+              >
+                {items.map(i => (
+                  <option key={group} value={group}>
+                    {group}
+                  </option>
+                ))}
+              </TextField>
+            ) : (
+              <ShortList
+                items={items}
+                onChange={i => this.handleSetGroup(i.short)}
+                selected={showGroup}
+              />
+            )
           }
-          entries={filteredEntries}
+          entries={showEntries}
           allowMarking
         />
         <Information title="Informationen" info={info} />
@@ -142,5 +172,5 @@ class Home extends React.PureComponent<Props> {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(Home)
+  withStyles(styles)(withWidth()(Home))
 );
