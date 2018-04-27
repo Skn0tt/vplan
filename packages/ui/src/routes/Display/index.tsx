@@ -13,7 +13,13 @@ import { withStyles, WithStyles, Grid } from "material-ui";
 import { Action } from "redux";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
-import { Entries, StudentEntries, Group, Entry } from "vplan-types";
+import {
+  Entries,
+  StudentEntries,
+  Group,
+  Entry,
+  StudentEntry
+} from "vplan-types";
 import { Map } from "immutable";
 import * as _ from "lodash";
 import Information from "../../components/Information";
@@ -44,6 +50,12 @@ const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
 const bound = (int: number, max: number) => (int > max ? max : int);
 const pages = (entries: any[], amount: number) => _.chunk(entries, amount);
 const pick = (arr: any[], int: number) => int % arr.length;
+const ensureAllGroups = (map: StudentEntriesMap): StudentEntriesMap =>
+  Map<string, StudentEntry[]>(neededGroups.map(g => [g, []])).merge(map);
+
+const neededGroups = !!window.__env
+  ? window.__env.UI_DISPLAY_NEEDED_GROUPS.split(",")
+  : [];
 
 /**
  * # Component Types
@@ -124,7 +136,7 @@ class Display extends React.Component<Props, State> {
     const { entries, classes, info } = this.props;
     const { page } = this.state;
 
-    const grouped = group(entries).sortBy((v, k) => k);
+    const grouped = group(ensureAllGroups(entries)).sortBy((v, k) => k);
 
     const g9 = grouped.size > 8;
 

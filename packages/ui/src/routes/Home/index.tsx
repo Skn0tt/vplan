@@ -1,5 +1,10 @@
 import * as React from "react";
-import { connect, Dispatch } from "react-redux";
+import {
+  connect,
+  Dispatch,
+  MapDispatchToPropsParam,
+  MapStateToPropsParam
+} from "react-redux";
 import { StudentEntries, Group, Groups } from "vplan-types";
 import {
   getStudentEntries,
@@ -19,6 +24,7 @@ import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
 import Information from "../../components/Information";
 import { Observable } from "rxjs";
+import { isFutureEntry } from "vplan-util";
 
 /**
  * Helpers
@@ -32,102 +38,109 @@ interface StateProps {
   info: string[];
   group: Group;
 }
-const mapStateToProps = (state: AppState) =>
-  ({
-    entries: getStudentEntries(state),
-    info: getInfoStudent(state),
-    group: getGroup(state)
-  } as StateProps);
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
+  entries: getStudentEntries(state),
+  info: getInfoStudent(state),
+  group: getGroup(state)
+});
 
 interface DispatchProps {
   refreshEntries(): void;
   refreshInfo(): void;
   setGroup(g: Group): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
-  ({
-    refreshEntries: () => dispatch(fetchEntriesStudent()),
-    refreshInfo: () => dispatch(fetchInfoStudent()),
-    setGroup: (g: Group) => dispatch(setGroup(g))
-  } as DispatchProps);
+const mapDispatchToProps: MapDispatchToPropsParam<
+  DispatchProps,
+  OwnProps
+> = dispatch => ({
+  refreshEntries: () => dispatch(fetchEntriesStudent()),
+  refreshInfo: () => dispatch(fetchInfoStudent()),
+  setGroup: (g: Group) => dispatch(setGroup(g))
+});
+
+interface OwnProps {}
 
 type Props = StateProps &
   DispatchProps &
+  OwnProps &
   RouteComponentProps<{ group: Group }> &
   WithStyles;
 
 /**
  * # Component
  */
-const Home = connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(
-    class extends React.PureComponent<Props> {
-      /**
-       * ## Lifecycle
-       */
-      componentDidMount() {
-        this.handleRefresh();
-        this.refreshClock.subscribe(this.handleRefresh);
-      }
+class Home extends React.PureComponent<Props> {
+  /**
+   * ## Lifecycle
+   */
+  componentDidMount() {
+    this.handleRefresh();
+    this.refreshClock.subscribe(this.handleRefresh);
+  }
 
-      /**
-       * ## Rx
-       */
-      refreshClock = Observable.interval(10 * 1000);
+  /**
+   * ## Rx
+   */
+  refreshClock = Observable.interval(10 * 1000);
 
-      /**
-       * ## Handlers
-       */
-      handleRefresh = () => {
-        this.props.refreshEntries();
-        this.props.refreshInfo();
-      };
+  /**
+   * ## Handlers
+   */
+  handleRefresh = () => {
+    this.props.refreshEntries();
+    this.props.refreshInfo();
+  };
 
-      handleSetGroup = (g: Group) => {
-        this.props.setGroup(g);
-        this.props.history.push("/" + g);
-      };
+  handleSetGroup = (g: Group) => {
+    this.props.setGroup(g);
+    this.props.history.push("/" + g);
+  };
 
-      /**
-       * ## Render
-       */
-      render() {
-        const { group, setGroup, entries, classes, match, info } = this.props;
+  /**
+   * ## Render
+   */
+  render() {
+    const { group, setGroup, entries, classes, match, info } = this.props;
 
-        const showGroup = match.params.group || group;
+    const showGroup = match.params.group || group;
 
-        const showEntries = entries.get(showGroup) || [];
+    const showEntries = entries.get(showGroup) || [];
+    const filteredEntries = showEntries.filter(isFutureEntry);
 
-        return (
-          <>
-            <EntriesView
-              title={
-                <TextField
-                  id="select-currency-native"
-                  select
-                  value={showGroup}
-                  label="Klasse"
-                  fullWidth
-                  className={classes.select}
-                  onChange={e => this.handleSetGroup(e.target.value as Group)}
-                  SelectProps={{ native: true }}
-                >
-                  {Groups.map(group => (
-                    <option key={group} value={group}>
-                      {group}
-                    </option>
-                  ))}
-                </TextField>
-              }
-              entries={showEntries}
-              allowMarking
-            />
-            <Information title="Informationen" info={info} />
-          </>
-        );
-      }
-    }
-  )
+    return (
+      <>
+        <EntriesView
+          title={
+            <TextField
+              id="select-currency-native"
+              select
+              value={showGroup}
+              label="Klasse"
+              fullWidth
+              className={classes.select}
+              onChange={e => this.handleSetGroup(e.target.value as Group)}
+              SelectProps={{ native: true }}
+            >
+              {Groups.map(group => (
+                <option key={group} value={group}>
+                  {group}
+                </option>
+              ))}
+            </TextField>
+          }
+          entries={filteredEntries}
+          allowMarking
+        />
+        <Information title="Informationen" info={info} />
+      </>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(Home)
 );
-
-export default Home;

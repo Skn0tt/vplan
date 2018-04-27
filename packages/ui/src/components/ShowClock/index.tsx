@@ -9,7 +9,9 @@ interface State {
   date: Date;
 }
 
-type Props = WithStyles;
+interface OwnProps {}
+
+type Props = OwnProps & WithStyles;
 
 /**
  * # Component
