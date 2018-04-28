@@ -58,7 +58,7 @@ Docs:
 
 
 # Build App
-Build App:
+app:ema:
   image: farwayer/react-native
   stage: release
   artifacts:
@@ -76,7 +76,7 @@ Build App:
     - echo $KEYSTORE_GRADLE_PROPERTIES | base64 -d >> ./android/gradle.properties
     # Keystore
     - echo $KEYSTORE | base64 -d > ./android/app/vplan-app.keystore
-    - yarn release:android:ci
+    - API_BASEURL=https://vplan.ema-vplan.de/api yarn release:android:ci
 
 # Coverage Pages
 pages:

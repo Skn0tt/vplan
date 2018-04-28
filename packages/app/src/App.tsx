@@ -9,7 +9,7 @@ import startPushing from "./etc/push";
 import * as util from "vplan-util";
 
 export const store = createStore({
-  baseUrl: "https://vplan.ema-vplan.de/api",
+  baseUrl: API_BASEURL,
   storage: AsyncStorage,
   onNewEntriesReceived
 });
