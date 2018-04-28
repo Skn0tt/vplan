@@ -117,7 +117,7 @@ class Teacher extends React.Component<Props> {
 
     return (
       <Grid container direction="row" justify="space-between">
-        <Grid item xs={3} className={classes.shortList}>
+        <Grid item xs={12} lg={3} wrap="wrap" className={classes.shortList}>
           <Paper>
             <ShortList
               onChange={i => this.handleShortChange(i.short)}
@@ -126,12 +126,12 @@ class Teacher extends React.Component<Props> {
             />
           </Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} lg={4}>
           {showEntries && (
             <EntriesView entries={showEntries} title={short} showGroups="all" />
           )}
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} lg={3}>
           <Grid container direction="column" spacing={16}>
             <Grid item>
               <Information title="Infos Lehrer" info={info.teacher} />
