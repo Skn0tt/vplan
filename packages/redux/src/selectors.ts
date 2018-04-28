@@ -15,7 +15,8 @@ import {
   TeacherEntries,
   Info,
   Entry,
-  AllDayInfo
+  AllDayInfo,
+  Short
 } from "vplan-types";
 import { createSelector, Selector } from "reselect";
 import { getMark } from "vplan-util";
@@ -51,12 +52,7 @@ export const isTeacher: Selector<AppState, boolean> = state =>
 export const getRefreshtime: Selector<AppState, Date> = state =>
   state.get("refreshtime");
 
-export const getIdentifier = createSelector<
-  AppState,
-  AppState,
-  boolean,
-  string
->(
+export const getShort = createSelector<AppState, AppState, boolean, Short>(
   [getState, isTeacher],
   (state, isTeacher) => (isTeacher ? state.get("short") : state.get("group"))
 );
@@ -67,7 +63,7 @@ export const getOwnEntries = createSelector<
   string,
   AllEntriesRecord,
   Entry[]
->([isTeacher, getIdentifier, getEntries], (isTeacher, id, entries) =>
+>([isTeacher, getShort, getEntries], (isTeacher, id, entries) =>
   entries.getIn([isTeacher ? "teacher" : "student", id])
 );
 

@@ -1,11 +1,15 @@
 import * as React from "react";
 import { View, Text, Switch, TextInput, Picker } from "react-native";
-import { connect } from "react-redux";
+import {
+  connect,
+  MapDispatchToPropsParam,
+  MapStateToPropsParam
+} from "react-redux";
 import {
   AppState,
   isTeacher,
   setIsTeacher,
-  getIdentifier,
+  getShort,
   setShort,
   setGroup,
   getGroup
@@ -25,68 +29,54 @@ interface StateProps {
   short: Short;
   group: Group;
 }
-const mapStateToProps = (state: AppState) =>
-  ({
-    isTeacher: isTeacher(state),
-    short: getIdentifier(state),
-    group: getGroup(state)
-  } as StateProps);
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
+  isTeacher: isTeacher(state),
+  short: getShort(state),
+  group: getGroup(state)
+});
 
 interface DispatchProps {
   setIsTeacher(is: boolean): void;
   setShort(id: Short): void;
   setGroup(g: Group): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
-  ({
-    setIsTeacher: (is: boolean) => dispatch(setIsTeacher(is)),
-    setShort: (id: Short) => dispatch(setShort(id)),
-    setGroup: (g: Group) => dispatch(setGroup(g))
-  } as DispatchProps);
+const mapDispatchToProps: MapDispatchToPropsParam<
+  DispatchProps,
+  OwnProps
+> = dispatch => ({
+  setIsTeacher: is => dispatch(setIsTeacher(is)),
+  setShort: id => dispatch(setShort(id)),
+  setGroup: g => dispatch(setGroup(g))
+});
 
-type Props = StateProps & DispatchProps;
+interface OwnProps {}
+
+type Props = StateProps & DispatchProps & OwnProps;
 
 /**
  * # Component
  */
-const Settings = connect(mapStateToProps, mapDispatchToProps)(
-  class extends React.Component<Props> {
-    /**
-     * ## Initialization
-     */
+const Settings: React.SFC<Props> = props => {
+  const { isTeacher, short, group, setIsTeacher, setGroup, setShort } = props;
 
-    /**
-     * ## Action Handlers
-     */
-    handleChangeIsTeacher = this.props.setIsTeacher;
-    handleChangeShort = this.props.setShort;
-    handleChangeGroup = this.props.setGroup;
+  return (
+    <View style={styles.container}>
+      <View style={styles.item}>
+        <ModeSwitch isTeacher={isTeacher} onChange={setIsTeacher} />
+      </View>
+      <View style={styles.item}>
+        {isTeacher ? (
+          <ShortInput short={short} onChange={setShort} />
+        ) : (
+          <GroupInput group={group} onChange={setGroup} />
+        )}
+      </View>
+    </View>
+  );
+};
 
-    /**
-     * ## Render
-     */
-    render() {
-      const { isTeacher, short, group } = this.props;
-
-      return (
-        <View style={styles.container}>
-          <View style={styles.item}>
-            <ModeSwitch
-              isTeacher={isTeacher}
-              onChange={this.handleChangeIsTeacher}
-            />
-          </View>
-          <View style={styles.item}>
-            {isTeacher ? (
-              <ShortInput short={short} onChange={this.handleChangeShort} />
-            ) : (
-              <GroupInput group={group} onChange={this.handleChangeGroup} />
-            )}
-          </View>
-        </View>
-      );
-    }
-  }
-);
-
-export default Settings;
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

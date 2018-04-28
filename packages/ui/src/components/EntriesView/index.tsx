@@ -75,9 +75,7 @@ const EntriesView: React.SFC<Props> = props => {
     showGroups
   } = props;
 
-  const filtered = entries.filter(isFutureEntry);
-
-  const sections = sectionize(filtered);
+  const sections = sectionize(entries);
 
   return (
     <div className={classes.container}>

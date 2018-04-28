@@ -1,4 +1,6 @@
-module.exports = ({ platform }, { module, resolve }) => ({
+const webpack = require("webpack");
+
+module.exports = ({ platform }, { module, resolve, plugins }) => ({
   entry: `./src/index.tsx`,
   module: {
     ...module,
@@ -10,6 +12,12 @@ module.exports = ({ platform }, { module, resolve }) => ({
       ...module.rules
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      API_BASEURL: JSON.stringify(process.env.API_BASEURL)
+    }),
+    ...plugins
+  ],
   resolve: {
     ...resolve,
     extensions: [
