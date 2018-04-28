@@ -32,6 +32,7 @@ import { Action } from "redux";
 import { Entry, Class, Short } from "vplan-types";
 import * as _ from "lodash";
 import EntryListItem from "./elements/EntryListItem";
+import ListEmptyText from "./elements/ListEmptyText";
 import {
   NavigationScreenOptions,
   NavigationStackScreenOptions,
@@ -206,6 +207,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
                 title={localiseDate(new Date(section.data[0].day))}
               />
             )}
+            ListEmptyComponent={<ListEmptyText text="Keine Vertetungen." />}
             keyExtractor={hashEntry}
             refreshing={isLoading}
             onRefresh={this.handleRefresh}
