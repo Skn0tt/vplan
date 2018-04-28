@@ -11,6 +11,7 @@ All configuration is done with environment variables.
 | `UI_HEADER`                | Header that is shown on certain UI pages        | Vertretungsplan am EMA                                      |
 | `UI_FAVICON_URL`           | URL of the favicon                              | thttp://www.ema-bonn.de/templates/jsn_metro_pro/favicon.ico |
 | `UI_DISPLAY_NEEDED_GROUPS` | Groups that need to be shown on /display        | 5,6,7,8,9,EF,Q1,Q2                                          |
+|  `UI_LOGO_URL`             |  URL of the logo to show in appbar              | http://ema-bonn.de/images/EMA-MINT-Logo.png                 |
 
 ## Example
 
@@ -24,4 +25,5 @@ UI_TITLE=vPlan
 UI_HEADER=Vertretungsplan am EMA
 UI_FAVICON_URL=http://www.ema-bonn.de/templates/jsn_metro_pro/favicon.ico
 UI_DISPLAY_NEEDED_GROUPS=5,6,7,8,9,EF,Q1,Q2
+UI_LOGO_URL=http://ema-bonn.de/images/EMA-MINT-Logo.png
 ```

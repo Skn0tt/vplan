@@ -148,11 +148,15 @@ class Home extends React.PureComponent<Props> {
                 onChange={e => this.handleSetGroup(e.target.value as Group)}
                 SelectProps={{ native: true }}
               >
-                {items.map(i => (
-                  <option key={group} value={group}>
-                    {group}
-                  </option>
-                ))}
+                {items.length !== 0 ? (
+                  items.map(i => (
+                    <option key={i.short} value={i.short}>
+                      {i.short}
+                    </option>
+                  ))
+                ) : (
+                  <option>Keine Vertrungsstunden</option>
+                )}
               </TextField>
             ) : (
               <ShortList

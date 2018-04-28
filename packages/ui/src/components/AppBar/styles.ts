@@ -5,6 +5,11 @@ const styles = (theme: Theme): StyleRules => ({
   appBar: {
     position: "fixed"
   },
+  logo: {
+    padding: 12,
+    overflow: "hidden",
+    maxHeight: "64px"
+  },
   content: {
     width: "100%",
     marginTop: 64,
