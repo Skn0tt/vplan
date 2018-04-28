@@ -54,7 +54,17 @@ type Props = OwnProps & WithStyles;
 const ShortList: React.SFC<Props> = props => {
   const { onChange, items, classes, selected } = props;
 
-  const additionalItems = ["JKL", "JUB", "NMD", "DFG", "VBN"].map(v => ({
+  const additionalItems = [
+    "JKL",
+    "JUB",
+    "NMD",
+    "DFG",
+    "VBN",
+    "ANB",
+    "MNJ",
+    "AVS",
+    "BNMB"
+  ].map(v => ({
     short: v,
     nmb: 0
   }));

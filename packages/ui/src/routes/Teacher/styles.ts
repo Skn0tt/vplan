@@ -3,8 +3,7 @@ import { Theme } from "material-ui/styles/createMuiTheme";
 
 const styles = (theme: Theme): StyleRules => ({
   shortList: {
-    maxHeight: "90vh",
-    overflowY: "scroll"
+    maxHeight: "90vh"
   }
 });
 
