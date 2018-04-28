@@ -7,7 +7,8 @@ import {
   FlatList,
   SectionList,
   SectionListData,
-  Modal
+  Modal,
+  ListRenderItemInfo
 } from "react-native";
 import {
   AppState,
@@ -22,11 +23,13 @@ import {
   removeMarked,
   isMarked,
   fetchInfoStudent,
-  fetchInfo
+  fetchInfo,
+  getGroup,
+  getShort
 } from "vplan-redux";
 import { Dispatch, connect } from "react-redux";
 import { Action } from "redux";
-import { Entry, Class } from "vplan-types";
+import { Entry, Class, Short } from "vplan-types";
 import * as _ from "lodash";
 import EntryListItem from "./elements/EntryListItem";
 import {
@@ -71,11 +74,13 @@ interface StateProps {
   entries: Entry[];
   isTeacher: boolean;
   isLoading: boolean;
+  short: Short;
   isMarked(item: Entry): boolean;
 }
 const mapStateToProps = (state: AppState) =>
   ({
     entries: getOwnEntries(state) || [],
+    short: getShort(state),
     isTeacher: isTeacher(state),
     isLoading: isLoading(state),
     isMarked: e => isMarked(e)(state)
@@ -112,7 +117,9 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
      * # Intialization
      */
     static navigationOptions = ({ navigation }: Nav) => ({
-      title: "vPlan",
+      title: !!navigation.state.params!.short
+        ? `vPlan - ${navigation.state.params!.short}`
+        : "vPlan",
       headerLeft: (
         <InfoModalButton
           onPress={() => navigation.setParams({ showInfo: true })}
@@ -136,6 +143,14 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
      */
     componentDidMount() {
       this.handleRefresh();
+    }
+
+    componentWillReceiveProps() {
+      const { short: oldShort } = this.props.navigation.state.params!;
+      const { short: newShort } = this.props;
+      if (oldShort !== newShort) {
+        this.props.navigation.setParams({ short: newShort });
+      }
     }
 
     /**
@@ -177,13 +192,13 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
           />
           <SectionList
             sections={sections}
-            renderItem={({ item }) => (
+            renderItem={({ item }: ListRenderItemInfo<Entry>) => (
               <EntryListItem
-                item={item as Entry}
+                item={item}
                 onLongPress={() =>
-                  isMarked(item as Entry) ? removeMarked(item) : addMarked(item)
+                  isMarked(item) ? removeMarked(item) : addMarked(item)
                 }
-                marked={isMarked(item as Entry)}
+                marked={isMarked(item)}
               />
             )}
             renderSectionHeader={({ section }) => (
