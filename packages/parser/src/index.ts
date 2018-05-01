@@ -1,4 +1,3 @@
-import sample2 from "./sampleinputteacher2";
 import {
   parseDayInfo,
   parseTable,
@@ -12,10 +11,6 @@ import { convertStudent, convertTeacher } from "./convert";
 import merge from "./merge";
 import encoding from "./encoding";
 import * as _ from "lodash";
-import sampleinput from "./sampleinput";
-import sampleinput2 from "./sampleinput2";
-import sampleinputteacher from "./sampleinputteacher";
-import sampleinputteacher2 from "./sampleinputteacher2";
 
 export type Row = string[];
 
