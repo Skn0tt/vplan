@@ -139,7 +139,6 @@ class Home extends React.PureComponent<Props> {
           title={
             isWidthDown("md", width) ? (
               <TextField
-                id="select-currency-native"
                 select
                 value={showGroup}
                 label="Klasse"

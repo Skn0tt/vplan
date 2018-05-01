@@ -20,7 +20,15 @@ import {
 import { connect, Dispatch } from "react-redux";
 import { Action } from "redux";
 import { List } from "immutable";
-import { Grid, withStyles, WithStyles, Typography, Paper } from "material-ui";
+import {
+  Grid,
+  withStyles,
+  WithStyles,
+  Typography,
+  Paper,
+  Hidden,
+  TextField
+} from "material-ui";
 import ShortList, { ShortListItem } from "../../components/ShortList";
 import Information from "../../components/Information";
 import styles from "./styles";
@@ -115,23 +123,49 @@ class Teacher extends React.Component<Props> {
 
     const showEntries = futureEntries.get(short === "etc" ? "" : short);
 
+    const shortItems = getItems(futureEntries);
+
     return (
       <Grid container direction="row" justify="space-between">
-        <Grid item xs={12} lg={3} wrap="wrap" className={classes.shortList}>
+        <Grid item xs={12} md={3} className={classes.shortList}>
           <Paper>
-            <ShortList
-              onChange={i => this.handleShortChange(i.short)}
-              items={getItems(futureEntries)}
-              selected={short}
-            />
+            <Hidden mdUp>
+              <TextField
+                id="select-currency-native"
+                select
+                value={short}
+                label="Kürzel"
+                fullWidth
+                className={classes.select}
+                onChange={e => this.handleShortChange(e.target.value as Short)}
+                SelectProps={{ native: true }}
+              >
+                {shortItems.length !== 0 ? (
+                  shortItems.map(i => (
+                    <option key={i.short} value={i.short}>
+                      {i.short}
+                    </option>
+                  ))
+                ) : (
+                  <option>Keine Vertrungsstunden</option>
+                )}
+              </TextField>
+            </Hidden>
+            <Hidden smDown>
+              <ShortList
+                onChange={i => this.handleShortChange(i.short)}
+                items={shortItems}
+                selected={short}
+              />
+            </Hidden>
           </Paper>
         </Grid>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} md={4}>
           {showEntries && (
             <EntriesView entries={showEntries} title={short} showGroups="all" />
           )}
         </Grid>
-        <Grid item xs={12} lg={3}>
+        <Grid item xs={12} md={3}>
           <Grid container direction="column" spacing={16}>
             <Grid item>
               <Information title="Infos Lehrer" info={info.teacher} />
