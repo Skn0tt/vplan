@@ -12,7 +12,7 @@ stages:
 # Test
 #
 test:unit:
-  image: node
+  image: node:9
   stage: test
   before_script:
     - yarn
