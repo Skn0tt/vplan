@@ -36,7 +36,7 @@ import {
 import { Action, ActionFunction1 } from "redux-actions";
 import { Map } from "immutable";
 import { PutEntriesPayload, PutInfoPayload, AppState } from "./types";
-import { config, getOwnEntries, isMarked } from "./";
+import { config, getOwnEntries, isMarked, isTeacher } from "./";
 import diff from "./diff";
 import { Entries, StudentEntries, Entry } from "vplan-types";
 import { Function0, Function1, Function2 } from "lodash";
@@ -94,7 +94,9 @@ const comparer = (oldEntries: Entry[], newEntries: Entry[]) => {
 
   const diffEntries = diff(oldEntries, newEntries);
 
-  const markedNewEntries = diffEntries.filter(e => isMarked(e)(state));
+  const markedNewEntries = isTeacher(state)
+    ? diffEntries
+    : diffEntries.filter(e => isMarked(e)(state));
 
   config.onNewEntriesReceived(markedNewEntries);
 };

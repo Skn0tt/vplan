@@ -1,4 +1,3 @@
-import sampleinput from "./sampleinput";
 import {
   Entry,
   Short,
@@ -79,7 +78,7 @@ export const parseExportDate = (input: string): Date => {
   const result = new Date(0);
   result.setFullYear(+year, +month - 1);
   result.setDate(+day);
-  result.setHours(+hour - 1, +minute);
+  result.setHours(+hour, +minute);
 
   return result;
 };

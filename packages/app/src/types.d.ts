@@ -4,3 +4,4 @@ declare module "redux-persist-immutable";
 declare module "redux-persist/storages";
 
 declare const API_BASEURL: string;
+declare const IMPRINT_URL: string;

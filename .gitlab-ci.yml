@@ -4,8 +4,24 @@ variables:
   API_IMAGE: $IMAGE_BASE/api:$CI_COMMIT_REF_NAME
 
 stages:
+  - test
   - build
   - release
+
+#
+# Test
+#
+test:unit:
+  image: node:9
+  stage: test
+  before_script:
+    - yarn
+  script:
+    - yarn test:coverage
+  artifacts:
+    paths:
+      - coverage/lcov-report/
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
 #
 # Build
@@ -76,7 +92,7 @@ app:ema:
     - echo $KEYSTORE_GRADLE_PROPERTIES | base64 -d >> ./android/gradle.properties
     # Keystore
     - echo $KEYSTORE | base64 -d > ./android/app/vplan-app.keystore
-    - API_BASEURL=https://vplan.ema-vplan.de/api yarn release:android:ci
+    - API_BASEURL=https://vplan.ema-vplan.de/api IMPRINT_URL=https://www.ema-bonn.de/index.php/service/neuigkeiten/350-impressum yarn release:android:ci
 
 # Coverage Pages
 pages:

@@ -6,7 +6,7 @@ import Routes from "./Routes";
 import theme from "./theme";
 import Loading from "./elements/Loading";
 import Messager from "./components/Messager";
-import ShowRefreshtime from "./components/ShowRefreshtime";
+import ShowRefreshtimeAndImprint from "./components/ShowRefreshtimeAndImprint";
 
 /**
  * # Component
@@ -28,9 +28,9 @@ class App extends React.PureComponent<{}> {
         <CssBaseline />
         <Provider store={store}>
           <MuiThemeProvider theme={theme}>
-            <ShowRefreshtime>
+            <ShowRefreshtimeAndImprint>
               <Routes />
-            </ShowRefreshtime>
+            </ShowRefreshtimeAndImprint>
             <Messager />
           </MuiThemeProvider>
         </Provider>
