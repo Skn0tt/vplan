@@ -16,12 +16,10 @@ output: pdf_document
   * nicht mobilfähig
   * &rarr; Keine gute UX
 
-> 1 Seite
-
 ## Lösungsansatz
 
 * Webservice zur Auslieferung des Untis-Exports in schön
-* Clients:
+* Anforderungen:
   * App
     * Push-Benachrichtigungen
     * iOS, Android
@@ -31,7 +29,6 @@ output: pdf_document
     * Schüler
     * Admin
 * Screenshots vom fertigen Produkt
-  > 1 Seite
 
 # Hauptteil
 
@@ -41,8 +38,6 @@ output: pdf_document
   * siehe Facharbeit
 * API / Client bzw. Server-Viewer
 
-> 2 Seiten
-
 ## Tools
 
 ### Javascript / Typescript
@@ -50,8 +45,7 @@ output: pdf_document
 * Wieso ist JS das richtige Tool?
 * Cross-Platform (Browser, App, Server)
 * Geschichte JS
-
-> 1 Seite
+* Kurzer Einstieg in JS-Syntax
 
 #### Betrachtung: Dynamische Typisierung gut/schlecht?
 
@@ -65,8 +59,6 @@ output: pdf_document
 * Typescript als Retter
 * Kurze Einführung in Typescript
 
-> 2 Seiten
-
 #### Betrachtung: JS everywhere
 
 * Gut nutzbar ja / nein?
@@ -76,20 +68,21 @@ output: pdf_document
   * Sprache lässt viel Freiraum, ermöglicht viele Paradigmen
 * Schlecht:
   * Sprache lässt viel Freiraum, ermöglicht viele Paradigmen
-
-> 1.5 Seiten
+* Beispiel:
+  * Shared Code (`vplan-types`, `vplan-util`) in vPlan
 
 #### Betrachtung: Functional Javascript
 
 * Was geht gut?
-  * Array functions (seit ES6)
   * First-Class Functions
 * Was fehlt?
   * Typisierung
   * Funktionale Typen (Mondas, Monoids, Applicatives etc...)
-* Beispiele (Vergleich Imperativ / Funktional)
-
-> 2 Seiten
+  * Immutability (Immutable.js)
+* allgemeine Beispiele (Vergleich Imperativ / Funktional)
+* Beispiele:
+  * `vplan-parser`
+  * `entries.filter(isFutureEntry)`
 
 ### Docker
 
@@ -98,11 +91,14 @@ output: pdf_document
   * IBM-Studie?
 * Was bringt Docker?
   * Unified Environment (Dev, Test, Deploy)
+* Beispiel:
+  * Dockerfiles vPlan
+  * Docker-Compose-File vPlan
 * Ausblick Cluster (Kubernetes):
   * Rolling Deployments
   * High Avalability
-
-> 1 Seite
+    * Diagram der Nodes!
+  * Managed Kubernetes
 
 ### React
 
@@ -110,59 +106,21 @@ output: pdf_document
 
   * DOM Diffing
   * Component-based
+  * Explain Component Structure (Types, Helpers, Component, Component Lifecycle)
   * Code-Beispiel
-    > 1 Seite
+  * Beispiel:
+    * 1 UI-Component von `vplan-ui`
 
 * Redux
 
-  * Code-Beispiel
-    > 1 Seite
+  * Konzept
+  * Probleme, die Redux lösen möchte
+  * Probleme, die Redux schafft
+  * Show Reducer flow with example (e.g. "entries")
 
 * React Native
   * React on mobile
   * Dynamically Transpiled? Precompiled? what is it? TODO: find out!
-  * Code-Beispiel
-    > 1 Seite
-
-### Misc
-
-* Monorepo
-
-  * Lerna
-  * Yarn
-  * Code sharing
-
-> 1 Seite
-
-* CI
-
-  * Gitlab
-  * Advantages:
-    * CI, CD
-
-> 1 Seite
-
-* TDD / BDD:
-  * Anwendung parser
-  * Snapshot testing
-  * Beispiel TDD
-
-> 1 Seite
-
-## Umsetzung / Beispiele
-
-* Parser
-  * Explain Functional approaches (clean up code beforehand)
-
-> 2 Seiten
-
-* UI
-  * Explain Component Structure (Types, Helpers, Component, Component Lifecycle)
-
-> 2 Seiten
-
-* App
-  * Explain antoher Component Structure (Types, Helpers, Component, Component Lifecycle)
   * Show that it's little difference to web react (div vs View etc)
 
 | RN    | RCT       |
@@ -170,24 +128,57 @@ output: pdf_document
 | div   | View      |
 | input | TextInput |
 
+* Code-Beispiel
+  * 1 UI-Component von `vplan-app`
 * Push-Notifications (Problem: min 15 minutes, "Pull"-Notification)
+  * Eventual Problem: Too much traffic
+    * Possible Solution: Dynamic poll scaling by varying poll interval on serverside, clients syncing to that
+    * Needs central coordinator (complex)
 
-> 2 Seiten
+### API
 
-* Redux
-  * Show Reducer flow with example (e.g. "entries")
+* Redis
+* Express (Explain routes)
+* Multer
 
-> 1 Seite
+### Tooling
 
-* API
-  * Redis
-  * Express (Explain routes)
+* OpenAPI
 
-> 2 Seiten
+  * Workflow: Design &rarr; Implement
+  * Stub Generators exist
+
+* Monorepo
+
+  * Einstieg
+    * Monorepo vs Multirepo
+    * Vorteile / Nachteile
+    * Prominente Beispiele (Wer nutzt was? (google, facebook: Monorepo, netflix: multirepo (?)))
+  * Lerna, Yarn
+  * Code sharing
+  * Beispiel: Struktur vPlan
+
+* CI, CD
+
+  * Einstieg
+    * Automatisiert Workflow
+    * Erleichtert Arbeit
+  * vplan: Gitlab
+  * Beispiel:
+    * .gitlab-ci.yml
+    * Screenshot Pipelines
+
+* TDD / BDD:
+  * Einstieg:
+    * Was ist TDD?
+    * Wie sieht der entwicklungszyklus aus? (Write tests &rarr; See tests fail &rarr; write code to pass tests &rarr; refactor)
+  * Anwendung parser
+  * Snapshot testing
+  * Beispiel TDD
+  * Beispiel:
+    * TDD in `vplan-parser`
 
 # Schluss
 
 * Gutes projekt
 * Schönes beispiel für simple web-apps
-
-> 2 Seiten
