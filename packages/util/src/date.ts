@@ -1,11 +1,10 @@
 import { Entry } from "vplan-types";
 import * as _ from "lodash";
-const moment = require("moment");
+import { format } from "date-fns";
+import * as deLocale from "date-fns/locale/de";
 
 export const localiseDate = (d: Date) =>
-  moment(d)
-    .locale("de")
-    .format("dddd, D. MMMM");
+  format(d, "dddd, D. MMMM", { locale: deLocale });
 
 export const groupByDay = (entries: ReadonlyArray<Entry>) =>
   _.values(_.groupBy(entries, "day"));
