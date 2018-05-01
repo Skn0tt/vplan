@@ -40,7 +40,7 @@ type Props = StateProps & DispatchProps & OwnProps & WithStyles;
 /**
  * # Component
  */
-class ShowRefreshtime extends React.PureComponent<Props> {
+class ShowRefreshtimeAndImprint extends React.PureComponent<Props> {
   refreshClock = Observable.interval(60 * 1000);
 
   componentDidMount() {
@@ -51,11 +51,14 @@ class ShowRefreshtime extends React.PureComponent<Props> {
   render() {
     const { children, refreshtime, classes } = this.props;
 
+    const imprint = !!window.__env ? window.__env.UI_IMPRINT_URL : "";
+
     return (
       <>
         <p className={classes.refreshtime}>
-          Stand: {refreshtime.toLocaleString()}
+          Stand: {refreshtime.toLocaleString()} <a href={imprint}>Impressum</a>
         </p>
+
         {children}
       </>
     );
@@ -65,4 +68,4 @@ class ShowRefreshtime extends React.PureComponent<Props> {
 export default connect<StateProps, DispatchProps, OwnProps, AppState>(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ShowRefreshtime));
+)(withStyles(styles)(ShowRefreshtimeAndImprint));
