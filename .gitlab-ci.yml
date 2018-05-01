@@ -4,8 +4,24 @@ variables:
   API_IMAGE: $IMAGE_BASE/api:$CI_COMMIT_REF_NAME
 
 stages:
+  - test
   - build
   - release
+
+#
+# Test
+#
+test:unit:
+  image: node
+  stage: test
+  before_script:
+    - yarn
+  script:
+    - yarn test:coverage
+  artifacts:
+    paths:
+      - coverage/lcov-report/
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
 #
 # Build
