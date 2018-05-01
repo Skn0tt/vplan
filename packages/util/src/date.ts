@@ -1,7 +1,6 @@
 import { Entry } from "vplan-types";
 import * as _ from "lodash";
-import * as moment from "moment";
-import "moment/locale/de";
+const moment = require("moment");
 
 export const localiseDate = (d: Date) =>
   moment(d)
