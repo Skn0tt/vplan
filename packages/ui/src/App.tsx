@@ -8,18 +8,35 @@ import Loading from "./elements/Loading";
 import Messager from "./components/Messager";
 import ShowRefreshtime from "./components/ShowRefreshtime";
 
-const App: React.SFC<{}> = () => (
-  <>
-    <CssBaseline />
-    <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <ShowRefreshtime>
-          <Routes />
-        </ShowRefreshtime>
-        <Messager />
-      </MuiThemeProvider>
-    </Provider>
-  </>
-);
+/**
+ * # Component
+ */
+class App extends React.PureComponent<{}> {
+  /**
+   * ## Lifecycle Methods
+   */
+  componentDidMount() {
+    document.title = !!window.__env ? window.__env.UI_TITLE : "vPlan";
+  }
+
+  /**
+   * ## Render
+   */
+  render() {
+    return (
+      <>
+        <CssBaseline />
+        <Provider store={store}>
+          <MuiThemeProvider theme={theme}>
+            <ShowRefreshtime>
+              <Routes />
+            </ShowRefreshtime>
+            <Messager />
+          </MuiThemeProvider>
+        </Provider>
+      </>
+    );
+  }
+}
 
 export default App;

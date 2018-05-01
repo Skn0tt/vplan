@@ -21,7 +21,7 @@ import { connect, Dispatch } from "react-redux";
 import { Action } from "redux";
 import { List } from "immutable";
 import { Grid, withStyles, WithStyles, Typography, Paper } from "material-ui";
-import ShortList, { Item } from "./components/ShortList";
+import ShortList, { ShortListItem } from "../../components/ShortList";
 import Information from "../../components/Information";
 import styles from "./styles";
 import * as _ from "lodash";
@@ -35,7 +35,7 @@ import { isFutureEntry } from "vplan-util";
 /**
  * # Helpers
  */
-const getItems = (entries: TeacherEntriesMap): Item[] =>
+const getItems = (entries: TeacherEntriesMap): ShortListItem[] =>
   entries
     .map((value, key) => ({
       short: key || "etc",
@@ -117,18 +117,21 @@ class Teacher extends React.Component<Props> {
 
     return (
       <Grid container direction="row" justify="space-between">
-        <Grid item xs={3}>
-          <ShortList
-            onChange={i => this.handleShortChange(i.short)}
-            items={getItems(futureEntries)}
-          />
+        <Grid item xs={12} lg={3} wrap="wrap" className={classes.shortList}>
+          <Paper>
+            <ShortList
+              onChange={i => this.handleShortChange(i.short)}
+              items={getItems(futureEntries)}
+              selected={short}
+            />
+          </Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} lg={4}>
           {showEntries && (
             <EntriesView entries={showEntries} title={short} showGroups="all" />
           )}
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} lg={3}>
           <Grid container direction="column" spacing={16}>
             <Grid item>
               <Information title="Infos Lehrer" info={info.teacher} />

@@ -13,13 +13,19 @@ import { withStyles, WithStyles, Grid } from "material-ui";
 import { Action } from "redux";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";
-import { Entries, StudentEntries, Group, Entry } from "vplan-types";
+import {
+  Entries,
+  StudentEntries,
+  Group,
+  Entry,
+  StudentEntry
+} from "vplan-types";
 import { Map } from "immutable";
 import * as _ from "lodash";
 import Information from "../../components/Information";
 import { Observable } from "rxjs/Rx";
 import { compareEntries, isFutureEntry } from "vplan-util";
-import ShowRefreshtime from "../../components/ShowRefreshtime";
+import ShowClock from "../../components/ShowClock";
 
 /**
  * # Helpers
@@ -44,6 +50,12 @@ const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
 const bound = (int: number, max: number) => (int > max ? max : int);
 const pages = (entries: any[], amount: number) => _.chunk(entries, amount);
 const pick = (arr: any[], int: number) => int % arr.length;
+const ensureAllGroups = (map: StudentEntriesMap): StudentEntriesMap =>
+  Map<string, StudentEntry[]>(neededGroups.map(g => [g, []])).merge(map);
+
+const neededGroups = !!window.__env
+  ? window.__env.UI_DISPLAY_NEEDED_GROUPS.split(",")
+  : [];
 
 /**
  * # Component Types
@@ -124,7 +136,7 @@ class Display extends React.Component<Props, State> {
     const { entries, classes, info } = this.props;
     const { page } = this.state;
 
-    const grouped = group(entries).sortBy((v, k) => k);
+    const grouped = group(ensureAllGroups(entries)).sortBy((v, k) => k);
 
     const g9 = grouped.size > 8;
 
@@ -132,38 +144,40 @@ class Display extends React.Component<Props, State> {
     const pickedInfo = pick(pagedInfo, page);
 
     return (
-      <div className={classes.container}>
-        <Grid container spacing={16} justify="center">
-          {grouped
-            .map((val, key) => {
-              const futureValues = val!.filter(isFutureEntry);
-              const sortedValues = futureValues!.sort(compareEntries);
-              const paged = pages(sortedValues!, 5);
-              const picked = pick(paged, page);
+      <ShowClock>
+        <div className={classes.container}>
+          <Grid container spacing={16} justify="center">
+            {grouped
+              .map((val, key) => {
+                const futureValues = val!.filter(isFutureEntry);
+                const sortedValues = futureValues!.sort(compareEntries);
+                const paged = pages(sortedValues!, 5);
+                const picked = pick(paged, page);
 
-              return (
-                <Grid item key={key} className={classes.item}>
-                  <EntriesView
-                    entries={paged[picked]}
-                    subtitle={`${_.isNaN(picked) ? 0 : picked + 1} / ${
-                      paged.length
-                    }`}
-                    title={key}
-                    allowMarking={false}
-                    showGroups="lower"
-                  />
-                </Grid>
-              );
-            })
-            .toArray()}
-          <Grid item className={g9 ? classes.item : classes.information}>
-            <Information
-              title="Informationen"
-              info={pagedInfo[pickedInfo] || []}
-            />
+                return (
+                  <Grid item key={key} className={classes.item}>
+                    <EntriesView
+                      entries={paged[picked]}
+                      subtitle={`${_.isNaN(picked) ? 0 : picked + 1} / ${
+                        paged.length
+                      }`}
+                      title={key}
+                      allowMarking={false}
+                      showGroups="lower"
+                    />
+                  </Grid>
+                );
+              })
+              .toArray()}
+            <Grid item className={g9 ? classes.item : classes.information}>
+              <Information
+                title="Informationen"
+                info={pagedInfo[pickedInfo] || []}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+      </ShowClock>
     );
   }
 }

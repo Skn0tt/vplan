@@ -1,14 +1,13 @@
 import { StyleRules } from "material-ui/styles/withStyles";
 import { Theme } from "material-ui/styles/createMuiTheme";
-import { blue, green, red } from "material-ui/colors";
 
 const styles = (theme: Theme): StyleRules => ({
-  container: {
-    height: "91vh",
-    flex: 1
-  },
-  shortItem: {
-    padding: theme.spacing.unit * 2
+  time: {
+    position: "fixed",
+    left: 20,
+    bottom: 0,
+    fontFamily: "Montserrat",
+    fontSize: 14
   }
 });
 

@@ -3,8 +3,8 @@ import { Theme } from "material-ui/styles/createMuiTheme";
 
 const styles = (theme: Theme): StyleRules => ({
   refreshtime: {
-    position: "absolute",
-    right: 10,
+    position: "fixed",
+    right: 20,
     bottom: 0,
     fontFamily: "Montserrat",
     fontSize: 14

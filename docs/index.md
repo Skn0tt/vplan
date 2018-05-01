@@ -28,3 +28,12 @@ docker-compose up
 
 1.  `yarn install && lerna bootstrap` to setup the dependencies
 2.  `make dev` to start the containers
+
+## Building the APP
+
+You need to supply the baseUrl for the API as an ENV var.
+Example:
+
+```
+API_BASEURL=https://vplan.simonknott.de/api yarn release:android
+```
