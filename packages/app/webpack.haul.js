@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+require("dotenv").config();
 
 module.exports = ({ platform }, { module, resolve, plugins }) => ({
   entry: `./src/index.tsx`,
@@ -14,7 +15,8 @@ module.exports = ({ platform }, { module, resolve, plugins }) => ({
   },
   plugins: [
     new webpack.DefinePlugin({
-      API_BASEURL: JSON.stringify(process.env.API_BASEURL)
+      API_BASEURL: JSON.stringify(process.env.API_BASEURL),
+      IMPRINT_URL: JSON.stringify(process.env.IMPRINT_URL)
     }),
     ...plugins
   ],

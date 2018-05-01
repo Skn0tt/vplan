@@ -31,9 +31,10 @@ docker-compose up
 
 ## Building the APP
 
-You need to supply the baseUrl for the API as an ENV var.
+You need to supply two values for the app as ENV var.
 Example:
 
 ```
 API_BASEURL=https://vplan.simonknott.de/api yarn release:android
+IMPRINT_URL=https://simonknott.de/impressum
 ```

@@ -1,5 +1,13 @@
 import * as React from "react";
-import { View, Text, Switch, TextInput, Picker } from "react-native";
+import {
+  View,
+  Text,
+  Switch,
+  TextInput,
+  Picker,
+  Linking,
+  TouchableOpacity
+} from "react-native";
 import {
   connect,
   MapDispatchToPropsParam,
@@ -65,15 +73,30 @@ const Settings: React.SFC<Props> = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.item}>
-        <ModeSwitch isTeacher={isTeacher} onChange={setIsTeacher} />
+      <View>
+        <View style={styles.item}>
+          <ModeSwitch isTeacher={isTeacher} onChange={setIsTeacher} />
+        </View>
+        <View style={styles.item}>
+          {isTeacher ? (
+            <ShortInput short={short} onChange={setShort} />
+          ) : (
+            <GroupInput group={group} onChange={setGroup} />
+          )}
+        </View>
       </View>
-      <View style={styles.item}>
-        {isTeacher ? (
-          <ShortInput short={short} onChange={setShort} />
-        ) : (
-          <GroupInput group={group} onChange={setGroup} />
-        )}
+      <View style={styles.bottom}>
+        <View style={styles.developer}>
+          <Text>Entwickelt von </Text>
+          <TouchableOpacity
+            onPress={() => Linking.openURL("https://simonknott.de")}
+          >
+            <Text style={styles.imprint}>Simon Knott</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={() => Linking.openURL(IMPRINT_URL)}>
+          <Text style={styles.imprint}>Impressum</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
