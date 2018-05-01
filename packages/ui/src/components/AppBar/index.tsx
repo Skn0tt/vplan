@@ -22,7 +22,7 @@ const AppBar: React.SFC<Props> = props => {
         <Toolbar>
           {!!window.__env && (
             <img
-              src={window.__env.UI_LOGO_URL}
+              src={"/assets/" + window.__env.UI_LOGO_FILENAME}
               alt="Logo Schule"
               className={classes.logo}
             />
