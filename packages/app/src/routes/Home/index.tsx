@@ -27,7 +27,7 @@ import {
   getGroup,
   getShort
 } from "vplan-redux";
-import { Dispatch, connect } from "react-redux";
+import { Dispatch, connect, MapDispatchToPropsParam } from "react-redux";
 import { Action } from "redux";
 import { Entry, Class, Short } from "vplan-types";
 import * as _ from "lodash";
@@ -95,15 +95,19 @@ interface DispatchProps {
   addMarked(item: Entry): void;
   removeMarked(item: Entry): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
-  ({
-    refreshTeacher: () => dispatch(fetchEntriesTeacher()),
-    refreshStudent: () => dispatch(fetchEntriesStudent()),
-    addMarked: e => dispatch(addMarked(e)),
-    removeMarked: e => dispatch(removeMarked(e)),
-    refreshAllInfo: () => dispatch(fetchInfo()),
-    refreshStudentInfo: () => dispatch(fetchInfoStudent())
-  } as DispatchProps);
+const mapDispatchToProps: MapDispatchToPropsParam<
+  DispatchProps,
+  OwnProps
+> = dispatch => ({
+  refreshTeacher: () => dispatch(fetchEntriesTeacher()),
+  refreshStudent: () => dispatch(fetchEntriesStudent()),
+  addMarked: e => dispatch(addMarked(e)),
+  removeMarked: e => dispatch(removeMarked(e)),
+  refreshAllInfo: () => dispatch(fetchInfo()),
+  refreshStudentInfo: () => dispatch(fetchInfoStudent())
+});
+
+interface OwnProps {}
 
 type Props = StateProps & DispatchProps & NavigationScreenProps;
 
@@ -202,9 +206,11 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
                 marked={isMarked(item)}
               />
             )}
-            renderSectionHeader={({ section }) => (
+            renderSectionHeader={(info: {
+              section: SectionListData<Entry>;
+            }) => (
               <SectionHeader
-                title={localiseDate(new Date(section.data[0].day))}
+                title={localiseDate(new Date(info.section.data[0].day))}
               />
             )}
             ListEmptyComponent={<ListEmptyText text="Keine Vertetungen." />}
