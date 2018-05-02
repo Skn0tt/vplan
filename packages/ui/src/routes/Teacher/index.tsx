@@ -51,6 +51,16 @@ const getItems = (entries: TeacherEntriesMap): ShortListItem[] =>
     }))
     .toArray();
 
+const compareShortListItems = (a: ShortListItem, b: ShortListItem) => {
+  if (a.short === "etc" || a.short === "---") {
+    return 1;
+  }
+  if (b.short === "etc" || b.short === "---") {
+    return -1;
+  }
+  return a.short.localeCompare(b.short);
+};
+
 /**
  * # Component Types
  */
@@ -123,7 +133,7 @@ class Teacher extends React.Component<Props> {
 
     const showEntries = futureEntries.get(short === "etc" ? "" : short);
 
-    const shortItems = getItems(futureEntries);
+    const shortItems = getItems(futureEntries).sort(compareShortListItems);
 
     return (
       <Grid container direction="row" justify="space-between">
