@@ -65,7 +65,7 @@ describe("parser", () => {
       expect(result.entries.student["7C"]).toHaveLength(1);
       expect(result.entries.student["8A"]).toHaveLength(4);
       expect(result.entries.student["8D"]).toHaveLength(1);
-      expect(result.entries.student["9A"]).toHaveLength(10);
+      expect(result.entries.student["9A"]).toHaveLength(11);
       expect(result.entries.student["9B"]).toHaveLength(15);
       expect(result.entries.student["9C"]).toHaveLength(11);
       expect(result.entries.student["9D"]).toHaveLength(10);
