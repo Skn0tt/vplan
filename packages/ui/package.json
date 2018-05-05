@@ -1,6 +1,6 @@
 {
   "name": "vplan-ui",
-  "version": "0.5.0",
+  "version": "0.1.0",
   "description": "the ui for vplan",
   "main": "src/index.html",
   "repository": "https://gitlab.com/skn0tt/vplan",
@@ -10,8 +10,7 @@
   "scripts": {
     "start": "yarn parcel src/index.html -o index.html",
     "watch": "yarn parcel watch src/index.html --public-url / -o index",
-    "build":
-      "yarn parcel build src/index.html --public-url / -o index && yarn serviceworker",
+    "build": "yarn parcel build src/index.html --public-url / -o index && yarn serviceworker",
     "serviceworker": "yarn workbox generateSW",
     "docker:replace": "docker exec vplan_ui_1 /usr/local/bin/replace"
   },
@@ -29,8 +28,8 @@
     "react-router-dom": "^4.2.2",
     "react-tappable": "^1.0.2",
     "rxjs": "^5.5.8",
-    "vplan-redux": "^0.5.0",
-    "vplan-util": "^0.5.0"
+    "vplan-redux": "^0.1.0",
+    "vplan-util": "^0.1.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.104",

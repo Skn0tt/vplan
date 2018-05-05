@@ -103,6 +103,10 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
+    androidGitVersion {
+        prefix = "v"
+    }
+
     defaultConfig {
         applicationId "de.simonknott.vplan.app"
         minSdkVersion 16

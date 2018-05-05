@@ -25,6 +25,7 @@ services:
     depends_on:
       - redis
     environment:
+      - TZ
       - SECRET
       - NODE_ENV=production
       - VIRTUAL_HOST=${HOST}

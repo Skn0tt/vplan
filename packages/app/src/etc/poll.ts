@@ -1,5 +1,5 @@
 import * as BackgroundFetch from "react-native-background-fetch";
-import App, { store } from "../App";
+import App from "../App";
 import {
   AppState,
   isTeacher,
@@ -13,11 +13,12 @@ import {
 } from "vplan-redux";
 import { Entry } from "vplan-types";
 import { notify } from "./push";
+import { store } from "../App";
 
 const complete = () =>
   new Promise(resolve => {
     store.subscribe(() => {
-      if (!isLoading(store.getState() as AppState)) {
+      if (!isLoading(store.getState())) {
         resolve();
       }
     });
@@ -29,7 +30,7 @@ export const onNewEntriesReceived = (entries: Entry[]) =>
 const routine = async (): Promise<void> => {
   console.log(" [bf] Background poll started");
 
-  if (isTeacher(store.getState() as AppState)) {
+  if (isTeacher(store.getState())) {
     store.dispatch(fetchEntriesTeacher());
   } else {
     store.dispatch(fetchEntriesStudent());

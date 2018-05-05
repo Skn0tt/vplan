@@ -14,7 +14,7 @@ import {
 import * as _ from "lodash";
 import styles from "./styles";
 import SingleDayInfo from "../../elements/SingleDayInfo";
-import { isInFuture } from "vplan-util";
+import { isInFuture, localiseDateWeekday } from "vplan-util";
 
 /**
  * # Helpers
@@ -27,8 +27,7 @@ const lines = (input: string[]) =>
     .map(arr => arr.join(", "))
     .join("\n");
 
-const title = (date: Date) =>
-  `${date.toLocaleDateString("de", { weekday: "long" })} fehlen:`;
+const title = (date: Date) => `${localiseDateWeekday(date)} fehlen:`;
 
 /**
  * # Component Types
