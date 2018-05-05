@@ -49,7 +49,7 @@ describe("parser", () => {
   }
 
   describe("outputs the right results", () => {
-    it("subst_011.htm", async () => {
+    test("subst_011.htm", async () => {
       const file = await loadFile(__dirname + "/../res/" + "subst_011.htm");
       const result = parseFiles([file]);
 
@@ -73,8 +73,37 @@ describe("parser", () => {
       expect(result.entries.student["Q1"]).toHaveLength(10);
       expect(result.entries.student["EWS"]).toHaveLength(1);
       expect(result.entries.student["AG"]).toHaveLength(1);
-    })
-  })
+    });
+
+    test("subst_010.htm", async () => {
+      const file = await loadFile(__dirname + "/../res/" + "subst_010.htm");
+      const result = parseFiles([file]);
+
+      expect(result.entries.student["5A"]).toBeUndefined();
+      expect(result.entries.student["5B"]).toBeUndefined();
+      expect(result.entries.student["5C"]).toHaveLength(1);
+      expect(result.entries.student["5D"]).toBeUndefined();
+      expect(result.entries.student["6A"]).toBeUndefined();
+      expect(result.entries.student["6B"]).toBeUndefined();
+      expect(result.entries.student["6D"]).toBeUndefined();
+      expect(result.entries.student["7A"]).toHaveLength(2);
+      expect(result.entries.student["7B"]).toHaveLength(2);
+      expect(result.entries.student["7C"]).toHaveLength(2);
+      expect(result.entries.student["7D"]).toHaveLength(2);
+      expect(result.entries.student["8A"]).toHaveLength(5);
+      expect(result.entries.student["8B"]).toHaveLength(2);
+      expect(result.entries.student["8C"]).toHaveLength(4);
+      expect(result.entries.student["8D"]).toHaveLength(3);
+      expect(result.entries.student["9A"]).toHaveLength(1);
+      expect(result.entries.student["9B"]).toHaveLength(1);
+      expect(result.entries.student["9C"]).toHaveLength(2);
+      expect(result.entries.student["9D"]).toHaveLength(1);
+      expect(result.entries.student["EF"]).toHaveLength(6);
+      expect(result.entries.student["Q1"]).toHaveLength(5);
+      expect(result.entries.student["EWS"]).toBeUndefined();
+      expect(result.entries.student["AG"]).toBeUndefined();
+    });
+  });
 
   describe("version detection", () => {
     it("outputs the right timestamp", async () => {
