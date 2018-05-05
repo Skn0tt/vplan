@@ -13,10 +13,10 @@ export let config: Config = {
   onNewEntriesReceived: () => {}
 };
 
-const createStore = (conf: Config) => {
+const createStore = async (conf: Config) => {
   config = conf;
 
-  persist();
+  await persist();
 
   return store;
 };

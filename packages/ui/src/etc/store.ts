@@ -1,9 +1,12 @@
-import createStore from "vplan-redux";
+import createStore, { AppState } from "vplan-redux";
+import { Store } from "redux";
 
 const baseUrl = window && `${location.protocol}//${location.hostname}/api`;
 
-const store = createStore({
-  baseUrl
-});
+export let store: Store<AppState>;
 
-export default store;
+export async function init() {
+  store = await createStore({
+    baseUrl
+  });
+}

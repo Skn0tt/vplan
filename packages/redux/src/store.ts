@@ -44,10 +44,16 @@ const store = createStore(reducer, enhancer as StoreEnhancer<any>);
 let persistor;
 
 export const persist = () =>
-  (persistor = persistStore(store, {
-    storage: config.storage || asyncLocalStorage,
-    transforms: [removeUnneededTransform]
-  }));
+  new Promise((resolve, reject) => {
+    persistor = persistStore(
+      store,
+      {
+        storage: config.storage || asyncLocalStorage,
+        transforms: [removeUnneededTransform]
+      },
+      resolve
+    );
+  });
 
 sagaMiddleware.run(sagas);
 
