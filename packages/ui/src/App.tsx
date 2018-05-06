@@ -2,6 +2,7 @@ import * as React from "react";
 import { Provider } from "react-redux";
 import { CssBaseline, MuiThemeProvider } from "material-ui";
 import { store } from "./etc/store";
+import * as config from "./etc/config";
 import Routes from "./Routes";
 import theme from "./theme";
 import Loading from "./elements/Loading";
@@ -16,7 +17,8 @@ class App extends React.PureComponent<{}> {
    * ## Lifecycle Methods
    */
   componentDidMount() {
-    document.title = !!window.__env ? window.__env.UI_TITLE : "vPlan";
+    const { UI_TITLE } = config.get();
+    document.title = UI_TITLE;
   }
 
   /**

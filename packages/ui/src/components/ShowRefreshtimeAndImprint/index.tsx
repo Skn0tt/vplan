@@ -8,6 +8,7 @@ import { AppState, getRefreshtime, fetchRefreshTime } from "vplan-redux";
 import { Observable } from "rxjs";
 import { WithStyles, withStyles } from "material-ui";
 import styles from "./styles";
+import * as config from "../../etc/config";
 
 /**
  * # Component Types
@@ -50,13 +51,13 @@ class ShowRefreshtimeAndImprint extends React.PureComponent<Props> {
 
   render() {
     const { children, refreshtime, classes } = this.props;
-
-    const imprint = !!window.__env ? window.__env.UI_IMPRINT_URL : "";
+    const { UI_IMPRINT_URL } = config.get();
 
     return (
       <>
         <p className={classes.refreshtime}>
-          Stand: {refreshtime.toLocaleString()} <a href={imprint}>Impressum</a>
+          Stand: {refreshtime.toLocaleString()}{" "}
+          <a href={UI_IMPRINT_URL}>Impressum</a>
         </p>
 
         {children}
