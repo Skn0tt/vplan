@@ -9,13 +9,12 @@ import {
   DayInfo,
   AllDayInfo
 } from "vplan-types";
-import { parseFiles, ParseResult } from "vplan-parser";
+import { parseBuffers, ParseResult } from "vplan-parser";
 import * as multer from "multer";
 import { promisify } from "util";
 import { returnRedis, redisErrHandler, client } from "../../helpers/redis";
 import auth from "../../helpers/auth";
-import { parseDayInfo } from "parser/src/parse";
-import { DAYINFO } from "../dayInfo";
+import { REDIS_DAYINFO } from "../dayInfo";
 
 const entriesRouter: Router = Router();
 
@@ -47,7 +46,7 @@ entriesRouter.put(
       const { files } = req.files as { [key: string]: Express.Multer.File[] };
       const buffers: Buffer[] = files.map(b => b.buffer);
 
-      result = parseFiles(buffers);
+      result = parseBuffers(buffers);
     } catch (error) {
       return res
         .status(400)
@@ -71,7 +70,11 @@ entriesRouter.put(
       redisErrHandler(next)
     );
     client.set(REFRESH_TIME, result.date.toISOString(), redisErrHandler(next));
-    client.set(DAYINFO, JSON.stringify(result.info), redisErrHandler(next));
+    client.set(
+      REDIS_DAYINFO,
+      JSON.stringify(result.info),
+      redisErrHandler(next)
+    );
 
     return res
       .status(200)
