@@ -2,7 +2,7 @@ import { parseBuffers } from "./";
 import * as fs from "fs";
 import * as chai from "chai";
 import * as _ from "lodash";
-import { parseDayInfo } from './cheerio';
+import { parseDayInfo } from "./cheerio";
 
 const loadFile = (path: string): Promise<Buffer> =>
   new Promise((resolve, reject) => {
@@ -127,7 +127,7 @@ describe("parseDayInfo", () => {
     expect(new Date(result.day)).toBeTruthy();
     expect(result.week).toEqual("A");
     expect(result.missingGroups).toHaveLength(0);
-  })
+  });
 
   test("t_subst_011.htm", async () => {
     const file = await loadFile(__dirname + "/../res/t_subst_011.htm");
@@ -139,7 +139,7 @@ describe("parseDayInfo", () => {
     expect(new Date(result.day)).toBeTruthy();
     expect(result.week).toEqual("A");
     expect(result.missingGroups).toHaveLength(0);
-  })
+  });
 
   test("t_subst_003.htm", async () => {
     const file = await loadFile(__dirname + "/../res/t_subst_003.htm");
@@ -151,7 +151,7 @@ describe("parseDayInfo", () => {
     expect(new Date(result.day)).toBeTruthy();
     expect(result.week).toEqual("A");
     expect(result.missingGroups).toHaveLength(0);
-  })
+  });
 
   test("t_subst_004.htm", async () => {
     const file = await loadFile(__dirname + "/../res/t_subst_004.htm");
@@ -163,7 +163,7 @@ describe("parseDayInfo", () => {
     expect(new Date(result.day)).toBeTruthy();
     expect(result.week).toEqual("A");
     expect(result.missingGroups).toHaveLength(0);
-  })
+  });
 
   test("t_subst_007.htm", async () => {
     const file = await loadFile(__dirname + "/../res/t_subst_007.htm");
@@ -175,9 +175,9 @@ describe("parseDayInfo", () => {
     expect(result.week).toEqual("B");
     expect(result.missingGroups).toHaveLength(1);
 
-    const day = new Date(result.day)
+    const day = new Date(result.day);
     expect(day.getDate()).toEqual(17);
     expect(day.getMonth()).toEqual(3);
     expect(day.getFullYear()).toEqual(2018);
-  })
-})
+  });
+});
