@@ -1,7 +1,8 @@
-import { parseFiles } from "./";
+import { parseBuffers } from "./";
 import * as fs from "fs";
 import * as chai from "chai";
 import * as _ from "lodash";
+import { parseDayInfo } from './cheerio';
 
 const loadFile = (path: string): Promise<Buffer> =>
   new Promise((resolve, reject) => {
@@ -39,7 +40,7 @@ describe("parser", () => {
   for (const path of paths) {
     it(path, async () => {
       const file = await loadFile(__dirname + "/../res/" + path);
-      const result = parseFiles([file]);
+      const result = parseBuffers([file]);
 
       expect(result).toBeInstanceOf(Object);
       expect(result.date).toBeInstanceOf(Date);
@@ -51,7 +52,7 @@ describe("parser", () => {
   describe("outputs the right results", () => {
     test("subst_011.htm", async () => {
       const file = await loadFile(__dirname + "/../res/" + "subst_011.htm");
-      const result = parseFiles([file]);
+      const result = parseBuffers([file]);
 
       expect(result.entries.student["5A"]).toHaveLength(3);
       expect(result.entries.student["5B"]).toHaveLength(1);
@@ -77,7 +78,7 @@ describe("parser", () => {
 
     test("subst_010.htm", async () => {
       const file = await loadFile(__dirname + "/../res/" + "subst_010.htm");
-      const result = parseFiles([file]);
+      const result = parseBuffers([file]);
 
       expect(result.entries.student["5A"]).toBeUndefined();
       expect(result.entries.student["5B"]).toBeUndefined();
@@ -108,9 +109,75 @@ describe("parser", () => {
   describe("version detection", () => {
     it("outputs the right timestamp", async () => {
       const file = await loadFile(__dirname + "/../res/subst_001.htm");
-      const result = parseFiles([file]);
+      const result = parseBuffers([file]);
 
       expect(result.date.toISOString()).toEqual("2018-03-08T11:37:00.000Z");
     });
   });
 });
+
+describe("parseDayInfo", () => {
+  test("t_subst_010.htm", async () => {
+    const file = await loadFile(__dirname + "/../res/t_subst_010.htm");
+
+    const result = parseDayInfo(file.toString());
+
+    expect(result.missingTeachers).toHaveLength(9);
+    expect(result.blockedRooms).toHaveLength(0);
+    expect(new Date(result.day)).toBeTruthy();
+    expect(result.week).toEqual("A");
+    expect(result.missingGroups).toHaveLength(0);
+  })
+
+  test("t_subst_011.htm", async () => {
+    const file = await loadFile(__dirname + "/../res/t_subst_011.htm");
+
+    const result = parseDayInfo(file.toString());
+
+    expect(result.missingTeachers).toHaveLength(7);
+    expect(result.blockedRooms).toHaveLength(0);
+    expect(new Date(result.day)).toBeTruthy();
+    expect(result.week).toEqual("A");
+    expect(result.missingGroups).toHaveLength(0);
+  })
+
+  test("t_subst_003.htm", async () => {
+    const file = await loadFile(__dirname + "/../res/t_subst_003.htm");
+
+    const result = parseDayInfo(file.toString());
+
+    expect(result.missingTeachers).toHaveLength(13);
+    expect(result.blockedRooms).toHaveLength(1);
+    expect(new Date(result.day)).toBeTruthy();
+    expect(result.week).toEqual("A");
+    expect(result.missingGroups).toHaveLength(0);
+  })
+
+  test("t_subst_004.htm", async () => {
+    const file = await loadFile(__dirname + "/../res/t_subst_004.htm");
+
+    const result = parseDayInfo(file.toString());
+
+    expect(result.missingTeachers).toHaveLength(12);
+    expect(result.blockedRooms).toHaveLength(0);
+    expect(new Date(result.day)).toBeTruthy();
+    expect(result.week).toEqual("A");
+    expect(result.missingGroups).toHaveLength(0);
+  })
+
+  test("t_subst_007.htm", async () => {
+    const file = await loadFile(__dirname + "/../res/t_subst_007.htm");
+
+    const result = parseDayInfo(file.toString());
+
+    expect(result.missingTeachers).toHaveLength(7);
+    expect(result.blockedRooms).toHaveLength(0);
+    expect(result.week).toEqual("B");
+    expect(result.missingGroups).toHaveLength(1);
+
+    const day = new Date(result.day)
+    expect(day.getDate()).toEqual(17);
+    expect(day.getMonth()).toEqual(3);
+    expect(day.getFullYear()).toEqual(2018);
+  })
+})

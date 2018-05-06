@@ -1,73 +1,34 @@
-import {
-  parseDayInfo,
-  parseTable,
-  isTeachersView,
-  parseDate,
-  parseExportDate
-} from "./parse";
 import { Entry, Grouped, DayInfo, AllDayInfo, AllEntries } from "vplan-types";
-import group from "./group";
-import { convertStudent, convertTeacher } from "./convert";
-import merge from "./merge";
-import encoding from "./encoding";
+import bufferToString from "./encoding";
 import * as _ from "lodash";
-
-export type Row = string[];
-
-type Converter = (input: Grouped<Row>) => Grouped<Entry>;
-
-const todayDate = (): Date => new Date();
-const day = 24 * 60 * 60 * 1000;
-const tomorrowDate = (): Date => new Date(+todayDate() + day);
-
-const parseHTML = (
-  input: string,
-  parser: (input: string) => Row[],
-  converter: (groups: Grouped<Row>) => Grouped<Entry>
-): Readonly<Grouped<Entry>> => {
-  const rows = parser(input);
-  const groups = group(rows);
-  const groupedEntries = converter(groups);
-
-  return groupedEntries;
-};
-
-/**
- * Parse Teacher
- */
-const parseTeacherDay = (input: string) =>
-  parseHTML(input, parseTable(true), convertTeacher(parseDate(input)));
-
-/**
- * Parse Students
- */
-const parseStudentDay = (input: string) =>
-  parseHTML(input, parseTable(false), convertStudent);
+import { isTeachersView, parseExportDate, parseStudentFile, parseTeacherFile, parseDayInfo } from './cheerio';
+import { sortStudentTeacher, toAllDayInfo, merge } from './helpers';
 
 export type ParseResult = { entries: AllEntries; info: AllDayInfo; date: Date };
-export const parseFiles = (buffers: Buffer[]): ParseResult => {
-  const files = buffers.map(encoding);
-  const teacherViews: string[] = [];
-  const studentViews: string[] = [];
 
-  files.forEach(
-    f => (isTeachersView(f) ? teacherViews.push(f) : studentViews.push(f))
-  );
-  const studentEntries = merge(...studentViews.map(parseStudentDay));
-  const teacherEntries = merge(...teacherViews.map(parseTeacherDay));
+export const parseBuffers = (buffers: Buffer[]): ParseResult => {
+  const files = buffers.map(bufferToString);
 
-  const dayInfos = teacherViews.map(parseDayInfo);
-  const info: AllDayInfo = _.fromPairs(
-    dayInfos.map(i => [new Date(i.day).toISOString(), i])
-  );
-  const date = Math.max(...files.map(parseExportDate).map(v => +v));
+  const { teacherFiles, studentFiles } = sortStudentTeacher(...files);
+  
+  const studentEntryInfos = studentFiles.map(parseStudentFile);
+  const allStudentEntryInfo = merge(...studentEntryInfos);
 
+  const teacherEntryInfos = teacherFiles.map(parseTeacherFile);
+  const allTeacherEntryInfo = merge(...teacherEntryInfos);
+
+  const dayInfos = teacherFiles.map(parseDayInfo);
+  const info = toAllDayInfo(...dayInfos);
+
+  const exportDates = files.map(parseExportDate);
+  const maxExportDate = new Date(Math.max(...exportDates.map(v => +v)))
+  
   return {
     info,
     entries: {
-      student: studentEntries,
-      teacher: teacherEntries
+      student: allStudentEntryInfo,
+      teacher: allTeacherEntryInfo
     },
-    date: new Date(date)
+    date: maxExportDate,
   };
 };
