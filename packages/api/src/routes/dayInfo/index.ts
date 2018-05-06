@@ -3,8 +3,8 @@ import { returnRedis } from "../../helpers/redis";
 
 const dayInfoRouter = Router();
 
-export const DAYINFO = "DAYINFO";
+export const REDIS_DAYINFO = "DAYINFO";
 
-dayInfoRouter.get("/", returnRedis(DAYINFO));
+dayInfoRouter.get("/", returnRedis(REDIS_DAYINFO));
 
 export default dayInfoRouter;

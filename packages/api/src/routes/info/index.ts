@@ -10,14 +10,14 @@ import auth from "../../helpers/auth";
 
 const infoRouter = Router();
 
-const INFO = "INFO";
-const INFO_TEACHER = "INFO_TEACHER";
-const INFO_STUDENT = "INFO_STUDENT";
+const REDIS_INFO = "INFO";
+const REDIS_INFO_TEACHER = "INFO_TEACHER";
+const REDIS_INFO_STUDENT = "INFO_STUDENT";
 
-infoRouter.get("/", returnRedis(INFO));
+infoRouter.get("/", returnRedis(REDIS_INFO));
 
-infoRouter.get("/teacher", returnRedis(INFO_TEACHER));
-infoRouter.get("/student", returnRedis(INFO_STUDENT));
+infoRouter.get("/teacher", returnRedis(REDIS_INFO_TEACHER));
+infoRouter.get("/student", returnRedis(REDIS_INFO_STUDENT));
 
 infoRouter.put(
   "/",
@@ -43,14 +43,14 @@ infoRouter.put(
   },
   async (req, res, next) => {
     try {
-      client.set(INFO, JSON.stringify(req.body), redisErrHandler(next));
+      client.set(REDIS_INFO, JSON.stringify(req.body), redisErrHandler(next));
       client.set(
-        INFO_STUDENT,
+        REDIS_INFO_STUDENT,
         JSON.stringify(req.body.student),
         redisErrHandler(next)
       );
       client.set(
-        INFO_TEACHER,
+        REDIS_INFO_TEACHER,
         JSON.stringify(req.body.teacher),
         redisErrHandler(next)
       );
@@ -82,11 +82,15 @@ infoRouter.put(
   },
   async (req, res, next) => {
     try {
-      client.set(INFO_TEACHER, JSON.stringify(req.body), redisErrHandler(next));
+      client.set(
+        REDIS_INFO_TEACHER,
+        JSON.stringify(req.body),
+        redisErrHandler(next)
+      );
 
-      const info = JSON.parse(await getAsync(INFO));
+      const info = JSON.parse(await getAsync(REDIS_INFO));
       info.teacher = req.body;
-      client.set(INFO, JSON.stringify(info), redisErrHandler(next));
+      client.set(REDIS_INFO, JSON.stringify(info), redisErrHandler(next));
 
       return res
         .status(200)
@@ -115,11 +119,15 @@ infoRouter.put(
   },
   async (req, res, next) => {
     try {
-      client.set(INFO_STUDENT, JSON.stringify(req.body), redisErrHandler(next));
+      client.set(
+        REDIS_INFO_STUDENT,
+        JSON.stringify(req.body),
+        redisErrHandler(next)
+      );
 
-      const info = JSON.parse(await getAsync(INFO));
+      const info = JSON.parse(await getAsync(REDIS_INFO));
       info.student = req.body;
-      client.set(INFO, JSON.stringify(info), redisErrHandler(next));
+      client.set(REDIS_INFO, JSON.stringify(info), redisErrHandler(next));
       return res
         .status(200)
         .json(req.body)
