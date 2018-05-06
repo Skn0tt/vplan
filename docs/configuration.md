@@ -13,7 +13,8 @@ All configuration is done with environment variables.
 | `UI_DISPLAY_NEEDED_GROUPS` | Groups that need to be shown on /display               | 5,6,7,8,9,EF,Q1,Q2                                          |
 | `UI_LOGO_FILENAME`         | Filename of the logo to show in appbar                 | logo.png                                                    |
 | `UI_IMPRINT_URL`           | URL to the imprint                                     | https://simonknott.de/impressum                             |
-|  `TZ`                      |  Timezone [Reference](https://www.iana.org/time-zones) | Europe/Berlin                                               |
+| `UI_API_URL`               | URL of the API (not required)                          | https://vplan.simonknott.de/api                             |
+| `TZ`                       |  Timezone [Reference](https://www.iana.org/time-zones) | Europe/Berlin                                               |
 
 ## Asset files
 
