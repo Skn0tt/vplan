@@ -13,7 +13,7 @@ RUN yarn lerna bootstrap
 
 RUN yarn --cwd packages/ui build
 
-FROM socialengine/nginx-spa
+FROM skn0tt/nginx-spa
 
 # Replace Script
 COPY packages/ui/replace.sh /usr/local/bin/replace

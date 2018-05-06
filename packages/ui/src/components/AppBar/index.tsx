@@ -6,6 +6,7 @@ import {
   WithStyles,
   withStyles
 } from "material-ui";
+import * as config from "../../etc/config";
 
 import styles from "./styles";
 
@@ -15,24 +16,21 @@ type Props = OwnProps & WithStyles;
 
 const AppBar: React.SFC<Props> = props => {
   const { children, classes } = props;
+  const { UI_HEADER, UI_LOGO_FILENAME } = config.get();
 
   return (
     <>
       <MUIAppBar className={classes.appBar}>
         <Toolbar>
-          {!!window.__env && (
+          {UI_LOGO_FILENAME && (
             <img
-              src={"/assets/" + window.__env.UI_LOGO_FILENAME}
+              src={"/assets/" + UI_LOGO_FILENAME}
               alt="Logo Schule"
               className={classes.logo}
             />
           )}
           <Typography variant="title" className={classes.title}>
-            {
-              (document.title = !!window.__env
-                ? window.__env.UI_HEADER
-                : "vPlan")
-            }
+            {UI_HEADER}
           </Typography>
         </Toolbar>
       </MUIAppBar>

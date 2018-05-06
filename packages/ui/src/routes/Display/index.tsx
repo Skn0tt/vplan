@@ -26,6 +26,7 @@ import Information from "../../components/Information";
 import { Observable } from "rxjs/Rx";
 import { compareEntries, isFutureEntry } from "vplan-util";
 import ShowClock from "../../components/ShowClock";
+import * as config from "../../etc/config";
 
 /**
  * # Helpers
@@ -53,9 +54,9 @@ const pick = (arr: any[], int: number) => int % arr.length;
 const ensureAllGroups = (map: StudentEntriesMap): StudentEntriesMap =>
   Map<string, StudentEntry[]>(neededGroups.map(g => [g, []])).merge(map);
 
-const neededGroups = !!window.__env
-  ? window.__env.UI_DISPLAY_NEEDED_GROUPS.split(",")
-  : [];
+const { UI_DISPLAY_NEEDED_GROUPS } = config.get();
+
+const neededGroups = UI_DISPLAY_NEEDED_GROUPS.split(",");
 
 /**
  * # Component Types
