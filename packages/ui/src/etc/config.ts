@@ -15,7 +15,6 @@ const CONFIG_COOKIE = "_config";
 
 const readConfig = () => {
   const c = cookie.getJSON(CONFIG_COOKIE);
-  cookie.remove(CONFIG_COOKIE);
 
   config = c as Config;
 };
