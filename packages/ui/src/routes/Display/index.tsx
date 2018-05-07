@@ -51,8 +51,8 @@ const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
 const bound = (int: number, max: number) => (int > max ? max : int);
 const pages = (entries: any[], amount: number) => _.chunk(entries, amount);
 const pick = (arr: any[], int: number) => int % arr.length;
-const ensureAllGroups = (map: StudentEntriesMap): StudentEntriesMap =>
-  Map<string, StudentEntry[]>(neededGroups.map(g => [g, []])).merge(map);
+const pickNeededGroups = (map: StudentEntriesMap): StudentEntriesMap =>
+  Map<string, StudentEntry[]>(neededGroups.map(v => [v, map.get(v) || []]));
 
 const { UI_DISPLAY_NEEDED_GROUPS } = config.get();
 
@@ -137,7 +137,7 @@ class Display extends React.Component<Props, State> {
     const { entries, classes, info } = this.props;
     const { page } = this.state;
 
-    const grouped = group(ensureAllGroups(entries)).sortBy((v, k) => k);
+    const grouped = pickNeededGroups(group(entries)).sortBy((v, k) => k);
 
     const g9 = grouped.size > 8;
 
