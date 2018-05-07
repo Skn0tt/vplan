@@ -100,6 +100,8 @@ pages:
   stage: release
   dependencies:
     - Docs
+  variables:
+    GIT_STRATEGY: none
   script:
     - mv site/ public/
   artifacts:
@@ -111,7 +113,9 @@ pages:
 
 # Deploy
 trigger_deploy:
-  image: byrnedo/alpine-curl
+  image: tutum/curl
+  variables:
+    GIT_STRATEGY: none
   stage: deploy
   only:
     - master
