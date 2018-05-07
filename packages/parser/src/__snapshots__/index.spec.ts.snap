@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`parser subst_001.1.htm 1`] = `
+exports[`parser snapshots subst_001.1.htm 1`] = `
 Object {
   "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
@@ -403,7 +403,7 @@ Object {
 }
 `;
 
-exports[`parser subst_001.htm 1`] = `
+exports[`parser snapshots subst_001.htm 1`] = `
 Object {
   "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
@@ -863,7 +863,7 @@ Object {
 }
 `;
 
-exports[`parser subst_002.1.htm 1`] = `
+exports[`parser snapshots subst_002.1.htm 1`] = `
 Object {
   "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
@@ -1148,7 +1148,7 @@ Object {
 }
 `;
 
-exports[`parser subst_002.htm 1`] = `
+exports[`parser snapshots subst_002.htm 1`] = `
 Object {
   "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
@@ -1589,7 +1589,7 @@ Object {
 }
 `;
 
-exports[`parser subst_003.htm 1`] = `
+exports[`parser snapshots subst_003.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -2769,7 +2769,7 @@ Object {
 }
 `;
 
-exports[`parser subst_004.htm 1`] = `
+exports[`parser snapshots subst_004.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -3648,7 +3648,7 @@ Object {
 }
 `;
 
-exports[`parser subst_005.htm 1`] = `
+exports[`parser snapshots subst_005.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -4626,7 +4626,7 @@ Object {
 }
 `;
 
-exports[`parser subst_006.htm 1`] = `
+exports[`parser snapshots subst_006.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -5303,7 +5303,7 @@ Object {
 }
 `;
 
-exports[`parser subst_007.htm 1`] = `
+exports[`parser snapshots subst_007.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -5487,7 +5487,7 @@ Object {
 }
 `;
 
-exports[`parser subst_008.htm 1`] = `
+exports[`parser snapshots subst_008.htm 1`] = `
 Object {
   "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
@@ -5653,7 +5653,7 @@ Object {
 }
 `;
 
-exports[`parser subst_009.htm 1`] = `
+exports[`parser snapshots subst_009.htm 1`] = `
 Object {
   "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
@@ -5664,7 +5664,7 @@ Object {
 }
 `;
 
-exports[`parser subst_010.htm 1`] = `
+exports[`parser snapshots subst_010.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -6135,7 +6135,7 @@ Object {
 }
 `;
 
-exports[`parser subst_011.htm 1`] = `
+exports[`parser snapshots subst_011.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -7210,7 +7210,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_003.htm 1`] = `
+exports[`parser snapshots t_subst_003.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -8428,7 +8428,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_004.htm 1`] = `
+exports[`parser snapshots t_subst_004.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -9175,7 +9175,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_005.htm 1`] = `
+exports[`parser snapshots t_subst_005.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -10261,7 +10261,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_006.htm 1`] = `
+exports[`parser snapshots t_subst_006.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -10896,7 +10896,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_007.htm 1`] = `
+exports[`parser snapshots t_subst_007.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -11156,7 +11156,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_008.htm 1`] = `
+exports[`parser snapshots t_subst_008.htm 1`] = `
 Object {
   "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
@@ -11198,7 +11198,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_009.htm 1`] = `
+exports[`parser snapshots t_subst_009.htm 1`] = `
 Object {
   "date": 2018-04-23T07:19:00.000Z,
   "entries": Object {
@@ -11219,7 +11219,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_010.htm 1`] = `
+exports[`parser snapshots t_subst_010.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -11425,7 +11425,7 @@ Object {
 }
 `;
 
-exports[`parser t_subst_011.htm 1`] = `
+exports[`parser snapshots t_subst_011.htm 1`] = `
 Object {
   "date": 2018-04-23T09:39:00.000Z,
   "entries": Object {
@@ -12779,7 +12779,7 @@ Object {
 }
 `;
 
-exports[`parser teacher_subst_001.htm 1`] = `
+exports[`parser snapshots teacher_subst_001.htm 1`] = `
 Object {
   "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {
@@ -13205,7 +13205,7 @@ Object {
 }
 `;
 
-exports[`parser teacher_subst_002.htm 1`] = `
+exports[`parser snapshots teacher_subst_002.htm 1`] = `
 Object {
   "date": 2018-03-08T11:37:00.000Z,
   "entries": Object {

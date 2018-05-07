@@ -3,51 +3,65 @@ import * as fs from "fs";
 import * as chai from "chai";
 import * as _ from "lodash";
 import { parseDayInfo } from "./cheerio";
+import { Entries } from "vplan-types";
 
 const loadFile = (path: string): Promise<Buffer> =>
   new Promise((resolve, reject) => {
     fs.readFile(path, (err, data) => (!!err ? resolve() : resolve(data)));
   });
 
+const assertEntries = (
+  expected: { [short: string]: number },
+  actual: Entries
+) => {
+  _.forEach(actual, (v, k) => {
+    const expectedLength = expected[k];
+    expect(expectedLength).toBeDefined();
+    expect(v).toHaveLength(expectedLength);
+  });
+};
+
 describe("parser", () => {
-  const paths = [
-    "subst_001.htm",
-    "subst_001.1.htm",
-    "subst_002.htm",
-    "subst_002.1.htm",
-    "subst_003.htm",
-    "subst_004.htm",
-    "subst_005.htm",
-    "subst_006.htm",
-    "subst_007.htm",
-    "subst_008.htm",
-    "subst_009.htm",
-    "subst_010.htm",
-    "subst_011.htm",
-    "t_subst_003.htm",
-    "t_subst_004.htm",
-    "t_subst_005.htm",
-    "t_subst_006.htm",
-    "t_subst_007.htm",
-    "t_subst_008.htm",
-    "t_subst_009.htm",
-    "t_subst_010.htm",
-    "t_subst_011.htm",
-    "teacher_subst_001.htm",
-    "teacher_subst_002.htm"
-  ];
+  describe("snapshots", () => {
+    const paths = [
+      "subst_001.htm",
+      "subst_001.1.htm",
+      "subst_002.htm",
+      "subst_002.1.htm",
+      "subst_003.htm",
+      "subst_004.htm",
+      "subst_005.htm",
+      "subst_006.htm",
+      "subst_007.htm",
+      "subst_008.htm",
+      "subst_009.htm",
+      "subst_010.htm",
+      "subst_011.htm",
+      "t_subst_003.htm",
+      "t_subst_004.htm",
+      "t_subst_005.htm",
+      "t_subst_006.htm",
+      "t_subst_007.htm",
+      "t_subst_008.htm",
+      "t_subst_009.htm",
+      "t_subst_010.htm",
+      "t_subst_011.htm",
+      "teacher_subst_001.htm",
+      "teacher_subst_002.htm"
+    ];
 
-  for (const path of paths) {
-    it(path, async () => {
-      const file = await loadFile(__dirname + "/../res/" + path);
-      const result = parseBuffers([file]);
+    for (const path of paths) {
+      test(path, async () => {
+        const file = await loadFile(__dirname + "/../res/" + path);
+        const result = parseBuffers([file]);
 
-      expect(result).toBeInstanceOf(Object);
-      expect(result.date).toBeInstanceOf(Date);
-      expect(result.date.toLocaleDateString()).toBeTruthy();
-      expect(result).toMatchSnapshot();
-    });
-  }
+        expect(result).toBeInstanceOf(Object);
+        expect(result.date).toBeInstanceOf(Date);
+        expect(result.date.toLocaleDateString()).toBeTruthy();
+        expect(result).toMatchSnapshot();
+      });
+    }
+  });
 
   describe("outputs the right results", () => {
     test("subst_011.htm", async () => {
@@ -103,6 +117,87 @@ describe("parser", () => {
       expect(result.entries.student["Q1"]).toHaveLength(5);
       expect(result.entries.student["EWS"]).toBeUndefined();
       expect(result.entries.student["AG"]).toBeUndefined();
+    });
+
+    test("subst_001.1.htm", async () => {
+      const file = await loadFile(__dirname + "/../res/" + "subst_001.1.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          "5D": 2,
+          "6A": 2,
+          "6B": 1,
+          "6C": 2,
+          "7A": 1,
+          "7C": 2,
+          "7D": 2,
+          "9A": 1,
+          "9B": 2,
+          "9C": 2,
+          "9D": 3,
+          EF: 9,
+          Q2: 3,
+          ABB: 1
+        },
+        result.entries.student
+      );
+    });
+
+    test("subst_002.htm", async () => {
+      const file = await loadFile(__dirname + "/../res/" + "subst_002.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          "5A": 1,
+          "5B": 1,
+          "6A": 3,
+          "7C": 1,
+          "8A": 1,
+          "9A": 1,
+          "9B": 2,
+          EF: 3,
+          Q1: 14,
+          Q2: 8,
+          GL: 2
+        },
+        result.entries.student
+      );
+    });
+
+    test("subst_003.htm", async () => {
+      const file = await loadFile(__dirname + "/../res/" + "subst_003.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          "-----": 5,
+          AG: 1,
+          Q2: 42,
+          Q1: 8,
+          EF: 5,
+          "9D": 3,
+          "9C": 5,
+          "9B": 1,
+          "9A": 2,
+          "8D": 3,
+          "8C": 2,
+          "8B": 1,
+          "8A": 3,
+          "7D": 1,
+          "7C": 2,
+          "7B": 3,
+          "7A": 2,
+          "6D": 2,
+          "6C": 1,
+          "6B": 3,
+          "6A": 5,
+          "5B": 1,
+          "5A": 1
+        },
+        result.entries.student
+      );
     });
   });
 
