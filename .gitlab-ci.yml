@@ -9,15 +9,10 @@ stages:
   - release
   - deploy
 
-build_docs:
-  image: byrnedo/alpine-curl
-  stage: deploy
-  script:
-  - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://gitlab.com/api/v4/projects/skn0tt%2Fvplan-deployments/trigger/pipeline
 #
 # Test
 #
-.test:unit:
+test:unit:
   image: node:9
   stage: test
   before_script:
@@ -32,7 +27,7 @@ build_docs:
 #
 # Build
 #
-.Build API:
+Build API:
   image: skn0tt/dind-make
   stage: build
   services:
@@ -48,7 +43,7 @@ build_docs:
     - make build IMAGE_TAG=$API_IMAGE
     - docker push $API_IMAGE
 
-.Build UI:
+Build UI:
   image: skn0tt/dind-make
   stage: build
   services:
@@ -65,7 +60,7 @@ build_docs:
     - docker push $UI_IMAGE
 
 # Documentation
-.Docs:
+Docs:
   image: python
   stage: build
   only:
@@ -80,7 +75,7 @@ build_docs:
 
 
 # Build App
-.app:ema:
+app:ema:
   image: farwayer/react-native
   stage: release
   artifacts:
@@ -101,7 +96,7 @@ build_docs:
     - API_BASEURL=https://vplan.ema-vplan.de/api IMPRINT_URL=https://www.ema-bonn.de/index.php/service/neuigkeiten/350-impressum yarn release:android:ci
 
 # Coverage Pages
-.pages:
+pages:
   stage: release
   dependencies:
     - Docs
@@ -113,3 +108,12 @@ build_docs:
     expire_in: 30 days
   only:
     - master
+
+# Deploy
+trigger_deploy:
+  image: byrnedo/alpine-curl
+  stage: deploy
+  only:
+    - master
+  script:
+  - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://gitlab.com/api/v4/projects/skn0tt%2Fvplan-deployments/trigger/pipeline
