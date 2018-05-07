@@ -10,6 +10,7 @@ stages:
   - deploy
 
 build_docs:
+  image: byrnedo/alpine-curl
   stage: deploy
   script:
   - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://gitlab.com/api/v4/projects/skn0tt%2Fvplan-deployments/trigger/pipeline
