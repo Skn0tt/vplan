@@ -16,6 +16,9 @@ const assertEntries = (
 ) => {
   _.forEach(actual, (v, k) => {
     const expectedLength = expected[k];
+    if (!expectedLength) {
+      console.error(k);
+    }
     expect(expectedLength).toBeDefined();
     expect(v).toHaveLength(expectedLength);
   });
@@ -37,6 +40,13 @@ describe("parser", () => {
       "subst_009.htm",
       "subst_010.htm",
       "subst_011.htm",
+      "subst_012.htm",
+      "subst_013.htm",
+      "subst_014.htm",
+      "subst_015.htm",
+      "subst_016.htm",
+      "subst_017.htm",
+      "subst_018.htm",
       "t_subst_003.htm",
       "t_subst_004.htm",
       "t_subst_005.htm",
@@ -46,6 +56,13 @@ describe("parser", () => {
       "t_subst_009.htm",
       "t_subst_010.htm",
       "t_subst_011.htm",
+      "t_subst_012.htm",
+      "t_subst_013.htm",
+      "t_subst_014.htm",
+      "t_subst_015.htm",
+      "t_subst_016.htm",
+      "t_subst_017.htm",
+      "t_subst_018.htm",
       "teacher_subst_001.htm",
       "teacher_subst_002.htm"
     ];
@@ -195,6 +212,66 @@ describe("parser", () => {
           "6A": 5,
           "5B": 1,
           "5A": 1
+        },
+        result.entries.student
+      );
+    });
+
+    // Ensures Fix: "VK E1" not missing
+    test("subst_014.htm", async () => {
+      const file = await loadFile(__dirname + "/../res/" + "subst_014.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          "-----": 1,
+          GL: 1,
+          ABB: 1,
+          Q1: 6,
+          EF: 8,
+          "9D": 1,
+          "9C": 1,
+          "9B": 1,
+          "8D": 8,
+          "8B": 2,
+          "6D": 1,
+          "6C": 1,
+          "6B": 1,
+          "5C": 2,
+          "5B": 2
+        },
+        result.entries.student
+      );
+    });
+
+    // Ensures Fix: "VK E1" not missing
+    test("subst_016.htm", async () => {
+      const file = await loadFile(__dirname + "/../res/" + "subst_016.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          LR: 1,
+          Q1: 2,
+          EF: 12,
+          "9D": 4,
+          "9C": 1,
+          "9B": 2,
+          "9A": 1,
+          "8D": 2,
+          "8C": 3,
+          "8B": 2,
+          "8A": 4,
+          "7D": 3,
+          "7C": 3,
+          "7B": 1,
+          "7A": 1,
+          "6D": 9,
+          "6C": 10,
+          "6B": 12,
+          "6A": 9,
+          "5C": 1,
+          "5B": 2
         },
         result.entries.student
       );
