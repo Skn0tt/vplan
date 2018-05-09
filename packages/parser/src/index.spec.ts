@@ -7,8 +7,14 @@ import { Entries } from "vplan-types";
 
 const loadFile = (path: string): Promise<Buffer> =>
   new Promise((resolve, reject) => {
-    fs.readFile(path, (err, data) => (!!err ? resolve() : resolve(data)));
+    fs.readFile(
+      __dirname + path,
+      (err, data) => (!!err ? resolve() : resolve(data))
+    );
   });
+
+const loadFiles = async (paths: string[]) =>
+  await Promise.all(paths.map(async p => loadFile(p)));
 
 const assertEntries = (
   expected: { [short: string]: number },
@@ -16,6 +22,9 @@ const assertEntries = (
 ) => {
   _.forEach(actual, (v, k) => {
     const expectedLength = expected[k];
+    if (!expectedLength) {
+      console.error(k);
+    }
     expect(expectedLength).toBeDefined();
     expect(v).toHaveLength(expectedLength);
   });
@@ -37,6 +46,13 @@ describe("parser", () => {
       "subst_009.htm",
       "subst_010.htm",
       "subst_011.htm",
+      "subst_012.htm",
+      "subst_013.htm",
+      "subst_014.htm",
+      "subst_015.htm",
+      "subst_016.htm",
+      "subst_017.htm",
+      "subst_018.htm",
       "t_subst_003.htm",
       "t_subst_004.htm",
       "t_subst_005.htm",
@@ -46,13 +62,20 @@ describe("parser", () => {
       "t_subst_009.htm",
       "t_subst_010.htm",
       "t_subst_011.htm",
+      "t_subst_012.htm",
+      "t_subst_013.htm",
+      "t_subst_014.htm",
+      "t_subst_015.htm",
+      "t_subst_016.htm",
+      "t_subst_017.htm",
+      "t_subst_018.htm",
       "teacher_subst_001.htm",
       "teacher_subst_002.htm"
     ];
 
     for (const path of paths) {
       test(path, async () => {
-        const file = await loadFile(__dirname + "/../res/" + path);
+        const file = await loadFile("/../res/" + path);
         const result = parseBuffers([file]);
 
         expect(result).toBeInstanceOf(Object);
@@ -65,7 +88,7 @@ describe("parser", () => {
 
   describe("outputs the right results", () => {
     test("subst_011.htm", async () => {
-      const file = await loadFile(__dirname + "/../res/" + "subst_011.htm");
+      const file = await loadFile("/../res/" + "subst_011.htm");
       const result = parseBuffers([file]);
 
       expect(result.entries.student["5A"]).toHaveLength(3);
@@ -91,7 +114,7 @@ describe("parser", () => {
     });
 
     test("subst_010.htm", async () => {
-      const file = await loadFile(__dirname + "/../res/" + "subst_010.htm");
+      const file = await loadFile("/../res/" + "subst_010.htm");
       const result = parseBuffers([file]);
 
       expect(result.entries.student["5A"]).toBeUndefined();
@@ -120,7 +143,7 @@ describe("parser", () => {
     });
 
     test("subst_001.1.htm", async () => {
-      const file = await loadFile(__dirname + "/../res/" + "subst_001.1.htm");
+      const file = await loadFile("/../res/" + "subst_001.1.htm");
       const result = parseBuffers([file]);
 
       assertEntries(
@@ -145,7 +168,7 @@ describe("parser", () => {
     });
 
     test("subst_002.htm", async () => {
-      const file = await loadFile(__dirname + "/../res/" + "subst_002.htm");
+      const file = await loadFile("/../res/" + "subst_002.htm");
       const result = parseBuffers([file]);
 
       assertEntries(
@@ -167,7 +190,7 @@ describe("parser", () => {
     });
 
     test("subst_003.htm", async () => {
-      const file = await loadFile(__dirname + "/../res/" + "subst_003.htm");
+      const file = await loadFile("/../res/" + "subst_003.htm");
       const result = parseBuffers([file]);
 
       assertEntries(
@@ -199,11 +222,71 @@ describe("parser", () => {
         result.entries.student
       );
     });
+
+    // Ensures Fix: "VK E1" not missing
+    test("subst_014.htm", async () => {
+      const file = await loadFile("/../res/" + "subst_014.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          "-----": 1,
+          GL: 1,
+          ABB: 1,
+          Q1: 6,
+          EF: 8,
+          "9D": 1,
+          "9C": 1,
+          "9B": 1,
+          "8D": 8,
+          "8B": 2,
+          "6D": 1,
+          "6C": 1,
+          "6B": 1,
+          "5C": 2,
+          "5B": 2
+        },
+        result.entries.student
+      );
+    });
+
+    // Ensures Fix: "VK E1" not missing
+    test("subst_016.htm", async () => {
+      const file = await loadFile("/../res/" + "subst_016.htm");
+      const result = parseBuffers([file]);
+
+      assertEntries(
+        {
+          LR: 1,
+          Q1: 2,
+          EF: 12,
+          "9D": 4,
+          "9C": 1,
+          "9B": 2,
+          "9A": 1,
+          "8D": 2,
+          "8C": 3,
+          "8B": 2,
+          "8A": 4,
+          "7D": 3,
+          "7C": 3,
+          "7B": 1,
+          "7A": 1,
+          "6D": 9,
+          "6C": 10,
+          "6B": 12,
+          "6A": 9,
+          "5C": 1,
+          "5B": 2
+        },
+        result.entries.student
+      );
+    });
   });
 
   describe("version detection", () => {
     it("outputs the right timestamp", async () => {
-      const file = await loadFile(__dirname + "/../res/subst_001.htm");
+      const file = await loadFile("/../res/subst_001.htm");
       const result = parseBuffers([file]);
 
       expect(result.date.toISOString()).toEqual("2018-03-08T11:37:00.000Z");
@@ -213,7 +296,7 @@ describe("parser", () => {
 
 describe("parseDayInfo", () => {
   test("t_subst_010.htm", async () => {
-    const file = await loadFile(__dirname + "/../res/t_subst_010.htm");
+    const file = await loadFile("/../res/t_subst_010.htm");
 
     const result = parseDayInfo(file.toString());
 
@@ -225,7 +308,7 @@ describe("parseDayInfo", () => {
   });
 
   test("t_subst_011.htm", async () => {
-    const file = await loadFile(__dirname + "/../res/t_subst_011.htm");
+    const file = await loadFile("/../res/t_subst_011.htm");
 
     const result = parseDayInfo(file.toString());
 
@@ -237,7 +320,7 @@ describe("parseDayInfo", () => {
   });
 
   test("t_subst_003.htm", async () => {
-    const file = await loadFile(__dirname + "/../res/t_subst_003.htm");
+    const file = await loadFile("/../res/t_subst_003.htm");
 
     const result = parseDayInfo(file.toString());
 
@@ -249,7 +332,7 @@ describe("parseDayInfo", () => {
   });
 
   test("t_subst_004.htm", async () => {
-    const file = await loadFile(__dirname + "/../res/t_subst_004.htm");
+    const file = await loadFile("/../res/t_subst_004.htm");
 
     const result = parseDayInfo(file.toString());
 
@@ -261,7 +344,7 @@ describe("parseDayInfo", () => {
   });
 
   test("t_subst_007.htm", async () => {
-    const file = await loadFile(__dirname + "/../res/t_subst_007.htm");
+    const file = await loadFile("/../res/t_subst_007.htm");
 
     const result = parseDayInfo(file.toString());
 
@@ -274,5 +357,46 @@ describe("parseDayInfo", () => {
     expect(day.getDate()).toEqual(17);
     expect(day.getMonth()).toEqual(3);
     expect(day.getFullYear()).toEqual(2018);
+  });
+});
+
+describe("merger", () => {
+  it("merges correctly", async () => {
+    const paths = [
+      "/../res/t_subst_016.htm",
+      "/../res/subst_016.htm",
+      "/../res/subst_017.htm"
+    ];
+    const files = await loadFiles(paths);
+
+    const result = parseBuffers(files);
+
+    assertEntries(
+      {
+        LR: 1,
+        Q1: 5,
+        EF: 15,
+        "9D": 4,
+        "9C": 2,
+        "9B": 2,
+        "9A": 5,
+        "8D": 3,
+        "8C": 4,
+        "8B": 5,
+        "8A": 5,
+        "7D": 4,
+        "7C": 6,
+        "7B": 1,
+        "7A": 3,
+        "6D": 17,
+        "6C": 18,
+        "6B": 22,
+        "6A": 16,
+        "5C": 2,
+        "5D": 1,
+        "5B": 2
+      },
+      result.entries.student
+    );
   });
 });

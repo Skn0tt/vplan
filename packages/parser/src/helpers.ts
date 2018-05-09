@@ -15,8 +15,16 @@ export const sortStudentTeacher = (...files: string[]) => {
   return { studentFiles, teacherFiles };
 };
 
-export const merge = (...groups: Entries[]) =>
-  _.merge(_.head(groups), ..._.tail(groups));
+export const merge = (...groups: Entries[]) => {
+  const result: Entries = {};
+  groups.forEach(group => {
+    _.forEach(group, (val, key) => {
+      result[key] = (result[key] || []).concat(val);
+    });
+  });
+
+  return result;
+};
 
 export type GroupEntries = (...entries: Entry[]) => Entries;
 
