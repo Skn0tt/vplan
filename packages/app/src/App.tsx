@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import Routes from "./Routes";
 import styles from "./styles";
 import startPolling, { onNewEntriesReceived } from "./etc/poll";
-import startPushing from "./etc/push";
+import * as push from "./etc/push";
 import * as util from "vplan-util";
 import createStore, { AppState } from "vplan-redux";
 import { Store } from "redux";
@@ -44,7 +44,7 @@ class App extends React.PureComponent<{}, State> {
   }
 
   componentDidMount() {
-    startPushing();
+    push.start();
     startPolling();
   }
 
