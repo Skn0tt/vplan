@@ -1,4 +1,12 @@
-import { Entry, Grouped, DayInfo, AllDayInfo, AllEntries } from "vplan-types";
+import {
+  Entry,
+  Grouped,
+  DayInfo,
+  AllDayInfo,
+  AllEntries,
+  StudentEntries,
+  TeacherEntries
+} from "vplan-types";
 import bufferToString from "./encoding";
 import * as _ from "lodash";
 import {
@@ -18,10 +26,10 @@ export const parseBuffers = (buffers: Buffer[]): ParseResult => {
   const { teacherFiles, studentFiles } = sortStudentTeacher(...files);
 
   const studentEntryInfos = studentFiles.map(parseStudentFile);
-  const allStudentEntryInfo = merge(...studentEntryInfos);
+  const allStudentEntryInfo = merge(...studentEntryInfos) as StudentEntries;
 
   const teacherEntryInfos = teacherFiles.map(parseTeacherFile);
-  const allTeacherEntryInfo = merge(...teacherEntryInfos);
+  const allTeacherEntryInfo = merge(...teacherEntryInfos) as TeacherEntries;
 
   const dayInfos = teacherFiles.map(parseDayInfo);
   const info = toAllDayInfo(...dayInfos);

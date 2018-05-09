@@ -3,13 +3,14 @@ import { PushNotificationIOS } from "react-native";
 import { Entry } from "vplan-types";
 import { text, secondaryText } from "vplan-util";
 
-export const notify = (entry: Entry) =>
+export const notify = (entry: Entry) => {
   PushNotification.localNotification({
     title: text(entry),
     message: secondaryText(entry)
   });
+};
 
-const start = () => {
+export const start = () => {
   PushNotification.configure({
     onNotification: (notification: any) => {
       console.log(" [pn] notification: ", notification);
@@ -18,5 +19,3 @@ const start = () => {
     }
   });
 };
-
-export default start;
