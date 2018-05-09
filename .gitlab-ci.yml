@@ -24,6 +24,14 @@ test:unit:
       - coverage/lcov-report/
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
+test:compile:
+  image: node:9
+  stage: test
+  before_script:
+    - yarn
+  script:
+    - yarn tsc
+
 #
 # Build
 #

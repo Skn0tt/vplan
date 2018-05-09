@@ -4,6 +4,7 @@
   "workspaces": ["packages/*"],
   "scripts": {
     "precommit": "pretty-quick --staged",
+    "tsc": "tsc --noEmit --jsx react",
     "test": "TZ=Europe/Berlin jest",
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage"
@@ -17,7 +18,8 @@
     "lerna": "^2.9.0",
     "prettier": "1.11.1",
     "pretty-quick": "^1.4.1",
-    "ts-jest": "^22.4.4"
+    "ts-jest": "^22.4.4",
+    "typescript": "^2.8.3"
   },
   "jest": {
     "transform": {
