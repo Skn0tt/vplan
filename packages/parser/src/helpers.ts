@@ -1,5 +1,13 @@
 import { isTeachersView } from "./cheerio";
-import { DayInfo, AllDayInfo, Entries, Entry, Grouped } from "vplan-types";
+import {
+  DayInfo,
+  AllDayInfo,
+  Entries,
+  Entry,
+  Grouped,
+  StudentEntries,
+  TeacherEntries
+} from "vplan-types";
 import * as _ from "lodash";
 
 export const toAllDayInfo = (...dayInfos: DayInfo[]): AllDayInfo =>
@@ -15,8 +23,8 @@ export const sortStudentTeacher = (...files: string[]) => {
   return { studentFiles, teacherFiles };
 };
 
-export const merge = (...groups: Entries[]) => {
-  const result: Entries = {};
+export const merge = <T = { [key: string]: any[] }>(...groups: T[]): T => {
+  const result = {} as any;
   groups.forEach(group => {
     _.forEach(group, (val, key) => {
       result[key] = (result[key] || []).concat(val);
