@@ -1,33 +1,3 @@
-/**
- * Vertretungsstunden
- */
-
-export const Groups = [
-  "5A",
-  "5B",
-  "5C",
-  "5D",
-  "6A",
-  "6B",
-  "6C",
-  "6D",
-  "7A",
-  "7B",
-  "7C",
-  "7D",
-  "8A",
-  "8B",
-  "8C",
-  "8D",
-  "9A",
-  "9B",
-  "9C",
-  "9D",
-  "EF",
-  "Q1",
-  "Q2"
-];
-
 export type Class = string;
 export type Group = string;
 export type Teacher = string;
@@ -54,14 +24,17 @@ export type StudentEntry = BaseEntry;
 
 export type AnyEntry = StudentEntry | TeacherEntry;
 
+export type Grouped<T> = { [type: string]: T[] };
+
 export type StudentEntries = Grouped<StudentEntry>;
 export type TeacherEntries = Grouped<TeacherEntry>;
+
 export type Entries = StudentEntries | TeacherEntries;
+
 export type AllEntries = {
   student: StudentEntries;
   teacher: TeacherEntries;
 };
-export type Grouped<T> = { [type: string]: T[] };
 
 export type DayInfo = {
   day: number;
@@ -73,9 +46,6 @@ export type DayInfo = {
 
 export type AllDayInfo = { [date: string]: DayInfo };
 
-/**
- * Informationen
- */
 export type Info = {
   student: string[];
   teacher: string[];
