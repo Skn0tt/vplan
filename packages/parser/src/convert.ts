@@ -1,7 +1,6 @@
 import {
   StudentEntry,
   TeacherEntry,
-  Types,
   Group,
   Short,
   Grouped,
@@ -30,7 +29,7 @@ export const toStudentEntry: MapToEntry = _ => group => row => {
     room,
     day,
     class: c,
-    type: row[0] as Types
+    type: row[0]
   };
 };
 
@@ -63,7 +62,7 @@ export const toTeacherEntry: MapToEntry = day => _ => row => {
     group,
     substituteTeacher,
     substituteClass,
-    type: row[0] as Types,
+    type: row[0]
     room: row[6]
   };
 };
