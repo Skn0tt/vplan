@@ -1,6 +1,6 @@
 import { diff } from "./diff";
 import { expect } from "chai";
-import { AnyEntry, Types } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 
 const first: AnyEntry = {
   class: "5A",
@@ -12,7 +12,7 @@ const first: AnyEntry = {
   substituteClass: "BIO",
   substituteTeacher: "SPI",
   room: "B204",
-  type: Types.VERTRETUNG
+  type: "Vertr."
 };
 
 const second: AnyEntry = {
@@ -25,7 +25,7 @@ const second: AnyEntry = {
   substituteClass: "BIO",
   substituteTeacher: "SPI",
   room: "B204",
-  type: Types.VERTRETUNG
+  type: "Vertr."
 };
 
 const third: AnyEntry = {
@@ -38,7 +38,7 @@ const third: AnyEntry = {
   substituteClass: "BIO",
   substituteTeacher: "SPI",
   room: "B204",
-  type: Types.VERTRETUNG
+  type: "Vertr."
 };
 
 describe("diff", () => {

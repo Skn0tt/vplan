@@ -28,26 +28,15 @@ export const Groups = [
   "Q2"
 ];
 
-export enum Types {
-  VERTRETUNG = "Vertr.",
-  EVA = "EVA",
-  ENTFALL = "Entfall",
-  RAUM_VERTRETUNG = "Raum-Vtr.",
-  BETREUUNG = "Betreuung",
-  KLAUSUR = "Klausur"
-}
-
 export type Class = string;
-
 export type Group = string;
-
 export type Teacher = string;
 
 export type Short = Teacher | Group;
 
 export type BaseEntry = {
   group: Group;
-  type: Types;
+  type: string;
   from: number;
   to: number;
   day: number;
