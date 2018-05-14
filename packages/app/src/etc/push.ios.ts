@@ -1,5 +1,5 @@
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 
-export const notify = (entry: Entry) => {};
+export const notify = (entry: AnyEntry) => {};
 
 export const start = () => {};

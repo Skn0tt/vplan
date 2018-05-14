@@ -1,5 +1,5 @@
 import { createAction } from "redux-actions";
-import { Group, Class, Entry, Teacher, Info, AllDayInfo } from "vplan-types";
+import { Group, Class, AnyEntry, Teacher, Info, AllDayInfo } from "vplan-types";
 import {
   AllEntriesRecord,
   PutEntriesPayload,
@@ -161,13 +161,13 @@ export const setShort = createAction<string>(SET_SHORT);
  * ## ADD_MARKED
  */
 export const ADD_MARKED = "ADD_MARKED";
-export const addMarked = createAction<Entry>(ADD_MARKED);
+export const addMarked = createAction<AnyEntry>(ADD_MARKED);
 
 /**
  * ## REMOVE_MARKED
  */
 export const REMOVE_MARKED = "REMOVE_MARKED";
-export const removeMarked = createAction<Entry>(REMOVE_MARKED);
+export const removeMarked = createAction<AnyEntry>(REMOVE_MARKED);
 
 /**
  * ## SET_GROUP

@@ -12,7 +12,7 @@ import {
   StudentEntries,
   AllEntries,
   TeacherEntries,
-  Entry,
+  AnyEntry,
   DayInfo
 } from "vplan-types";
 

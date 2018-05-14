@@ -38,7 +38,7 @@ import { Map } from "immutable";
 import { PutEntriesPayload, PutInfoPayload, AppState } from "./types";
 import { config, getOwnEntries, isMarked, isTeacher } from "./";
 import diff from "./diff";
-import { Entries, StudentEntries, Entry } from "vplan-types";
+import { Entries, StudentEntries, AnyEntry } from "vplan-types";
 import { Function0, Function1, Function2 } from "lodash";
 import store from "./store";
 
@@ -65,17 +65,17 @@ const createSagaWithComparison = (
   api: Function0<void> | Function1<any, void>,
   onSuccess: ActionFunction1<any, Action<any>>,
   onError: ActionFunction1<Error, Action<Error>>,
-  onCompare: Function2<Entry[], Entry[], void>
+  onCompare: Function2<AnyEntry[], AnyEntry[], void>
 ) =>
   function*(action: Action<any>) {
     try {
-      const oldEntries: Entry[] = yield select(getOwnEntries);
+      const oldEntries: AnyEntry[] = yield select(getOwnEntries);
 
       const result = yield call(api, action.payload);
 
       yield put(onSuccess(result));
 
-      const newEntries: Entry[] = yield select(getOwnEntries);
+      const newEntries: AnyEntry[] = yield select(getOwnEntries);
       onCompare(oldEntries, newEntries);
     } catch (error) {
       yield put(onError(error));
@@ -85,7 +85,7 @@ const createSagaWithComparison = (
 /**
  * ## Comparison
  */
-const comparer = (oldEntries: Entry[], newEntries: Entry[]) => {
+const comparer = (oldEntries: AnyEntry[], newEntries: AnyEntry[]) => {
   if (!config.onNewEntriesReceived) {
     return;
   }

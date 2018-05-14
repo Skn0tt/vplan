@@ -1,10 +1,10 @@
 import store, { persist } from "./store";
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 
 export type Config = {
   baseUrl: string;
   storage?: any;
-  onNewEntriesReceived?: (entries: Entry[]) => void;
+  onNewEntriesReceived?: (entries: AnyEntry[]) => void;
 };
 
 export let config: Config = {

@@ -1,5 +1,5 @@
 import {
-  Entry,
+  AnyEntry,
   Grouped,
   DayInfo,
   AllDayInfo,

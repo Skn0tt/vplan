@@ -3,7 +3,7 @@ import {
   DayInfo,
   AllDayInfo,
   Entries,
-  Entry,
+  AnyEntry,
   Grouped,
   StudentEntries,
   TeacherEntries
@@ -34,7 +34,7 @@ export const merge = <T = { [key: string]: any[] }>(...groups: T[]): T => {
   return result;
 };
 
-export type GroupEntries = (...entries: Entry[]) => Entries;
+export type GroupEntries = (...entries: AnyEntry[]) => Entries;
 
 export const groupTeachers: GroupEntries = (...entries) =>
   _.groupBy(entries, "substituteTeacher");

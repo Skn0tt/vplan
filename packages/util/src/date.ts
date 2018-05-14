@@ -1,4 +1,4 @@
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 import * as _ from "lodash";
 import { format } from "date-fns";
 import * as deLocale from "date-fns/locale/de";
@@ -9,7 +9,7 @@ export const localiseDate = (d: Date) =>
 export const localiseDateWeekday = (d: Date) =>
   format(d, "dddd", { locale: deLocale });
 
-export const groupByDay = (entries: ReadonlyArray<Entry>) =>
+export const groupByDay = (entries: ReadonlyArray<AnyEntry>) =>
   _.values(_.groupBy(entries, "day"));
 
 export const today = (): Date => {

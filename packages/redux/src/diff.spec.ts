@@ -1,8 +1,8 @@
 import { diff } from "./diff";
 import { expect } from "chai";
-import { Entry, Types } from "vplan-types";
+import { AnyEntry, Types } from "vplan-types";
 
-const first: Entry = {
+const first: AnyEntry = {
   class: "5A",
   day: +new Date(),
   from: 1,
@@ -15,7 +15,7 @@ const first: Entry = {
   type: Types.VERTRETUNG
 };
 
-const second: Entry = {
+const second: AnyEntry = {
   class: "6A",
   day: +new Date(),
   from: 1,
@@ -28,7 +28,7 @@ const second: Entry = {
   type: Types.VERTRETUNG
 };
 
-const third: Entry = {
+const third: AnyEntry = {
   class: "6C",
   day: +new Date(),
   from: 1,

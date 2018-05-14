@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
-import { Entry, Grouped, DayInfo } from "vplan-types";
+import { AnyEntry, Grouped, DayInfo } from "vplan-types";
 import { toStudentEntry, MapToEntry, toTeacherEntry } from "./convert";
 import { groupStudents, GroupEntries, groupTeachers } from "./helpers";
 import * as _ from "lodash";
@@ -50,7 +50,7 @@ const getGroup = (row: string[]) => row[0];
 const parseFile = (
   mapToEntry: MapToEntry,
   group: GroupEntries
-): Parse<Grouped<Entry>> => input => {
+): Parse<Grouped<AnyEntry>> => input => {
   const $ = cheerio.load(input);
 
   const date = toDate(
@@ -66,7 +66,7 @@ const parseFile = (
 
   const valueRows = rawRows.map(tr => tr.children.map(td => $(td).text()));
 
-  const entries: Entry[] = [];
+  const entries: AnyEntry[] = [];
   let currentGroup = getGroup(valueRows[0]);
   for (const row of valueRows) {
     if (isDividerRow(row)) {

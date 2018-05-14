@@ -5,13 +5,13 @@ import {
   Group,
   Short,
   Grouped,
-  Entry
+  AnyEntry
 } from "vplan-types";
 import * as _ from "lodash";
 
 export type MapToEntry = (
   day: Date
-) => (group: string) => (row: string[]) => Entry;
+) => (group: string) => (row: string[]) => AnyEntry;
 
 export const toStudentEntry: MapToEntry = _ => group => row => {
   const { from, to } = getHours(row[2]);

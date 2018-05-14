@@ -11,7 +11,7 @@ import {
   getOwnEntries,
   isMarked
 } from "vplan-redux";
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 import { notify } from "./push";
 import { store } from "../App";
 
@@ -24,7 +24,7 @@ const complete = () =>
     });
   });
 
-export const onNewEntriesReceived = (entries: Entry[]) =>
+export const onNewEntriesReceived = (entries: AnyEntry[]) =>
   entries.forEach(notify);
 
 const routine = async (): Promise<void> => {

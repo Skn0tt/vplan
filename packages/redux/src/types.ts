@@ -9,7 +9,7 @@ import {
   Short,
   Info,
   AllDayInfo,
-  Entry,
+  AnyEntry,
   DayInfo
 } from "vplan-types";
 

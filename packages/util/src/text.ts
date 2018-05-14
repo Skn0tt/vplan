@@ -1,16 +1,16 @@
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 import { isLower } from "./entries";
 
-export const text = (entry: Readonly<Entry>): string =>
+export const text = (entry: Readonly<AnyEntry>): string =>
   entry.class ? entry.class + " " + entry.teacher : entry.teacher;
 
-export const textWithLowerClass = (entry: Readonly<Entry>): string =>
+export const textWithLowerClass = (entry: Readonly<AnyEntry>): string =>
   isLower(entry.group) ? `${entry.group} ${text(entry)}` : text(entry);
 
-export const textWithClass = (entry: Readonly<Entry>): string =>
+export const textWithClass = (entry: Readonly<AnyEntry>): string =>
   `${entry.group} ${text(entry)}`;
 
-export const secondaryText = (entry: Readonly<Entry>): string => {
+export const secondaryText = (entry: Readonly<AnyEntry>): string => {
   let result: string = entry.type;
   if (entry.substituteTeacher) {
     result += ", ";

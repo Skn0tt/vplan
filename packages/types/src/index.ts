@@ -45,11 +45,7 @@ export type Teacher = string;
 
 export type Short = Teacher | Group;
 
-export type TeacherEntry = StudentEntry & {
-  substituteClass: Class;
-};
-
-export type StudentEntry = {
+export type BaseEntry = {
   group: Group;
   type: Types;
   from: number;
@@ -61,7 +57,13 @@ export type StudentEntry = {
   room: string;
 };
 
-export type Entry = StudentEntry | TeacherEntry;
+export type TeacherEntry = BaseEntry & {
+  substituteClass: Class;
+};
+
+export type StudentEntry = BaseEntry;
+
+export type AnyEntry = StudentEntry | TeacherEntry;
 
 export type StudentEntries = Grouped<StudentEntry>;
 export type TeacherEntries = Grouped<TeacherEntry>;

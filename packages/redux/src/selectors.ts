@@ -14,7 +14,7 @@ import {
   AllEntries,
   TeacherEntries,
   Info,
-  Entry,
+  AnyEntry,
   AllDayInfo,
   Short
 } from "vplan-types";
@@ -62,7 +62,7 @@ export const getOwnEntries = createSelector<
   boolean,
   string,
   AllEntriesRecord,
-  Entry[]
+  AnyEntry[]
 >([isTeacher, getShort, getEntries], (isTeacher, id, entries) =>
   entries.getIn([isTeacher ? "teacher" : "student", id])
 );
@@ -94,7 +94,7 @@ export const filterTeacherEntries = (short: Teacher) =>
     entries => entries.get(short)
   );
 
-export const isMarked = (e: Entry): Selector<AppState, boolean> => state =>
+export const isMarked = (e: AnyEntry): Selector<AppState, boolean> => state =>
   state.hasIn(["marked", getGroup(state), getMark(e)]);
 
 export const getGroup: Selector<AppState, Group> = state => state.get("group");

@@ -37,7 +37,7 @@ import {
   FETCH_REFRESH_TIME,
   FETCH_REFRESH_TIME_SUCCESS
 } from "./actions";
-import { Class, Group, Entry, AllDayInfo } from "vplan-types";
+import { Class, Group, AnyEntry, AllDayInfo } from "vplan-types";
 import { AppState, AllEntriesRecord, InfoRecord } from "./types";
 import { Map, Set, List } from "immutable";
 import { getGroup } from "./selectors";
@@ -186,13 +186,13 @@ const reducer = handleActions(
     /**
      * ## MARKED
      */
-    [ADD_MARKED]: (state, action: Action<Entry>) =>
+    [ADD_MARKED]: (state, action: Action<AnyEntry>) =>
       state.updateIn(
         ["marked", getGroup(state)],
         Set(),
         (marked: Set<string>) => marked.add(getMark(action.payload!))
       ),
-    [REMOVE_MARKED]: (state, action: Action<Entry>) =>
+    [REMOVE_MARKED]: (state, action: Action<AnyEntry>) =>
       state.updateIn(
         ["marked", getGroup(state)],
         Set(),
