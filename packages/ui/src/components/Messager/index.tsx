@@ -1,6 +1,10 @@
 import * as React from "react";
 import { Snackbar, SnackbarContent } from "material-ui";
-import { connect } from "react-redux";
+import {
+  connect,
+  MapDispatchToPropsParam,
+  MapStateToPropsParam
+} from "react-redux";
 import { AppState, removeError, getErrors } from "vplan-redux";
 import { Dispatch, Action } from "redux";
 
@@ -9,20 +13,29 @@ import { Dispatch, Action } from "redux";
  */
 
 interface StateProps {
-  errors: Error[];
+  errors: string[];
 }
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
   errors: getErrors(state)
 });
 
 interface DispatchProps {
   remove(i: number): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
+const mapDispatchToProps: MapDispatchToPropsParam<
+  DispatchProps,
+  OwnProps
+> = dispatch => ({
   remove: i => dispatch(removeError(i))
 });
 
-type Props = StateProps & DispatchProps;
+interface OwnProps {}
+
+type Props = StateProps & DispatchProps & OwnProps;
 
 /**
  * # Component
@@ -36,7 +49,7 @@ const Messager: React.SFC<Props> = props => {
         <Snackbar
           open
           autoHideDuration={6000}
-          message={<p>{e.message}</p>}
+          message={<p>{e}</p>}
           onClose={() => remove(i)}
         />
       ))}
@@ -44,4 +57,7 @@ const Messager: React.SFC<Props> = props => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Messager);
+export default connect<StateProps, DispatchProps, OwnProps, AppState>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Messager);
