@@ -1,6 +1,6 @@
 {
   "name": "vplan-util",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Utility for vplan.",
   "main": "src/index.ts",
   "repository": "gitlab.com/skn0tt/vplan",
@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.106",
     "typescript": "^2.8.1",
-    "vplan-types": "^0.5.0"
+    "vplan-types": "^0.1.2"
   },
   "dependencies": {
     "date-fns": "^1.29.0",
