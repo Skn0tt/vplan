@@ -84,7 +84,7 @@ interface IAppState {
   isTeacher: boolean;
   dayInfo: DayInfoMap;
   short: Short;
-  errors: List<Error>;
+  errors: List<string>;
   refreshtime: Date;
 }
 
@@ -99,7 +99,7 @@ export class AppState extends Record(
     dayInfo: Map<string, DayInfo>(),
     isTeacher: false,
     short: "",
-    errors: List<Error>()
+    errors: List<string>()
   } as IAppState,
   "AppState"
 ) {

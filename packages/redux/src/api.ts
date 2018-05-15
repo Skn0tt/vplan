@@ -9,11 +9,12 @@ import {
   InfoRecord
 } from "./";
 import {
-  StudentEntries,
   AllEntries,
   TeacherEntries,
   AnyEntry,
-  DayInfo
+  DayInfo,
+  Short,
+  BaseEntry
 } from "vplan-types";
 
 /**
@@ -79,7 +80,7 @@ export const fetchEntriesStudent = async () => {
     const data = await fetch(`${config.baseUrl}/entries/student`);
     const json = await data.json();
 
-    return Map(json);
+    return Map<Short, BaseEntry[]>(json);
   } catch (error) {
     throw error;
   }

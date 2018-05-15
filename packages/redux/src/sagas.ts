@@ -49,22 +49,23 @@ import store from "./store";
 const createSaga = (
   api: Function0<void> | Function1<any, void>,
   onSuccess: ActionFunction1<any, Action<any>>,
-  onError: ActionFunction1<Error, Action<Error>>
+  onError: ActionFunction1<string, Action<string>>
 ) =>
   function*(action: Action<any>) {
     try {
       const result = yield call(api, action.payload);
 
       yield put(onSuccess(result));
-    } catch (error) {
-      yield put(onError(error));
+    } catch (e) {
+      const error: Error = e;
+      yield put(onError(error.message));
     }
   };
 
 const createSagaWithComparison = (
   api: Function0<void> | Function1<any, void>,
   onSuccess: ActionFunction1<any, Action<any>>,
-  onError: ActionFunction1<Error, Action<Error>>,
+  onError: ActionFunction1<string, Action<string>>,
   onCompare: Function2<AnyEntry[], AnyEntry[], void>
 ) =>
   function*(action: Action<any>) {
@@ -77,8 +78,9 @@ const createSagaWithComparison = (
 
       const newEntries: AnyEntry[] = yield select(getOwnEntries);
       onCompare(oldEntries, newEntries);
-    } catch (error) {
-      yield put(onError(error));
+    } catch (e) {
+      const error: Error = e;
+      yield put(onError(error.message));
     }
   };
 
@@ -131,8 +133,9 @@ function* putEntriesSaga(action: Action<any>) {
 
     yield put(putEntriesSuccess());
     yield put(fetchRefreshTime());
-  } catch (error) {
-    yield put(putEntriesError(error));
+  } catch (e) {
+    const error: Error = e;
+    yield put(putEntriesError(error.message));
   }
 }
 

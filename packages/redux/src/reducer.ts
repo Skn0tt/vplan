@@ -53,7 +53,7 @@ const remove = (ind: number) => (list: List<any>) => list.remove(ind);
 
 const asyncReducer = (start: string, error: string) => ({
   [start]: (state: AppState) => state.update("loading", increment),
-  [error]: (state: AppState, action: Action<Error>) =>
+  [error]: (state: AppState, action: Action<string>) =>
     state.update("loading", decrement).update("errors", push(action.payload))
 });
 
