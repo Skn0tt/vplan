@@ -32,5 +32,6 @@
       "!packages/*/src/**/styles.ts",
       "!packages/*/src/**/*.d.ts"
     ]
-  }
+  },
+  "version": "0.0.1"
 }
