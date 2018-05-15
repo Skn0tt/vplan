@@ -8,7 +8,7 @@ import {
   Avatar
 } from "material-ui";
 import styles from "./styles";
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 import Tappable from "react-tappable";
 import * as _ from "lodash";
 import {
@@ -21,7 +21,7 @@ import {
 /**
  * # Helper Functions
  */
-const time = (entry: Readonly<Entry>): string => {
+const time = (entry: Readonly<AnyEntry>): string => {
   const { from, to } = entry;
   if (to !== from) {
     if (to - from === 1) {
@@ -49,7 +49,7 @@ const color = (type: string) => pick(colors, hash(type));
  * # Component Types
  */
 interface OwnProps {
-  entry: Readonly<Entry>;
+  entry: Readonly<AnyEntry>;
   isMarked: boolean;
   addMarked(): void;
   removeMarked(): void;

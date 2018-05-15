@@ -17,7 +17,7 @@ import {
   Entries,
   StudentEntries,
   Group,
-  Entry,
+  AnyEntry,
   StudentEntry
 } from "vplan-types";
 import { Map } from "immutable";
@@ -39,8 +39,8 @@ const filter = (_: any, key: string | undefined) =>
 const isNumber = (i: string) => i > "0" && i <= "9";
 const isMinor = (inp: string) => isNumber(inp.charAt(0));
 const stage = (g: string) => (isMinor(g) ? g.charAt(0) : g);
-const group = (entries: StudentEntriesMap): Map<string, Entry[]> =>
-  Map<string, Entry[]>().withMutations(mutator =>
+const group = (entries: StudentEntriesMap): Map<string, AnyEntry[]> =>
+  Map<string, AnyEntry[]>().withMutations(mutator =>
     entries
       .filter(filter)
       .forEach((value, key) =>

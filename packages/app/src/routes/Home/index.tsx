@@ -29,7 +29,7 @@ import {
 } from "vplan-redux";
 import { Dispatch, connect, MapDispatchToPropsParam } from "react-redux";
 import { Action } from "redux";
-import { Entry, Class, Short } from "vplan-types";
+import { AnyEntry, Class, Short } from "vplan-types";
 import * as _ from "lodash";
 import EntryListItem from "./elements/EntryListItem";
 import ListEmptyText from "./elements/ListEmptyText";
@@ -60,23 +60,23 @@ import InfoModal from "./components/InfoModal";
 /**
  * # Helpers
  */
-const sectionize = (entries: Entry[]): SectionListData<Entry>[] =>
+const sectionize = (entries: AnyEntry[]): SectionListData<AnyEntry>[] =>
   groupByDay(entries).map(v => ({
     data: v
   }));
 
-const sort = (entries: Entry[]) =>
+const sort = (entries: AnyEntry[]) =>
   entries ? entries.sort(compareEntries) : entries;
 
 /**
  * # Component Types
  */
 interface StateProps {
-  entries: Entry[];
+  entries: AnyEntry[];
   isTeacher: boolean;
   isLoading: boolean;
   short: Short;
-  isMarked(item: Entry): boolean;
+  isMarked(item: AnyEntry): boolean;
 }
 const mapStateToProps = (state: AppState) =>
   ({
@@ -92,8 +92,8 @@ interface DispatchProps {
   refreshStudent(): void;
   refreshAllInfo(): void;
   refreshStudentInfo(): void;
-  addMarked(item: Entry): void;
-  removeMarked(item: Entry): void;
+  addMarked(item: AnyEntry): void;
+  removeMarked(item: AnyEntry): void;
 }
 const mapDispatchToProps: MapDispatchToPropsParam<
   DispatchProps,
@@ -197,7 +197,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
           />
           <SectionList
             sections={sections}
-            renderItem={({ item }: ListRenderItemInfo<Entry>) => (
+            renderItem={({ item }: ListRenderItemInfo<AnyEntry>) => (
               <EntryListItem
                 item={item}
                 onLongPress={() =>
@@ -207,7 +207,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
               />
             )}
             renderSectionHeader={(info: {
-              section: SectionListData<Entry>;
+              section: SectionListData<AnyEntry>;
             }) => (
               <SectionHeader
                 title={localiseDate(new Date(info.section.data[0].day))}

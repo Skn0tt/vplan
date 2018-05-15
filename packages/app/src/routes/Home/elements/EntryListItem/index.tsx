@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text, AppState, TouchableOpacity } from "react-native";
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 import Hours from "../Hours";
 import styles from "./styles";
 import { secondaryText, text } from "vplan-util";
@@ -9,7 +9,7 @@ import { secondaryText, text } from "vplan-util";
  * # Component Types
  */
 interface OwnProps {
-  item: Entry;
+  item: AnyEntry;
   onLongPress(): void;
   marked: boolean;
 }

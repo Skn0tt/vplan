@@ -5,7 +5,7 @@ import {
   MapDispatchToPropsParam,
   MapStateToPropsParam
 } from "react-redux";
-import { StudentEntries, Group, Groups } from "vplan-types";
+import { StudentEntries, Group } from "vplan-types";
 import {
   getStudentEntries,
   getInfoStudent,

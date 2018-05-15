@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Short, Group, Groups } from "vplan-types";
+import { Short, Group } from "vplan-types";
 import { Picker, Text, View } from "react-native";
 import styles from "./styles";
+import { GROUPS } from "vplan-util";
 
 /**
  * # Component Types
@@ -26,7 +27,7 @@ const GroupInput: React.SFC<Props> = props => {
         selectedValue={group}
         onValueChange={onChange}
       >
-        {Groups.map(g => <Picker.Item key={g} value={g} label={g} />)}
+        {GROUPS.map(g => <Picker.Item key={g} value={g} label={g} />)}
       </Picker>
     </View>
   );

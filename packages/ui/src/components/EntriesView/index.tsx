@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles";
-import { Entry, Class } from "vplan-types";
+import { AnyEntry, Class } from "vplan-types";
 import {
   withStyles,
   List,
@@ -11,7 +11,11 @@ import {
 } from "material-ui";
 import EntryItem from "../../elements/EntryItem";
 import * as _ from "lodash";
-import { connect } from "react-redux";
+import {
+  connect,
+  MapDispatchToPropsParam,
+  MapStateToPropsParam
+} from "react-redux";
 import TitleBar from "../../elements/TitleBar";
 import { AppState, addMarked, removeMarked, isMarked } from "vplan-redux";
 import { Dispatch, Action } from "redux";
@@ -25,14 +29,14 @@ import {
 /**
  * # Helpers
  */
-const sectionize = (entries: ReadonlyArray<Entry>): Entry[][] =>
+const sectionize = (entries: ReadonlyArray<AnyEntry>): AnyEntry[][] =>
   groupByDay(entries);
 
 /**
  * # Component Types
  */
 interface OwnProps {
-  entries: ReadonlyArray<Entry>;
+  entries: ReadonlyArray<AnyEntry>;
   allowMarking?: boolean;
   title?: string | JSX.Element;
   subtitle?: string;
@@ -40,22 +44,27 @@ interface OwnProps {
 }
 
 interface StateProps {
-  isMarked(c: Entry): boolean;
+  isMarked(c: AnyEntry): boolean;
 }
-const mapStateToProps = (state: AppState) =>
-  ({
-    isMarked: e => isMarked(e)(state)
-  } as StateProps);
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
+  isMarked: e => isMarked(e)(state)
+});
 
 interface DispatchProps {
-  addMarked(e: Entry): void;
-  removeMarked(e: Entry): void;
+  addMarked(e: AnyEntry): void;
+  removeMarked(e: AnyEntry): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>) =>
-  ({
-    addMarked: (e: Entry) => dispatch(addMarked(e)),
-    removeMarked: (e: Entry) => dispatch(removeMarked(e))
-  } as DispatchProps);
+const mapDispatchToProps: MapDispatchToPropsParam<
+  DispatchProps,
+  OwnProps
+> = dispatch => ({
+  addMarked: e => dispatch(addMarked(e)),
+  removeMarked: e => dispatch(removeMarked(e))
+});
 
 type Props = OwnProps & StateProps & DispatchProps & WithStyles;
 
@@ -105,6 +114,7 @@ const EntriesView: React.SFC<Props> = props => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(EntriesView)
-);
+export default connect<StateProps, DispatchProps, OwnProps, AppState>(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(EntriesView));

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Text, AppState } from "react-native";
-import { Entry } from "vplan-types";
+import { AnyEntry } from "vplan-types";
 import styles from "./styles";
 import * as _ from "lodash";
 
@@ -36,14 +36,14 @@ type Colors =
 const pick = (arr: any[], ind: number) => arr[ind % arr.length];
 const color = (type: string): Colors => pick(colors, hash(type));
 
-const getStyles = (marked: boolean, item: Entry) =>
+const getStyles = (marked: boolean, item: AnyEntry) =>
   marked ? styles.white : styles[color(item.type)];
 
 /**
  * # Component Types
  */
 interface OwnProps {
-  item: Entry;
+  item: AnyEntry;
   marked: boolean;
 }
 type Props = OwnProps;

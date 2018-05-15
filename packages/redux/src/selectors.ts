@@ -101,5 +101,5 @@ export const getGroup: Selector<AppState, Group> = state => state.get("group");
 export const isLoading: Selector<AppState, boolean> = state =>
   state.get("loading") > 0;
 
-export const getErrors: Selector<AppState, Error[]> = state =>
+export const getErrors: Selector<AppState, string[]> = state =>
   state.get("errors").toArray();

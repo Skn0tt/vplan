@@ -6,7 +6,6 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity
 } from "react-native";
-import { Entry } from "vplan-types";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "./styles";
 import * as util from "vplan-util";
