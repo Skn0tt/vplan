@@ -8,7 +8,8 @@
     "tsc:watch": "yarn tsc --watch",
     "test": "TZ=Europe/Berlin jest",
     "test:watch": "yarn test --watch",
-    "test:coverage": "yarn test --coverage"
+    "test:coverage": "yarn test --coverage",
+    "preversion": "yarn tsc && yarn test"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
