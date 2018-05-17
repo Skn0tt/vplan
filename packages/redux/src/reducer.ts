@@ -128,7 +128,7 @@ const reducer = handleActions(
      */
     ...asyncReducer(FETCH_MESSAGES, FETCH_MESSAGES_ERROR),
     [FETCH_MESSAGES_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
-      state.update("loading", decrement).set("info", Map(action.payload!)),
+      state.update("loading", decrement).set("messages", Map(action.payload!)),
 
     /**
      * ## FETCH_MESSAGES_TEACHER
@@ -140,7 +140,7 @@ const reducer = handleActions(
     ) =>
       state
         .update("loading", decrement)
-        .setIn(["info", "teacher"], action.payload),
+        .setIn(["messages", "teacher"], action.payload),
 
     /**
      * ## FETCH_MESSAGES_STUDENT
@@ -149,14 +149,14 @@ const reducer = handleActions(
     [FETCH_MESSAGES_STUDENT_SUCCESS]: (state, action) =>
       state
         .update("loading", decrement)
-        .setIn(["info", "student"], action.payload),
+        .setIn(["messages", "student"], action.payload),
 
     /**
      * ## PUT_MESSAGES
      */
     ...asyncReducer(PUT_MESSAGES, PUT_MESSAGES_ERROR),
     [PUT_MESSAGES_SUCCESS]: (state, action: Action<MessagesRecord>) =>
-      state.update("loading", decrement).set("info", action.payload),
+      state.update("loading", decrement).set("messages", action.payload),
 
     /**
      * # Sync
