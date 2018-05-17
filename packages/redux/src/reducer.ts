@@ -13,20 +13,8 @@ import {
   FETCH_ENTRIES_TEACHER_ERROR,
   FETCH_ENTRIES_TEACHER_SUCCESS,
   PUT_ENTRIES,
-  PUT_INFO_ERROR,
-  PUT_INFO_SUCCESS,
   PUT_ENTRIES_ERROR,
   PUT_ENTRIES_SUCCESS,
-  PUT_INFO,
-  FETCH_INFO,
-  FETCH_INFO_ERROR,
-  FETCH_INFO_TEACHER,
-  FETCH_INFO_TEACHER_ERROR,
-  FETCH_INFO_SUCCESS,
-  FETCH_INFO_STUDENT,
-  FETCH_INFO_STUDENT_ERROR,
-  FETCH_INFO_STUDENT_SUCCESS,
-  FETCH_INFO_TEACHER_SUCCESS,
   SET_IS_TEACHER,
   SET_SHORT,
   FETCH_DAYINFO,
@@ -35,10 +23,22 @@ import {
   REMOVE_ERROR,
   FETCH_REFRESH_TIME_ERROR,
   FETCH_REFRESH_TIME,
-  FETCH_REFRESH_TIME_SUCCESS
+  FETCH_REFRESH_TIME_SUCCESS,
+  FETCH_MESSAGES_SUCCESS,
+  FETCH_MESSAGES,
+  FETCH_MESSAGES_ERROR,
+  FETCH_MESSAGES_TEACHER,
+  FETCH_MESSAGES_TEACHER_ERROR,
+  FETCH_MESSAGES_TEACHER_SUCCESS,
+  FETCH_MESSAGES_STUDENT_SUCCESS,
+  FETCH_MESSAGES_STUDENT,
+  FETCH_MESSAGES_STUDENT_ERROR,
+  PUT_MESSAGES,
+  PUT_MESSAGES_ERROR,
+  PUT_MESSAGES_SUCCESS
 } from "./actions";
 import { Class, Group, AnyEntry, AllDayInfo } from "vplan-types";
-import { AppState, AllEntriesRecord, InfoRecord } from "./types";
+import { AppState, AllEntriesRecord, MessagesRecord } from "./types";
 import { Map, Set, List } from "immutable";
 import { getGroup } from "./selectors";
 import { getMark } from "vplan-util";
@@ -124,35 +124,38 @@ const reducer = handleActions(
     ...asyncReducerFull(PUT_ENTRIES, PUT_ENTRIES_ERROR, PUT_ENTRIES_SUCCESS),
 
     /**
-     * ## FETCH_INFO
+     * ## FETCH_MESSAGES
      */
-    ...asyncReducer(FETCH_INFO, FETCH_INFO_ERROR),
-    [FETCH_INFO_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
+    ...asyncReducer(FETCH_MESSAGES, FETCH_MESSAGES_ERROR),
+    [FETCH_MESSAGES_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
       state.update("loading", decrement).set("info", Map(action.payload!)),
 
     /**
-     * ## FETCH_INFO_TEACHER
+     * ## FETCH_MESSAGES_TEACHER
      */
-    ...asyncReducer(FETCH_INFO_TEACHER, FETCH_INFO_TEACHER_ERROR),
-    [FETCH_INFO_TEACHER_SUCCESS]: (state, action: Action<AllEntriesRecord>) =>
+    ...asyncReducer(FETCH_MESSAGES_TEACHER, FETCH_MESSAGES_TEACHER_ERROR),
+    [FETCH_MESSAGES_TEACHER_SUCCESS]: (
+      state,
+      action: Action<AllEntriesRecord>
+    ) =>
       state
         .update("loading", decrement)
         .setIn(["info", "teacher"], action.payload),
 
     /**
-     * ## FETCH_INFO_STUDENT
+     * ## FETCH_MESSAGES_STUDENT
      */
-    ...asyncReducer(FETCH_INFO_STUDENT, FETCH_INFO_STUDENT_ERROR),
-    [FETCH_INFO_STUDENT_SUCCESS]: (state, action) =>
+    ...asyncReducer(FETCH_MESSAGES_STUDENT, FETCH_MESSAGES_STUDENT_ERROR),
+    [FETCH_MESSAGES_STUDENT_SUCCESS]: (state, action) =>
       state
         .update("loading", decrement)
         .setIn(["info", "student"], action.payload),
 
     /**
-     * ## PUT_INFO
+     * ## PUT_MESSAGES
      */
-    ...asyncReducer(PUT_INFO, PUT_INFO_ERROR),
-    [PUT_INFO_SUCCESS]: (state, action: Action<InfoRecord>) =>
+    ...asyncReducer(PUT_MESSAGES, PUT_MESSAGES_ERROR),
+    [PUT_MESSAGES_SUCCESS]: (state, action: Action<MessagesRecord>) =>
       state.update("loading", decrement).set("info", action.payload),
 
     /**

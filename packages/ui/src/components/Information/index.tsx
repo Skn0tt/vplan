@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { getInfo, AppState } from "vplan-redux";
-import { Info } from "vplan-types";
+import { getMessages, AppState } from "vplan-redux";
+import { Messages } from "vplan-types";
 import {
   List,
   ListItem,

@@ -6,20 +6,20 @@ All Data is served to the clients via a REST API.
 It is available under `/api`.
 The full Documentation is available in [OpenAPI-Format](https://gitlab.com/Skn0tt/vplan/raw/master/packages/api/Docs.yml).
 
-| Route              | Method |  Result                                          |
-| ------------------ | ------ | ------------------------------------------------ |
-| `/entries`         | GET    | entries for students and teachers                |
-| `/entries/teacher` | GET    | entries for teachers                             |
-| `/entries/student` | GET    | entries for students                             |
-| `/entries`         | PUT    | upload new Untis-Files                           |
-| `/dayInfo`         | GET    | information about the day                        |
-| `/info`            | GET    | individual information for students and teachers |
-| `/info`            | PUT    | update information                               |
-| `/info/student`    | GET    | individual information for students              |
-| `/info/student`    | PUT    | update information for students                  |
-| `/info/teacher`    | GET    | individual information for teachers              |
-| `/info/teacher`    | PUT    | update information for teachers                  |
-| `/status`          |  GET   |  returns "OK"                                    |
+| Route               | Method |  Result                                          |
+| ------------------- | ------ | ------------------------------------------------ |
+| `/entries`          | GET    | entries for students and teachers                |
+| `/entries/teacher`  | GET    | entries for teachers                             |
+| `/entries/student`  | GET    | entries for students                             |
+| `/entries`          | PUT    | upload new Untis-Files                           |
+| `/dayInfo`          | GET    | information about the day                        |
+| `/messages`         | GET    | individual information for students and teachers |
+| `/messages`         | PUT    | update information                               |
+| `/messages/student` | GET    | individual information for students              |
+| `/messages/student` | PUT    | update information for students                  |
+| `/messages/teacher` | GET    | individual information for teachers              |
+| `/messages/teacher` | PUT    | update information for teachers                  |
+| `/status`           |  GET   |  returns "OK"                                    |
 
 ## Updating entries
 

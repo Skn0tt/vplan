@@ -1,17 +1,17 @@
 import * as React from "react";
 import {
   AppState,
-  getInfo,
+  getMessages,
   PutEntriesPayload,
-  PutInfoPayload,
-  putInfo,
+  PutMessagesPayload,
+  getMessagesStudent,
+  getMessagesTeacher,
+  putMessages,
   putEntries,
-  fetchInfo,
-  getInfoStudent,
-  getInfoTeacher
+  fetchMessages
 } from "vplan-redux";
 import { Action, Dispatch } from "redux";
-import { connect } from "react-redux";
+import { connect, MapStateToPropsParam } from "react-redux";
 import {
   Grid,
   TextField,
@@ -34,27 +34,32 @@ import styles from "./styles";
  * # Component Types
  */
 interface StateProps {
-  studentInfo: string[];
-  teacherInfo: string[];
+  studentMessages: string[];
+  teacherMessages: string[];
 }
-const mapStateToProps = (state: AppState) =>
-  ({
-    studentInfo: getInfoStudent(state),
-    teacherInfo: getInfoTeacher(state)
-  } as StateProps);
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
+  studentMessages: getMessagesStudent(state),
+  teacherMessages: getMessagesTeacher(state)
+});
 
 interface DispatchProps {
-  putInfo(payload: PutInfoPayload): Action;
+  putMessages(payload: PutMessagesPayload): Action;
   putEntries(payload: PutEntriesPayload): Action;
   fetchInfo(): Action;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
-  putInfo: payload => dispatch(putInfo(payload)),
+  putMessages: payload => dispatch(putMessages(payload)),
   putEntries: payload => dispatch(putEntries(payload)),
-  fetchInfo: () => dispatch(fetchInfo())
+  fetchInfo: () => dispatch(fetchMessages())
 });
 
-type Props = StateProps & DispatchProps & WithStyles;
+interface OwnProps {}
+
+type Props = StateProps & DispatchProps & OwnProps & WithStyles;
 
 type State = {
   secret: string;
@@ -89,18 +94,18 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
        * ## Handlers
        */
       handlePutStudentInfo = (infos: string[]) =>
-        this.props.putInfo({
+        this.props.putMessages({
           info: {
             student: infos,
-            teacher: this.props.teacherInfo
+            teacher: this.props.teacherMessages
           },
           secret: this.state.secret
         });
 
       handlePutTeacherInfo = (infos: string[]) =>
-        this.props.putInfo({
+        this.props.putMessages({
           info: {
-            student: this.props.studentInfo,
+            student: this.props.studentMessages,
             teacher: infos
           },
           secret: this.state.secret
@@ -116,7 +121,7 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
        * ## Render
        */
       render() {
-        const { studentInfo, teacherInfo, classes } = this.props;
+        const { studentMessages, teacherMessages, classes } = this.props;
         return (
           <div className={classes.container}>
             <TextField
@@ -137,7 +142,7 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
                 <InfoUpdater
                   title="Schülerinfos"
                   button="Schülerinfos aktualisieren"
-                  infos={studentInfo}
+                  infos={studentMessages}
                   onSend={this.handlePutStudentInfo}
                 />
               </Grid>
@@ -145,7 +150,7 @@ const Admin = connect(mapStateToProps, mapDispatchToProps)(
                 <InfoUpdater
                   title="Lehrerinfos"
                   button="Lehrerinfos aktualisieren"
-                  infos={teacherInfo}
+                  infos={teacherMessages}
                   onSend={this.handlePutTeacherInfo}
                 />
               </Grid>

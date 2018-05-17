@@ -7,7 +7,7 @@ import {
   TeacherEntry,
   StudentEntry,
   Short,
-  Info,
+  Messages,
   AllDayInfo,
   AnyEntry,
   DayInfo
@@ -21,8 +21,8 @@ export type PutEntriesPayload = {
   secret: string;
 };
 
-export type PutInfoPayload = {
-  info: Info;
+export type PutMessagesPayload = {
+  info: Messages;
   secret: string;
 };
 
@@ -52,17 +52,17 @@ export class AllEntriesRecord extends Record(
   }
 }
 
-export class InfoRecord extends Record(
+export class MessagesRecord extends Record(
   {
     teacher: [],
     student: []
-  } as Info,
-  "InfoRecord"
+  } as Messages,
+  "MessagesRecord"
 ) {
-  constructor(props: Partial<Info>) {
+  constructor(props: Partial<Messages>) {
     super(props);
   }
-  get<T extends keyof Info>(value: T): Info[T] {
+  get<T extends keyof Messages>(value: T): Messages[T] {
     return super.get(value);
   }
 }
@@ -80,7 +80,7 @@ interface IAppState {
   loading: number;
   group: Group;
   marked: Map<Group, Set<Class>>;
-  info: InfoRecord;
+  messages: MessagesRecord;
   isTeacher: boolean;
   dayInfo: DayInfoMap;
   short: Short;
@@ -95,7 +95,7 @@ export class AppState extends Record(
     loading: 0,
     group: "5A",
     marked: Map<Group, Set<Class>>(),
-    info: new InfoRecord({}),
+    messages: new MessagesRecord({}),
     dayInfo: Map<string, DayInfo>(),
     isTeacher: false,
     short: "",

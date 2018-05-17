@@ -5,16 +5,16 @@ import {
   AppState,
   TeacherEntriesMap,
   fetchEntriesTeacher,
-  getInfo,
-  fetchInfo,
+  getMessages,
   fetchDayInfo,
-  getDayInfo
+  getDayInfo,
+  fetchMessages
 } from "vplan-redux";
 import {
   TeacherEntry,
   TeacherEntries,
   Short,
-  Info,
+  Messages,
   AllDayInfo
 } from "vplan-types";
 import { connect, Dispatch } from "react-redux";
@@ -66,23 +66,23 @@ const compareShortListItems = (a: ShortListItem, b: ShortListItem) => {
  */
 interface StateProps {
   entries: TeacherEntriesMap;
-  info: Info;
+  messages: Messages;
   dayInfo: AllDayInfo;
 }
 const mapStateToProps = (state: AppState): StateProps => ({
   entries: getTeacherEntries(state),
-  info: getInfo(state),
+  messages: getMessages(state),
   dayInfo: getDayInfo(state)
 });
 
 interface DispatchProps {
   refreshEntries(): void;
-  refreshInfo(): void;
+  refreshMessages(): void;
   refreshDayInfo(): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
   refreshEntries: () => dispatch(fetchEntriesTeacher()),
-  refreshInfo: () => dispatch(fetchInfo()),
+  refreshMessages: () => dispatch(fetchMessages()),
   refreshDayInfo: () => dispatch(fetchDayInfo())
 });
 
@@ -115,7 +115,7 @@ class Teacher extends React.Component<Props> {
     this.props.history.push(`/teacher/${short}`);
   handleRefresh = () => {
     this.props.refreshEntries();
-    this.props.refreshInfo();
+    this.props.refreshMessages();
     this.props.refreshDayInfo();
   };
 
@@ -123,7 +123,7 @@ class Teacher extends React.Component<Props> {
    * ## Render
    */
   render() {
-    const { entries, classes, match, info, dayInfo } = this.props;
+    const { entries, classes, match, messages, dayInfo } = this.props;
     const { short } = match.params;
 
     const futureEntries = entries
@@ -178,10 +178,10 @@ class Teacher extends React.Component<Props> {
         <Grid item xs={12} md={3}>
           <Grid container direction="column" spacing={16}>
             <Grid item>
-              <Information title="Infos Lehrer" info={info.teacher} />
+              <Information title="Infos Lehrer" info={messages.teacher} />
             </Grid>
             <Grid item>
-              <Information title="Infos Schüler" info={info.student} />
+              <Information title="Infos Schüler" info={messages.student} />
             </Grid>
             <Grid item>
               <AllDayInfoView allInfo={dayInfo} />

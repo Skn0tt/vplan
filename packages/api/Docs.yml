@@ -36,7 +36,7 @@ paths:
                 $ref: "#/components/schemas/dayInfo"
                 
   # info
-  '/info':
+  '/messages':
     get:
       description: "Alle Infos"
       tags:
@@ -70,7 +70,7 @@ paths:
                 $ref: "#/components/schemas/allInfo"
           
                 
-  '/info/student':
+  '/messages/student':
     get:
       description: "Schüler-Infos"
       tags:
@@ -103,7 +103,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/info"
                 
-  '/info/teacher':
+  '/messages/teacher':
     get:
       description: "Lehrer-Infos"
       tags:

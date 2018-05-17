@@ -4,9 +4,9 @@ import {
   AllEntriesRecord,
   TeacherEntriesMap,
   StudentEntriesMap,
-  PutInfoPayload,
+  PutMessagesPayload,
   PutEntriesPayload,
-  InfoRecord
+  MessagesRecord
 } from "./";
 import {
   AllEntries,
@@ -126,11 +126,11 @@ export const putEntries = async (payload: PutEntriesPayload) => {
   }
 };
 
-export const putInfo = async (payload: PutInfoPayload) => {
+export const putMessages = async (payload: PutMessagesPayload) => {
   try {
     const body = JSON.stringify(payload.info);
     const response = await fetch(
-      `${config.baseUrl}/info`,
+      `${config.baseUrl}/messages`,
       putConfigWithContentType(body, payload.secret, "application/json")
     );
 
@@ -140,15 +140,15 @@ export const putInfo = async (payload: PutInfoPayload) => {
       throw new Error("Request failed.");
     }
 
-    return new InfoRecord(json);
+    return new MessagesRecord(json);
   } catch (error) {
     throw error;
   }
 };
 
-export const fetchInfo = async () => {
+export const fetchMessages = async () => {
   try {
-    const data = await fetch(`${config.baseUrl}/info`);
+    const data = await fetch(`${config.baseUrl}/messages`);
     const json = await data.json();
 
     return json;
@@ -157,9 +157,9 @@ export const fetchInfo = async () => {
   }
 };
 
-export const fetchInfoTeacher = async () => {
+export const fetchMessagesTeacher = async () => {
   try {
-    const data = await fetch(`${config.baseUrl}/info/teacher`);
+    const data = await fetch(`${config.baseUrl}/messages/teacher`);
     const json = await data.json();
 
     return json;
@@ -168,9 +168,9 @@ export const fetchInfoTeacher = async () => {
   }
 };
 
-export const fetchInfoStudent = async () => {
+export const fetchMessagesStudent = async () => {
   try {
-    const data = await fetch(`${config.baseUrl}/info/student`);
+    const data = await fetch(`${config.baseUrl}/messages/student`);
     const json = await data.json();
 
     return json;

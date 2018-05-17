@@ -8,13 +8,13 @@ import {
 import { StudentEntries, Group } from "vplan-types";
 import {
   getStudentEntries,
-  getInfoStudent,
   AppState,
   StudentEntriesMap,
   fetchEntriesStudent,
   setGroup,
   getGroup,
-  fetchInfoStudent
+  getMessagesStudent,
+  fetchMessagesStudent
 } from "vplan-redux";
 import { Action } from "redux";
 import { RouteComponentProps } from "react-router";
@@ -37,7 +37,7 @@ import { WithWidthProps, isWidthDown } from "material-ui/utils/withWidth";
  */
 interface StateProps {
   entries: StudentEntriesMap;
-  info: string[];
+  messages: string[];
   group: Group;
 }
 const mapStateToProps: MapStateToPropsParam<
@@ -46,13 +46,13 @@ const mapStateToProps: MapStateToPropsParam<
   AppState
 > = state => ({
   entries: getStudentEntries(state),
-  info: getInfoStudent(state),
+  messages: getMessagesStudent(state),
   group: getGroup(state)
 });
 
 interface DispatchProps {
   refreshEntries(): void;
-  refreshInfo(): void;
+  refreshMessages(): void;
   setGroup(g: Group): void;
 }
 const mapDispatchToProps: MapDispatchToPropsParam<
@@ -60,7 +60,7 @@ const mapDispatchToProps: MapDispatchToPropsParam<
   OwnProps
 > = dispatch => ({
   refreshEntries: () => dispatch(fetchEntriesStudent()),
-  refreshInfo: () => dispatch(fetchInfoStudent()),
+  refreshMessages: () => dispatch(fetchMessagesStudent()),
   setGroup: (g: Group) => dispatch(setGroup(g))
 });
 
@@ -95,7 +95,7 @@ class Home extends React.PureComponent<Props> {
    */
   handleRefresh = () => {
     this.props.refreshEntries();
-    this.props.refreshInfo();
+    this.props.refreshMessages();
   };
 
   handleSetGroup = (g: Group) => {
@@ -113,7 +113,7 @@ class Home extends React.PureComponent<Props> {
       entries,
       classes,
       match,
-      info,
+      messages,
       width
     } = this.props;
 
@@ -168,7 +168,7 @@ class Home extends React.PureComponent<Props> {
           entries={showEntries}
           allowMarking
         />
-        <Information title="Informationen" info={info} />
+        <Information title="Informationen" info={messages} />
       </>
     );
   }

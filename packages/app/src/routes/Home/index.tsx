@@ -22,10 +22,10 @@ import {
   addMarked,
   removeMarked,
   isMarked,
-  fetchInfoStudent,
-  fetchInfo,
   getGroup,
-  getShort
+  getShort,
+  fetchMessagesStudent,
+  fetchMessages
 } from "vplan-redux";
 import { Dispatch, connect, MapDispatchToPropsParam } from "react-redux";
 import { Action } from "redux";
@@ -90,8 +90,8 @@ const mapStateToProps = (state: AppState) =>
 interface DispatchProps {
   refreshTeacher(): void;
   refreshStudent(): void;
-  refreshAllInfo(): void;
-  refreshStudentInfo(): void;
+  refreshAllMessages(): void;
+  refreshStudentMessages(): void;
   addMarked(item: AnyEntry): void;
   removeMarked(item: AnyEntry): void;
 }
@@ -103,8 +103,8 @@ const mapDispatchToProps: MapDispatchToPropsParam<
   refreshStudent: () => dispatch(fetchEntriesStudent()),
   addMarked: e => dispatch(addMarked(e)),
   removeMarked: e => dispatch(removeMarked(e)),
-  refreshAllInfo: () => dispatch(fetchInfo()),
-  refreshStudentInfo: () => dispatch(fetchInfoStudent())
+  refreshAllMessages: () => dispatch(fetchMessages()),
+  refreshStudentMessages: () => dispatch(fetchMessagesStudent())
 });
 
 interface OwnProps {}
@@ -164,10 +164,10 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
     handleRefresh = () => {
       if (this.props.isTeacher) {
         this.props.refreshTeacher();
-        this.props.refreshAllInfo();
+        this.props.refreshAllMessages();
       } else {
         this.props.refreshStudent();
-        this.props.refreshStudentInfo();
+        this.props.refreshStudentMessages();
       }
     };
     handleShowInfoModal = () => this.setState({ showInfoModal: true });

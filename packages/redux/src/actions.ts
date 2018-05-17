@@ -1,10 +1,17 @@
 import { createAction } from "redux-actions";
-import { Group, Class, AnyEntry, Teacher, Info, AllDayInfo } from "vplan-types";
+import {
+  Group,
+  Class,
+  AnyEntry,
+  Teacher,
+  Messages,
+  AllDayInfo
+} from "vplan-types";
 import {
   AllEntriesRecord,
   PutEntriesPayload,
-  PutInfoPayload,
-  InfoRecord
+  MessagesRecord,
+  PutMessagesPayload
 } from "./types";
 
 /**
@@ -62,27 +69,29 @@ export const putEntriesError = createAction<string>(PUT_ENTRIES_ERROR);
 export const putEntriesSuccess = createAction(PUT_ENTRIES_SUCCESS);
 
 /**
- * ## FETCH_INFO
+ * ## FETCH_MESSAGES
  */
-export const FETCH_INFO = "FETCH_INFO";
-export const FETCH_INFO_ERROR = "FETCH_INFO_ERROR";
-export const FETCH_INFO_SUCCESS = "FETCH_INFO_SUCCESS";
-export const fetchInfo = createAction(FETCH_INFO);
-export const fetchInfoError = createAction<string>(FETCH_INFO_ERROR);
-export const fetchInfoSuccess = createAction<Info>(FETCH_INFO_SUCCESS);
+export const FETCH_MESSAGES = "FETCH_MESSAGES";
+export const FETCH_MESSAGES_ERROR = "FETCH_MESSAGES_ERROR";
+export const FETCH_MESSAGES_SUCCESS = "FETCH_MESSAGES_SUCCESS";
+export const fetchMessages = createAction(FETCH_MESSAGES);
+export const fetchMessagesError = createAction<string>(FETCH_MESSAGES_ERROR);
+export const fetchMessagesSuccess = createAction<Messages>(
+  FETCH_MESSAGES_SUCCESS
+);
 
 /**
- * ## FETCH_INFO_TEACHER
+ * ## FETCH_MESSAGES_TEACHER
  */
-export const FETCH_INFO_TEACHER = "FETCH_INFO_TEACHER";
-export const FETCH_INFO_TEACHER_ERROR = "FETCH_INFO_TEACHER_ERROR";
-export const FETCH_INFO_TEACHER_SUCCESS = "FETCH_INFO_TEACHER_SUCCESS";
-export const fetchInfoTeacher = createAction(FETCH_INFO_TEACHER);
-export const fetchInfoTeacherError = createAction<string>(
-  FETCH_INFO_TEACHER_ERROR
+export const FETCH_MESSAGES_TEACHER = "FETCH_MESSAGES_TEACHER";
+export const FETCH_MESSAGES_TEACHER_ERROR = "FETCH_MESSAGES_TEACHER_ERROR";
+export const FETCH_MESSAGES_TEACHER_SUCCESS = "FETCH_MESSAGES_TEACHER_SUCCESS";
+export const fetchMessagesTeacher = createAction(FETCH_MESSAGES_TEACHER);
+export const fetchMessagesTeacherError = createAction<string>(
+  FETCH_MESSAGES_TEACHER_ERROR
 );
-export const fetchInfoTeacherSuccess = createAction<string[]>(
-  FETCH_INFO_TEACHER_SUCCESS
+export const fetchMessagesTeacherSuccess = createAction<string[]>(
+  FETCH_MESSAGES_TEACHER_SUCCESS
 );
 
 /**
@@ -100,17 +109,17 @@ export const fetchRefreshTimeSuccess = createAction<string[]>(
 );
 
 /**
- * ## FETCH_INFO_STUDENT
+ * ## FETCH_MESSAGES_STUDENT
  */
-export const FETCH_INFO_STUDENT = "FETCH_INFO_STUDENT";
-export const FETCH_INFO_STUDENT_ERROR = "FETCH_INFO_STUDENT_ERROR";
-export const FETCH_INFO_STUDENT_SUCCESS = "FETCH_INFO_STUDENT_SUCCESS";
-export const fetchInfoStudent = createAction(FETCH_INFO_STUDENT);
-export const fetchInfoStudentError = createAction<string>(
-  FETCH_INFO_STUDENT_ERROR
+export const FETCH_MESSAGES_STUDENT = "FETCH_MESSAGES_STUDENT";
+export const FETCH_MESSAGES_STUDENT_ERROR = "FETCH_MESSAGES_STUDENT_ERROR";
+export const FETCH_MESSAGES_STUDENT_SUCCESS = "FETCH_MESSAGES_STUDENT_SUCCESS";
+export const fetchMessagesStudent = createAction(FETCH_MESSAGES_STUDENT);
+export const fetchMessagesStudentError = createAction<string>(
+  FETCH_MESSAGES_STUDENT_ERROR
 );
-export const fetchInfoStudentSuccess = createAction<string[]>(
-  FETCH_INFO_STUDENT_SUCCESS
+export const fetchMessagesStudentSuccess = createAction<string[]>(
+  FETCH_MESSAGES_STUDENT_SUCCESS
 );
 
 /**
@@ -126,14 +135,16 @@ export const fetchDayInfoSuccess = createAction<AllDayInfo>(
 );
 
 /**
- * ## PUT_INFO
+ * ## PUT_MESSAGES
  */
-export const PUT_INFO = "PUT_INFO";
-export const PUT_INFO_ERROR = "PUT_INFO_ERROR";
-export const PUT_INFO_SUCCESS = "PUT_INFO_SUCCESS";
-export const putInfo = createAction<PutInfoPayload>(PUT_INFO);
-export const putInfoError = createAction<string>(PUT_INFO_ERROR);
-export const putInfoSuccess = createAction<InfoRecord>(PUT_INFO_SUCCESS);
+export const PUT_MESSAGES = "PUT_MESSAGES";
+export const PUT_MESSAGES_ERROR = "PUT_MESSAGES_ERROR";
+export const PUT_MESSAGES_SUCCESS = "PUT_MESSAGES_SUCCESS";
+export const putMessages = createAction<PutMessagesPayload>(PUT_MESSAGES);
+export const putMessagesError = createAction<string>(PUT_MESSAGES_ERROR);
+export const putMessagesSuccess = createAction<MessagesRecord>(
+  PUT_MESSAGES_SUCCESS
+);
 
 /**
  * # Sync

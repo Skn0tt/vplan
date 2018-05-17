@@ -3,7 +3,7 @@ import {
   AllEntriesRecord,
   StudentEntriesMap,
   TeacherEntriesMap,
-  InfoRecord
+  MessagesRecord
 } from "./types";
 import {
   Group,
@@ -13,7 +13,7 @@ import {
   StudentEntry,
   AllEntries,
   TeacherEntries,
-  Info,
+  Messages,
   AnyEntry,
   AllDayInfo,
   Short
@@ -23,25 +23,25 @@ import { getMark } from "vplan-util";
 
 const getState: Selector<AppState, AppState> = state => state;
 
-export const getInfo: Selector<AppState, Info> = state =>
-  state.get("info").toJS();
+export const getMessages: Selector<AppState, Messages> = state =>
+  state.get("messages").toJS();
 
-export const getInfos: Selector<AppState, string[]> = state =>
+export const getAllMessages: Selector<AppState, string[]> = state =>
   state
-    .get("info")
+    .get("messages")
     .flatten()
     .toArray();
 
-export const getInfoTeacher: Selector<AppState, string[]> = state =>
-  state.getIn(["info", "teacher"]);
+export const getMessagesTeacher: Selector<AppState, string[]> = state =>
+  state.getIn(["messages", "teacher"]);
 
-export const getInfoStudent: Selector<AppState, string[]> = state =>
-  state.getIn(["info", "student"]);
+export const getMessagesStudent: Selector<AppState, string[]> = state =>
+  state.getIn(["messages", "student"]);
 
-export const getOwnInfos: Selector<AppState, string[]> = state =>
+export const getOwnMessages: Selector<AppState, string[]> = state =>
   isTeacher(state)
-    ? getInfoTeacher(state).concat(getInfoStudent(state))
-    : getInfoStudent(state);
+    ? getMessagesTeacher(state).concat(getMessagesStudent(state))
+    : getMessagesStudent(state);
 
 export const getEntries: Selector<AppState, AllEntriesRecord> = state =>
   state.get("entries");

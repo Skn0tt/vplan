@@ -8,18 +8,18 @@ import {
 import * as _ from "lodash";
 import auth from "../../helpers/auth";
 
-const infoRouter = Router();
+const messagesRouter = Router();
 
-const REDIS_INFO = "INFO";
-const REDIS_INFO_TEACHER = "INFO_TEACHER";
-const REDIS_INFO_STUDENT = "INFO_STUDENT";
+const REDIS_MESSAGES = "MESSAGES";
+const REDIS_MESSAGES_TEACHER = "MESSAGES_TEACHER";
+const REDIS_MESSAGES_STUDENT = "MESSAGES_STUDENT";
 
-infoRouter.get("/", returnRedis(REDIS_INFO));
+messagesRouter.get("/", returnRedis(REDIS_MESSAGES));
 
-infoRouter.get("/teacher", returnRedis(REDIS_INFO_TEACHER));
-infoRouter.get("/student", returnRedis(REDIS_INFO_STUDENT));
+messagesRouter.get("/teacher", returnRedis(REDIS_MESSAGES_TEACHER));
+messagesRouter.get("/student", returnRedis(REDIS_MESSAGES_STUDENT));
 
-infoRouter.put(
+messagesRouter.put(
   "/",
   auth,
   (req, res, next) => {
@@ -43,14 +43,18 @@ infoRouter.put(
   },
   async (req, res, next) => {
     try {
-      client.set(REDIS_INFO, JSON.stringify(req.body), redisErrHandler(next));
       client.set(
-        REDIS_INFO_STUDENT,
+        REDIS_MESSAGES,
+        JSON.stringify(req.body),
+        redisErrHandler(next)
+      );
+      client.set(
+        REDIS_MESSAGES_STUDENT,
         JSON.stringify(req.body.student),
         redisErrHandler(next)
       );
       client.set(
-        REDIS_INFO_TEACHER,
+        REDIS_MESSAGES_TEACHER,
         JSON.stringify(req.body.teacher),
         redisErrHandler(next)
       );
@@ -65,7 +69,7 @@ infoRouter.put(
   }
 );
 
-infoRouter.put(
+messagesRouter.put(
   "/teacher",
   auth,
   (req, res, next) => {
@@ -83,14 +87,14 @@ infoRouter.put(
   async (req, res, next) => {
     try {
       client.set(
-        REDIS_INFO_TEACHER,
+        REDIS_MESSAGES_TEACHER,
         JSON.stringify(req.body),
         redisErrHandler(next)
       );
 
-      const info = JSON.parse(await getAsync(REDIS_INFO));
+      const info = JSON.parse(await getAsync(REDIS_MESSAGES));
       info.teacher = req.body;
-      client.set(REDIS_INFO, JSON.stringify(info), redisErrHandler(next));
+      client.set(REDIS_MESSAGES, JSON.stringify(info), redisErrHandler(next));
 
       return res
         .status(200)
@@ -102,7 +106,7 @@ infoRouter.put(
   }
 );
 
-infoRouter.put(
+messagesRouter.put(
   "/student",
   auth,
   (req, res, next) => {
@@ -120,14 +124,14 @@ infoRouter.put(
   async (req, res, next) => {
     try {
       client.set(
-        REDIS_INFO_STUDENT,
+        REDIS_MESSAGES_STUDENT,
         JSON.stringify(req.body),
         redisErrHandler(next)
       );
 
-      const info = JSON.parse(await getAsync(REDIS_INFO));
+      const info = JSON.parse(await getAsync(REDIS_MESSAGES));
       info.student = req.body;
-      client.set(REDIS_INFO, JSON.stringify(info), redisErrHandler(next));
+      client.set(REDIS_MESSAGES, JSON.stringify(info), redisErrHandler(next));
       return res
         .status(200)
         .json(req.body)
@@ -138,4 +142,4 @@ infoRouter.put(
   }
 );
 
-export default infoRouter;
+export default messagesRouter;

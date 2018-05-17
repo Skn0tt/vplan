@@ -46,7 +46,7 @@ export type DayInfo = {
 
 export type AllDayInfo = { [date: string]: DayInfo };
 
-export type Info = {
+export type Messages = {
   student: string[];
   teacher: string[];
 };

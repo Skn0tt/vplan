@@ -1,13 +1,11 @@
 import * as React from "react";
 import { View, Text, FlatList } from "react-native";
 import {
-  getInfos,
+  getAllMessages,
   AppState,
   isLoading,
-  fetchInfo,
-  getInfoTeacher,
-  getInfoStudent,
-  getOwnInfos
+  getOwnMessages,
+  fetchMessages
 } from "vplan-redux";
 import { Action, Dispatch } from "redux";
 import { connect } from "react-redux";
@@ -23,11 +21,11 @@ interface OwnProps {
 }
 
 interface StateProps {
-  infos: string[];
+  messages: string[];
   loading: boolean;
 }
 const mapStateToProps = (state: AppState): StateProps => ({
-  infos: getOwnInfos(state),
+  messages: getOwnMessages(state),
   loading: isLoading(state)
 });
 
@@ -35,7 +33,7 @@ interface DispatchProps {
   refresh(): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
-  refresh: () => dispatch(fetchInfo())
+  refresh: () => dispatch(fetchMessages())
 });
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -44,7 +42,7 @@ type Props = OwnProps & StateProps & DispatchProps;
  * # Component
  */
 const InfoModal: React.SFC<Props> = props => {
-  const { show, onClose, infos, loading, refresh } = props;
+  const { show, onClose, messages, loading, refresh } = props;
 
   return (
     <Modal
@@ -56,7 +54,7 @@ const InfoModal: React.SFC<Props> = props => {
       <View style={styles.container}>
         <Text style={styles.title}>Informationen</Text>
         <FlatList
-          data={infos}
+          data={messages}
           refreshing={loading}
           onRefresh={refresh}
           renderItem={({ item, index }) => (

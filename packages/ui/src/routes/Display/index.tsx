@@ -4,9 +4,9 @@ import {
   StudentEntriesMap,
   getStudentEntries,
   fetchEntriesStudent,
-  getInfo,
-  getInfoStudent,
-  fetchInfoStudent
+  getMessages,
+  getMessagesStudent,
+  fetchMessagesStudent
 } from "vplan-redux";
 import { connect, Dispatch } from "react-redux";
 import { withStyles, WithStyles, Grid } from "material-ui";
@@ -63,21 +63,21 @@ const neededGroups = UI_DISPLAY_NEEDED_GROUPS.split(",");
  */
 interface StateProps {
   entries: StudentEntriesMap;
-  info: string[];
+  messages: string[];
 }
 const mapStateToProps = (state: AppState): StateProps =>
   ({
     entries: getStudentEntries(state),
-    info: getInfoStudent(state)
+    messages: getMessagesStudent(state)
   } as StateProps);
 
 interface DispatchProps {
   refresh(): void;
-  refreshInfo(): void;
+  refreshMessages(): void;
 }
 const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
   refresh: () => dispatch(fetchEntriesStudent()),
-  refreshInfo: () => dispatch(fetchInfoStudent())
+  refreshMessages: () => dispatch(fetchMessagesStudent())
 });
 
 type Props = StateProps & DispatchProps & WithStyles;
@@ -111,11 +111,11 @@ class Display extends React.Component<Props, State> {
    */
   componentDidMount() {
     this.props.refresh();
-    this.props.refreshInfo();
+    this.props.refreshMessages();
 
     this.pageClock.subscribe(this.nextSecond);
     this.refreshClock.subscribe(this.props.refresh);
-    this.refreshInfoClock.subscribe(this.props.refreshInfo);
+    this.refreshInfoClock.subscribe(this.props.refreshMessages);
   }
 
   /**
@@ -134,14 +134,14 @@ class Display extends React.Component<Props, State> {
    * ## Render
    */
   render() {
-    const { entries, classes, info } = this.props;
+    const { entries, classes, messages } = this.props;
     const { page } = this.state;
 
     const grouped = pickNeededGroups(group(entries)).sortBy((v, k) => k);
 
     const g9 = grouped.size > 8;
 
-    const pagedInfo = pages(info, 6);
+    const pagedInfo = pages(messages, 6);
     const pickedInfo = pick(pagedInfo, page);
 
     return (

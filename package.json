@@ -5,6 +5,7 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "tsc": "tsc --noEmit --jsx react",
+    "tsc:watch": "yarn tsc --watch",
     "test": "TZ=Europe/Berlin jest",
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage"

@@ -10,32 +10,32 @@ import {
   fetchEntriesStudentError,
   FETCH_ENTRIES_STUDENT,
   FETCH_ENTRIES_TEACHER,
-  fetchInfoSuccess,
-  fetchInfoError,
-  putInfoSuccess,
-  putInfoError,
+  putMessagesSuccess,
+  putMessagesError,
   putEntriesSuccess,
   putEntriesError,
-  PUT_INFO,
   PUT_ENTRIES,
-  FETCH_INFO,
-  FETCH_INFO_TEACHER,
-  FETCH_INFO_STUDENT,
-  fetchInfoStudentError,
-  fetchInfoStudentSuccess,
-  fetchInfoTeacherError,
-  fetchInfoTeacherSuccess,
   FETCH_DAYINFO,
   fetchDayInfoSuccess,
   fetchDayInfoError,
   fetchRefreshTime,
   fetchRefreshTimeSuccess,
   fetchRefreshTimeError,
-  FETCH_REFRESH_TIME
+  FETCH_REFRESH_TIME,
+  fetchMessagesStudentSuccess,
+  fetchMessagesStudentError,
+  fetchMessagesTeacherSuccess,
+  fetchMessagesTeacherError,
+  fetchMessagesSuccess,
+  fetchMessagesError,
+  FETCH_MESSAGES,
+  FETCH_MESSAGES_TEACHER,
+  FETCH_MESSAGES_STUDENT,
+  PUT_MESSAGES
 } from "./actions";
 import { Action, ActionFunction1 } from "redux-actions";
 import { Map } from "immutable";
-import { PutEntriesPayload, PutInfoPayload, AppState } from "./types";
+import { PutEntriesPayload, PutMessagesPayload, AppState } from "./types";
 import { config, getOwnEntries, isMarked, isTeacher } from "./";
 import diff from "./diff";
 import { Entries, StudentEntries, AnyEntry } from "vplan-types";
@@ -139,22 +139,22 @@ function* putEntriesSaga(action: Action<any>) {
   }
 }
 
-const fetchInfoSaga = createSaga(
-  api.fetchInfo,
-  fetchInfoSuccess,
-  fetchInfoError
+const fetchMessagesSaga = createSaga(
+  api.fetchMessages,
+  fetchMessagesSuccess,
+  fetchMessagesError
 );
 
-const fetchInfoTeacherSaga = createSaga(
-  api.fetchInfoTeacher,
-  fetchInfoTeacherSuccess,
-  fetchInfoTeacherError
+const fetchMessagesTeacherSaga = createSaga(
+  api.fetchMessagesTeacher,
+  fetchMessagesTeacherSuccess,
+  fetchMessagesTeacherError
 );
 
-const fetchInfoStudentSaga = createSaga(
-  api.fetchInfoStudent,
-  fetchInfoStudentSuccess,
-  fetchInfoStudentError
+const fetchMessagesStudentSaga = createSaga(
+  api.fetchMessagesStudent,
+  fetchMessagesStudentSuccess,
+  fetchMessagesStudentError
 );
 
 const fetchRefreshtimeSaga = createSaga(
@@ -163,7 +163,11 @@ const fetchRefreshtimeSaga = createSaga(
   fetchRefreshTimeError
 );
 
-const putInfoSaga = createSaga(api.putInfo, putInfoSuccess, putInfoError);
+const putMessagesSaga = createSaga(
+  api.putMessages,
+  putMessagesSuccess,
+  putMessagesError
+);
 
 const fetchDayInfoSaga = createSaga(
   api.fetchDayInfo,
@@ -179,9 +183,9 @@ function* rootSaga() {
   yield takeLatest(FETCH_ENTRIES, fetchEntriesSaga);
   yield takeLatest(FETCH_ENTRIES_STUDENT, fetchEntriesStudentSaga);
   yield takeLatest(FETCH_ENTRIES_TEACHER, fetchEntriesTeacherSaga);
-  yield takeLatest(FETCH_INFO, fetchInfoSaga);
-  yield takeLatest(FETCH_INFO_TEACHER, fetchInfoTeacherSaga);
-  yield takeLatest(FETCH_INFO_STUDENT, fetchInfoStudentSaga);
+  yield takeLatest(FETCH_MESSAGES, fetchMessagesSaga);
+  yield takeLatest(FETCH_MESSAGES_TEACHER, fetchMessagesTeacherSaga);
+  yield takeLatest(FETCH_MESSAGES_STUDENT, fetchMessagesStudentSaga);
   yield takeLatest(FETCH_REFRESH_TIME, fetchRefreshtimeSaga);
   yield takeLatest(FETCH_DAYINFO, fetchDayInfoSaga);
 
@@ -189,7 +193,7 @@ function* rootSaga() {
    * # Take all
    * > Write Operation
    */
-  yield takeEvery(PUT_INFO, putInfoSaga);
+  yield takeEvery(PUT_MESSAGES, putMessagesSaga);
   yield takeEvery(PUT_ENTRIES, putEntriesSaga);
 }
 
