@@ -4,6 +4,7 @@
     "module": "commonjs",
     "baseUrl": "./packages",
     "skipLibCheck": true, // see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16825,
+    "lib": ["es2016", "dom"],
     "paths": {
       "vplan-*": ["./*/src"]
     },
