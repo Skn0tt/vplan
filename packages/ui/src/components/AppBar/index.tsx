@@ -5,7 +5,7 @@ import {
   Typography,
   WithStyles,
   withStyles
-} from "material-ui";
+} from "@material-ui/core";
 import * as config from "../../etc/config";
 
 import styles from "./styles";

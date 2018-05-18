@@ -24,7 +24,7 @@ import {
   Button,
   WithStyles,
   withStyles
-} from "material-ui";
+} from "@material-ui/core";
 import { Delete as DeleteIcon, Add as AddIcon } from "material-ui-icons";
 import EntriesUpdater from "./components/EntriesUpdater";
 import InfoUpdater from "./components/InfoUpdater";

@@ -1,5 +1,5 @@
-import { StyleRules } from "material-ui/styles/withStyles";
-import { Theme } from "material-ui/styles/createMuiTheme";
+import { StyleRules } from "@material-ui/core/styles/withStyles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 
 const styles = (theme: Theme): StyleRules => ({
   titleBar: {

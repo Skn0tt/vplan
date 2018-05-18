@@ -1,5 +1,5 @@
-import { StyleRules } from "material-ui/styles/withStyles";
-import { Theme } from "material-ui/styles/createMuiTheme";
+import { StyleRules } from "@material-ui/core/styles/withStyles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import {
   blue,
   deepPurple,
@@ -10,7 +10,7 @@ import {
   cyan,
   common,
   grey
-} from "material-ui/colors";
+} from "@material-ui/core/colors";
 
 const styles = (theme: Theme): StyleRules => ({
   red900: { backgroundColor: red[900] },

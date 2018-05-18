@@ -10,11 +10,13 @@
   "scripts": {
     "start": "yarn parcel src/index.html -o index.html",
     "watch": "yarn parcel watch src/index.html --public-url / -o index",
-    "build": "yarn parcel build src/index.html --public-url / -o index && yarn serviceworker",
+    "build":
+      "yarn parcel build src/index.html --public-url / -o index && yarn serviceworker",
     "serviceworker": "yarn workbox generateSW",
     "docker:replace": "docker exec vplan_ui_1 /usr/local/bin/replace"
   },
   "dependencies": {
+    "@material-ui/core": "^1.0.0",
     "create-react-class": "^15.6.3",
     "es6-promise": "^4.2.4",
     "js-cookie": "^2.2.0",

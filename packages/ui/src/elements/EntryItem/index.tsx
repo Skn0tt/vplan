@@ -6,7 +6,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar
-} from "material-ui";
+} from "@material-ui/core";
 import styles from "./styles";
 import { AnyEntry } from "vplan-types";
 import Tappable from "react-tappable";

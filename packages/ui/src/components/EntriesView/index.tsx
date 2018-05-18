@@ -8,7 +8,7 @@ import {
   Typography,
   WithStyles,
   ListSubheader
-} from "material-ui";
+} from "@material-ui/core";
 import EntryItem from "../../elements/EntryItem";
 import * as _ from "lodash";
 import {

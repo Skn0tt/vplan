@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { CssBaseline, MuiThemeProvider } from "material-ui";
+import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
 import { store } from "./etc/store";
 import * as config from "./etc/config";
 import Routes from "./Routes";

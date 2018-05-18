@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Snackbar, SnackbarContent } from "material-ui";
+import { Snackbar, SnackbarContent } from "@material-ui/core";
 import {
   connect,
   MapDispatchToPropsParam,

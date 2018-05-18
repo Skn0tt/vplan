@@ -5,7 +5,7 @@ import {
   withStyles,
   WithStyles,
   Divider
-} from "material-ui";
+} from "@material-ui/core";
 import { DayInfo } from "vplan-types";
 import styles from "./styles";
 

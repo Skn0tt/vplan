@@ -28,7 +28,7 @@ import {
   Paper,
   Hidden,
   TextField
-} from "material-ui";
+} from "@material-ui/core";
 import ShortList, { ShortListItem } from "../../components/ShortList";
 import Information from "../../components/Information";
 import styles from "./styles";

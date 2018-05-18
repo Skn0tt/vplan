@@ -13,7 +13,7 @@ import {
   GridList,
   GridListTile,
   ButtonBase
-} from "material-ui";
+} from "@material-ui/core";
 import * as _ from "lodash";
 import styles from "./styles";
 

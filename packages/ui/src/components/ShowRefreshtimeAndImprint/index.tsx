@@ -6,7 +6,7 @@ import {
 } from "react-redux";
 import { AppState, getRefreshtime, fetchRefreshTime } from "vplan-redux";
 import { Observable } from "rxjs";
-import { WithStyles, withStyles } from "material-ui";
+import { WithStyles, withStyles } from "@material-ui/core";
 import styles from "./styles";
 import * as config from "../../etc/config";
 

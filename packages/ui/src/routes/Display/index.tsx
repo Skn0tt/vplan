@@ -9,7 +9,7 @@ import {
   fetchMessagesStudent
 } from "vplan-redux";
 import { connect, Dispatch } from "react-redux";
-import { withStyles, WithStyles, Grid } from "material-ui";
+import { withStyles, WithStyles, Grid } from "@material-ui/core";
 import { Action } from "redux";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";

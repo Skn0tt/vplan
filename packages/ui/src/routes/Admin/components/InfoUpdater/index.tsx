@@ -10,7 +10,7 @@ import {
   WithStyles,
   withStyles,
   Typography
-} from "material-ui";
+} from "@material-ui/core";
 import { Delete as DeleteIcon, Add as AddIcon } from "material-ui-icons";
 import styles from "./styles";
 import TitleBar from "../../../../elements/TitleBar";

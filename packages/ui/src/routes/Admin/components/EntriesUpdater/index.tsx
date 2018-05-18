@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, WithStyles, withStyles, Grid } from "material-ui";
+import { Button, WithStyles, withStyles, Grid } from "@material-ui/core";
 import styles from "./styles";
 import UploadButton from "../../elements/UploadButton";
 import TitleBar from "../../../../elements/TitleBar";

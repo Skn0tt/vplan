@@ -18,7 +18,12 @@ import {
 } from "vplan-redux";
 import { Action } from "redux";
 import { RouteComponentProps } from "react-router";
-import { WithStyles, withStyles, TextField, withWidth } from "material-ui";
+import {
+  WithStyles,
+  withStyles,
+  TextField,
+  withWidth
+} from "@material-ui/core";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import styles from "./styles";
 import EntriesView from "../../components/EntriesView";

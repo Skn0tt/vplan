@@ -7,7 +7,7 @@ import {
   ListItemText,
   ListSubheader,
   ListItem
-} from "material-ui";
+} from "@material-ui/core";
 
 /**
  * # Helpers
