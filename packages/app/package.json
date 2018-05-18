@@ -1,6 +1,6 @@
 {
   "name": "vplan-app",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "scripts": {
     "start:ios": "react-native run-ios",
@@ -22,7 +22,7 @@
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.5.7",
     "react-redux": "^5.0.7",
-    "vplan-redux": "^0.2.2",
+    "vplan-redux": "^0.2.3",
     "vplan-util": "^0.2.0"
   },
   "devDependencies": {
