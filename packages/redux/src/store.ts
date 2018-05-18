@@ -10,7 +10,7 @@ import {
   persistStore,
   createTransform
 } from "redux-persist-immutable";
-import { AppState } from "./types";
+import { AppState, IAppState } from "./types";
 import { config } from "./";
 import { asyncLocalStorage } from "redux-persist/storages";
 import { Map } from "immutable";
@@ -34,9 +34,11 @@ const enhancer = composeEnhancers(
   autoRehydrate()
 );
 
+const initialState = new AppState({});
+const keysToRemove: (keyof IAppState)[] = ["loading", "errors"];
 const removeUnneededTransform = createTransform(
-  (inboundState: AppState, key: string) =>
-    key === "loading" ? 0 : inboundState
+  (inboundState: AppState, key: keyof IAppState) =>
+    keysToRemove.includes(key) ? initialState.get(key) : inboundState
 );
 
 const store = createStore(reducer, enhancer as StoreEnhancer<any>);

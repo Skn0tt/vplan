@@ -75,7 +75,7 @@ type DayInfoMap = Map<string, DayInfo>;
 /**
  * AppState
  */
-interface IAppState {
+export interface IAppState {
   entries: AllEntriesRecord;
   loading: number;
   group: Group;
