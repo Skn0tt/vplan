@@ -16,7 +16,7 @@ export const toStudentEntry: MapToEntry = _ => group => row => {
   const { from, to } = getHours(row[2]);
   const substituteTeacher = sanitizeSubsituteTeacher(row[3].trim());
   const teacher = row[7].trim();
-  const room = row[8].trim();
+  const room = row[6].trim();
   const c = row[4].trim();
   const day = getDay(row[1]);
 

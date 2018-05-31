@@ -223,7 +223,7 @@ describe("parser", () => {
       );
     });
 
-    // Ensures Fix: "VK E1" not missing
+    // Regression test: "VK E1" not missing
     test("subst_014.htm", async () => {
       const file = await loadFile("/../res/" + "subst_014.htm");
       const result = parseBuffers([file]);
@@ -250,7 +250,7 @@ describe("parser", () => {
       );
     });
 
-    // Ensures Fix: "VK E1" not missing
+    // Regression test: "VK E1" not missing
     test("subst_016.htm", async () => {
       const file = await loadFile("/../res/" + "subst_016.htm");
       const result = parseBuffers([file]);
@@ -282,6 +282,20 @@ describe("parser", () => {
         result.entries.student
       );
     });
+  });
+
+  // Regression test: It parses the right examen rooms
+  it("outputs the right examen rooms", async () => {
+    const file = await loadFile("/../res/" + "subst_016.htm");
+    const result = parseBuffers([file]);
+
+    const klausuren = result.entries.student["EF"].filter(
+      e => e.type === "Klausur"
+    );
+    const rooms = klausuren.map(e => e.room);
+    const accepted = ["A105", "A104", "A103", "A107"];
+    expect(rooms.sort()).toEqual(accepted.sort());
+    expect(klausuren).toHaveLength(4);
   });
 
   describe("version detection", () => {
