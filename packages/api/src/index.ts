@@ -25,7 +25,7 @@ if (PRODUCTION) {
 }
 
 // Middlewares
-app.use(logger("dev"));
+app.use(logger(PRODUCTION ? "common" : "dev"));
 app.use(express.json());
 app.use(cors({ origin: true }));
 app.options("*", cors({ origin: true }));
