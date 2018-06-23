@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import styles from "./styles";
+import styles from "./Button.styles";
 import * as util from "vplan-util";
 
 /**
@@ -21,7 +21,7 @@ const SettingsButton: React.SFC<Props> = props => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Icon name="ios-settings" color={util.white} size={24} />
+        <Icon name="md-refresh" color={util.white} size={24} />
       </View>
     </TouchableOpacity>
   );

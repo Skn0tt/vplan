@@ -32,6 +32,7 @@ import {
   NavigationParams
 } from "react-navigation";
 import SettingsButton from "./elements/SettingsButton";
+import RefreshButton from "./elements/RefreshButton";
 import SectionHeader from "./elements/SectionHeader";
 import InfoModalButton from "./elements/InfoModalButton";
 import {
@@ -125,15 +126,18 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         />
       ),
       headerRight: (
-        <SettingsButton
-          onPress={() =>
-            navigation.dispatch(
-              NavigationActions.navigate({
-                routeName: "Settings"
-              })
-            )
-          }
-        />
+        <>
+          <RefreshButton onPress={navigation.getParam("handleRefresh")} />
+          <SettingsButton
+            onPress={() =>
+              navigation.dispatch(
+                NavigationActions.navigate({
+                  routeName: "Settings"
+                })
+              )
+            }
+          />
+        </>
       )
     });
 
@@ -142,6 +146,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
      */
     componentDidMount() {
       this.handleRefresh();
+      this.props.navigation.setParams({ handleRefresh: this.handleRefresh });
     }
 
     componentWillReceiveProps() {

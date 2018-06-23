@@ -19,7 +19,7 @@
     "react-native-modal": "^5.4.0",
     "react-native-push-notification": "^3.0.2",
     "react-native-vector-icons": "^4.5.0",
-    "react-navigation": "^1.5.7",
+    "react-navigation": "^2.5.1",
     "react-redux": "^5.0.7",
     "vplan-redux": "^0.2.3",
     "vplan-util": "^0.2.0"
@@ -30,7 +30,7 @@
     "@types/react": "^16.0.40",
     "@types/react-native": "^0.52.18",
     "@types/react-native-vector-icons": "^4.4.3",
-    "@types/react-navigation": "^1.2.3",
+    "@types/react-navigation": "^2.0.7",
     "@types/react-redux": "^5.0.15",
     "@types/react-test-renderer": "^16.0.1",
     "babel-jest": "23.0.0-alpha.0",
