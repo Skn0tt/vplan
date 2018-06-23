@@ -38,7 +38,7 @@ const initialState = new AppState({});
 const keysToRemove: (keyof IAppState)[] = ["loading", "errors"];
 const removeUnneededTransform = createTransform(
   (inboundState: AppState, key: keyof IAppState) =>
-    keysToRemove.includes(key) ? initialState.get(key) : inboundState
+    keysToRemove.indexOf(key) !== -1 ? initialState.get(key) : inboundState
 );
 
 const store = createStore(reducer, enhancer as StoreEnhancer<any>);

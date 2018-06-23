@@ -1,14 +1,16 @@
 import * as React from "react";
 import { View, Text, FlatList } from "react-native";
 import {
-  getAllMessages,
   AppState,
   isLoading,
   getOwnMessages,
   fetchMessages
 } from "vplan-redux";
-import { Action, Dispatch } from "redux";
-import { connect } from "react-redux";
+import {
+  connect,
+  MapStateToPropsParam,
+  MapDispatchToPropsParam
+} from "react-redux";
 import Modal from "react-native-modal";
 import styles from "./styles";
 
@@ -24,7 +26,11 @@ interface StateProps {
   messages: string[];
   loading: boolean;
 }
-const mapStateToProps = (state: AppState): StateProps => ({
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
   messages: getOwnMessages(state),
   loading: isLoading(state)
 });
@@ -32,7 +38,10 @@ const mapStateToProps = (state: AppState): StateProps => ({
 interface DispatchProps {
   refresh(): void;
 }
-const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
+const mapDispatchToProps: MapDispatchToPropsParam<
+  DispatchProps,
+  OwnProps
+> = dispatch => ({
   refresh: () => dispatch(fetchMessages())
 });
 
@@ -67,4 +76,7 @@ const InfoModal: React.SFC<Props> = props => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoModal);
+export default connect<StateProps, DispatchProps, OwnProps, AppState>(
+  mapStateToProps,
+  mapDispatchToProps
+)(InfoModal);

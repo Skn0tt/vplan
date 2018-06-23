@@ -1,19 +1,7 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  FlatList,
-  SectionList,
-  SectionListData,
-  Modal,
-  ListRenderItemInfo
-} from "react-native";
+import { SectionList, SectionListData, ListRenderItemInfo } from "react-native";
 import {
   AppState,
-  getEntries,
-  getStudentEntries,
   getOwnEntries,
   fetchEntriesTeacher,
   fetchEntriesStudent,
@@ -22,26 +10,24 @@ import {
   addMarked,
   removeMarked,
   isMarked,
-  getGroup,
   getShort,
   fetchMessagesStudent,
-  fetchMessages
+  fetchMessages,
+  fetchRefreshTime,
+  getRefreshtime
 } from "vplan-redux";
-import { Dispatch, connect, MapDispatchToPropsParam } from "react-redux";
-import { Action } from "redux";
-import { AnyEntry, Class, Short } from "vplan-types";
-import * as _ from "lodash";
+import {
+  connect,
+  MapDispatchToPropsParam,
+  MapStateToPropsParam
+} from "react-redux";
+import { AnyEntry, Short } from "vplan-types";
 import EntryListItem from "./elements/EntryListItem";
 import ListEmptyText from "./elements/ListEmptyText";
 import {
-  NavigationScreenOptions,
-  NavigationStackScreenOptions,
-  NavigationScreenOptionsGetter,
-  StackNavigatorConfig,
   NavigationActions,
   NavigationRoute,
   NavigationScreenProp,
-  NavigationScreenComponent,
   NavigationScreenProps,
   NavigationParams
 } from "react-navigation";
@@ -56,6 +42,7 @@ import {
   isFutureEntry
 } from "vplan-util";
 import InfoModal from "./components/InfoModal";
+import RefreshTimeFooter from "./elements/RefreshTimeFooter";
 
 /**
  * # Helpers
@@ -76,22 +63,28 @@ interface StateProps {
   isTeacher: boolean;
   isLoading: boolean;
   short: Short;
+  refreshTime: Date;
   isMarked(item: AnyEntry): boolean;
 }
-const mapStateToProps = (state: AppState) =>
-  ({
-    entries: getOwnEntries(state) || [],
-    short: getShort(state),
-    isTeacher: isTeacher(state),
-    isLoading: isLoading(state),
-    isMarked: e => isMarked(e)(state)
-  } as StateProps);
+const mapStateToProps: MapStateToPropsParam<
+  StateProps,
+  OwnProps,
+  AppState
+> = state => ({
+  entries: getOwnEntries(state) || [],
+  short: getShort(state),
+  isTeacher: isTeacher(state),
+  isLoading: isLoading(state),
+  refreshTime: getRefreshtime(state),
+  isMarked: e => isMarked(e)(state)
+});
 
 interface DispatchProps {
   refreshTeacher(): void;
   refreshStudent(): void;
   refreshAllMessages(): void;
   refreshStudentMessages(): void;
+  fetchRefreshTime(): void;
   addMarked(item: AnyEntry): void;
   removeMarked(item: AnyEntry): void;
 }
@@ -101,6 +94,7 @@ const mapDispatchToProps: MapDispatchToPropsParam<
 > = dispatch => ({
   refreshTeacher: () => dispatch(fetchEntriesTeacher()),
   refreshStudent: () => dispatch(fetchEntriesStudent()),
+  fetchRefreshTime: () => dispatch(fetchRefreshTime()),
   addMarked: e => dispatch(addMarked(e)),
   removeMarked: e => dispatch(removeMarked(e)),
   refreshAllMessages: () => dispatch(fetchMessages()),
@@ -169,6 +163,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         this.props.refreshStudent();
         this.props.refreshStudentMessages();
       }
+      this.props.fetchRefreshTime();
     };
     handleShowInfoModal = () => this.setState({ showInfoModal: true });
     handleCloseInfoModal = () => this.setState({ showInfoModal: false });
@@ -178,12 +173,13 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
      */
     render() {
       const {
-        entries,
         isLoading,
         addMarked,
         removeMarked,
         isMarked,
-        navigation: { state: { params }, setParams }
+        entries,
+        navigation: { state: { params }, setParams },
+        refreshTime
       } = this.props;
       const showInfo: boolean = (params as NavigationParams).showInfo;
 
@@ -213,6 +209,7 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
                 title={localiseDate(new Date(info.section.data[0].day))}
               />
             )}
+            ListFooterComponent={() => <RefreshTimeFooter time={refreshTime} />}
             ListEmptyComponent={<ListEmptyText text="Keine Vertetungen." />}
             keyExtractor={hashEntry}
             refreshing={isLoading}

@@ -5,7 +5,7 @@ export default StyleSheet.create({
     borderColor: "red"
   },
   text: {
-    marginTop: 60,
+    marginVertical: "88%",
     textAlign: "center",
     fontSize: 16,
     color: "#9E9E9E"

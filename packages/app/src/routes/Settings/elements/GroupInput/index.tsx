@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Short, Group } from "vplan-types";
+import { Group } from "vplan-types";
 import { Picker, Text, View } from "react-native";
 import styles from "./styles";
 import { GROUPS } from "vplan-util";
