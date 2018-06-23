@@ -1,0 +1,51 @@
+{
+  "name": "vplan-redux",
+  "version": "0.2.3",
+  "description": "redux state management for vplan",
+  "main": "src/index.ts",
+  "repository": "https://gitlab.com/skn0tt/vplan",
+  "author": "Simon Knott",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn tsc",
+    "watch": "yarn tsc --watch",
+    "test": "yarn jest"
+  },
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.5",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.3.0",
+    "redux-devtools": "^3.4.1",
+    "redux-immutable": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-persist-immutable": "^4.3.1",
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1",
+    "vplan-types": "^0.2.0",
+    "vplan-util": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/jest": "^22.2.2",
+    "@types/redux-actions": "^2.2.4",
+    "@types/redux-immutable": "^3.0.38",
+    "@types/redux-logger": "^3.0.5",
+    "@types/redux-persist": "^4.3.1",
+    "chai": "^4.1.2",
+    "jest": "^22.4.3",
+    "redux-devtools-extension": "^2.13.2",
+    "ts-jest": "^22.4.2",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2",
+    "vplan-types": "^0.2.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+  }
+}

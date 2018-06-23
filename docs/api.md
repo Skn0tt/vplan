@@ -4,7 +4,7 @@ title: API
 
 All Data is served to the clients via a REST API.
 It is available under `/api`.
-The full Documentation is available in [OpenAPI-Format](https://gitlab.com/Skn0tt/vplan/raw/master/packages/api/Docs.yml).
+The full Documentation is available in [OpenAPI-Format](https://gitlab.com/Skn0tt/vplan/raw/master/packages/vplan-api/Docs.yml).
 
 | Route               | Method |  Result                                          |
 | ------------------- | ------ | ------------------------------------------------ |

@@ -2,8 +2,6 @@
   "lerna": "2.9.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["./packages/vplan-*"],
   "version": "0.2.3"
 }

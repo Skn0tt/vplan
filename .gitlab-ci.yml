@@ -47,7 +47,7 @@ Build API:
   before_script:
     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
-    - cd packages/api
+    - cd packages/vplan-api
     - make build IMAGE_TAG=$API_IMAGE
     - docker push $API_IMAGE
 
@@ -63,7 +63,7 @@ Build UI:
   before_script:
     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
   script:
-    - cd packages/ui
+    - cd packages/vplan-ui
     - make build IMAGE_TAG=$UI_IMAGE
     - docker push $UI_IMAGE
 
@@ -88,7 +88,7 @@ app:ema:
   stage: release
   artifacts:
     paths:
-      - ./packages/app/android/app/build/outputs/apk/release/
+      - ./packages/vplan-app/android/app/build/outputs/apk/release/
   only:
     - master
   only:
@@ -96,7 +96,7 @@ app:ema:
   before_script:
     - yarn
   script:
-    - cd packages/app
+    - cd packages/vplan-app
     # Gradle Properties
     - echo $KEYSTORE_GRADLE_PROPERTIES | base64 -d >> ./android/gradle.properties
     # Keystore

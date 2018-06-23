@@ -21,10 +21,10 @@ build: vplan-api vplan-ui vplan-app
 build-docker: vplan-api vplan-ui
 
 vplan-api:
-	$(MAKE) -C packages/api build
+	$(MAKE) -C packages/vplan-api build
 
 vplan-ui:
-	$(MAKE) -C packages/ui build
+	$(MAKE) -C packages/vplan-ui build
 
 vplan-app:
-	$(MAKE) -C packages/app build
+	$(MAKE) -C packages/vplan-app build

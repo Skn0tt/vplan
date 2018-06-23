@@ -11,4 +11,4 @@ services:
 
   ui:
     volumes:
-      - ./packages/ui/dist:/app/
+      - ./packages/vplan-ui/dist:/app/

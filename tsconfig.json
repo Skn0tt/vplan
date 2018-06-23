@@ -6,7 +6,7 @@
     "skipLibCheck": true, // see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16825,
     "lib": ["es2016", "dom"],
     "paths": {
-      "vplan-*": ["./*/src"]
+      "vplan-*": ["./packages/*/"]
     },
     "noImplicitAny": true,
     "noImplicitReturns": true,

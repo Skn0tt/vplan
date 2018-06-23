@@ -10,8 +10,8 @@
       "name": "Attach to Remote",
       "address": "localhost",
       "port": 9229,
-      "localRoot": "${workspaceFolder}/packages/api/dist",
-      "remoteRoot": "usr/src/app/packages/api/dist"
+      "localRoot": "${workspaceFolder}/packages/vplan-api/dist",
+      "remoteRoot": "usr/src/app/packages/vplan-api/dist"
     }
   ]
 }

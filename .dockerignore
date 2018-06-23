@@ -1,7 +1,7 @@
 packages/**/node_modules
 ./node_modules
-packages/app/android
-packages/app/ios
+packages/vplan-app/android
+packages/vplan-app/ios
 packages/old-app/android
 packages/old-app/ios
 packages/**/dist
