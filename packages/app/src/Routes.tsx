@@ -1,11 +1,11 @@
-import { StackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
 import * as util from "vplan-util";
 
 import Home from "./routes/Home";
 import Settings from "./routes/Settings";
 
-const MainStack = StackNavigator(
+const MainStack = createStackNavigator(
   {
     Home: {
       screen: Home,
