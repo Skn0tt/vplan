@@ -177,11 +177,25 @@ const Home = connect(mapStateToProps, mapDispatchToProps)(
         addMarked,
         removeMarked,
         isMarked,
-        entries,
         navigation: { state: { params }, setParams },
         refreshTime
       } = this.props;
       const showInfo: boolean = (params as NavigationParams).showInfo;
+
+      const entries: AnyEntry[] = [
+        {
+          class: "5b",
+          day: +new Date(),
+          from: 1,
+          to: 2,
+          group: "5B",
+          room: "kfpsd",
+          substituteClass: "jkl",
+          substituteTeacher: "jl",
+          teacher: "A",
+          type: "kl"
+        }
+      ];
 
       const sections = sectionize(sort(entries.filter(isFutureEntry)));
 

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { StackNavigator } from "react-navigation";
 
 import * as util from "vplan-util";
@@ -27,6 +26,9 @@ const MainStack = StackNavigator(
       headerStyle: {
         backgroundColor: util.blue500
       }
+    },
+    cardStyle: {
+      backgroundColor: util.white
     }
   }
 );

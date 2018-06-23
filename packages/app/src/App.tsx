@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  AsyncStorage,
-  ActivityIndicator
-} from "react-native";
+import { View, StatusBar, AsyncStorage, ActivityIndicator } from "react-native";
 import { Provider } from "react-redux";
 import Routes from "./Routes";
 import styles from "./styles";
@@ -15,7 +8,6 @@ import * as push from "./etc/push";
 import * as util from "vplan-util";
 import createStore, { AppState } from "vplan-redux";
 import { Store } from "redux";
-import { isThisSecond } from "date-fns";
 
 interface State {
   store?: Store<AppState>;
