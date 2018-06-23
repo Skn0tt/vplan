@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  AppState,
-  TouchableNativeFeedback,
-  TouchableOpacity
-} from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "./styles";
 import * as util from "vplan-util";

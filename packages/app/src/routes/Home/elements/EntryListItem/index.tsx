@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, AppState, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { AnyEntry } from "vplan-types";
 import Hours from "../Hours";
 import styles from "./styles";
