@@ -1,6 +1,6 @@
 {
   "name": "vplan-app",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "scripts": {
     "start:ios": "react-native run-ios",
@@ -21,8 +21,8 @@
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^2.5.1",
     "react-redux": "^5.0.7",
-    "vplan-redux": "^0.2.3",
-    "vplan-util": "^0.2.0"
+    "vplan-redux": "^0.2.4",
+    "vplan-util": "^0.2.4"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
@@ -44,11 +44,15 @@
     "ts-jest": "^22.4.1",
     "ts-loader": "3.5.0",
     "typescript": "^2.7.2",
-    "vplan-types": "^0.2.0"
+    "vplan-types": "^0.2.4"
   },
   "jest": {
     "preset": "react-native",
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"

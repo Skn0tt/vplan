@@ -1,6 +1,6 @@
 {
   "name": "vplan-parser",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "description": "parses untis html files.",
   "main": "./src/index.ts",
   "repository": "https://github.com/skn0tt/vplan",
@@ -16,7 +16,7 @@
     "cheerio": "^1.0.0-rc.2",
     "iconv-lite": "^0.4.19",
     "lodash": "^4.17.5",
-    "vplan-types": "^0.2.0"
+    "vplan-types": "^0.2.4"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.7",
