@@ -2,7 +2,7 @@
   "name": "vplan-parser",
   "version": "0.2.4",
   "description": "parses untis html files.",
-  "main": "./src/index.ts",
+  "main": "./dist/vplan-parser/src/index.js",
   "repository": "https://github.com/skn0tt/vplan",
   "author": "Simon Knott",
   "license": "MIT",
