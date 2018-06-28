@@ -1,6 +1,6 @@
 {
   "name": "vplan-parser",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "parses untis html files.",
   "main": "./dist/vplan-parser/src/index.js",
   "repository": "https://github.com/skn0tt/vplan",
